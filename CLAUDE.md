@@ -19,64 +19,66 @@ a self-contained **HTML template**.
   categories.
 - `chart-template/chart-template.html` — the visualizer. Data slot: the literal
   string `"__CHART_DATA_PLACEHOLDER__"` (quotes included).
-- The prompt outputs `{ axes, categories, data }`. The template needs the
-  scraped tweets too — combine them with the nested form the template accepts:
+- The prompt outputs `{ axes, categories, data }`. The template also needs the
+  scraped tweets — combine them with the nested form the template accepts:
   `{ "tweetData": <scraped thread JSON>, "categorizationData": <prompt output> }`.
 
 `bookmarklet.html` (repo root) installs the browser bookmarklet that scrapes a
 thread into the raw JSON these pipelines consume.
 
-## Inputs — `threads/`
+## Where inputs and outputs live — `published/`
 
-Raw scraped thread JSON lives in `threads/<slug>.json`.
+Inputs and outputs are **not part of the `main` branch**. They live in
+`published/` — a git worktree checked out to the `gh-pages` branch. `main`
+holds only the tool (templates, bookmarklet, docs); `gh-pages` holds the
+content and is what GitHub Pages serves.
 
-**If a `.json` file appears at the repo root** — a user dropped it there — move
-it into `threads/` first, renamed to a kebab-case slug
-(e.g. a root `Dark_Matter.json` becomes `threads/dark-matter.json`). Always
-process threads from `threads/`, never from the repo root.
+- **Inputs:** scraped thread JSON → `published/threads/<slug>.json`
+- **Outputs:** finished visualizations → `published/output/<slug>-graph.html`
+  or `published/output/<slug>-chart.html`
 
-## Outputs — `output/`
+If `published/` does not exist yet (fresh clone or fork), create it once:
 
-Every finished visualization goes in `output/`:
-- Graph: `output/<slug>-graph.html`
-- Chart: `output/<slug>-chart.html`
+```sh
+git worktree add published gh-pages
+```
 
-To build one: copy the template HTML into `output/`, then replace its
-placeholder string (quotes included) with the combined JSON object.
+If a `.json` file appears at the **repo root** — a user dropped it there — move
+it into `published/threads/`, renamed to a kebab-case slug (e.g. a root
+`Dark_Matter.json` becomes `published/threads/dark-matter.json`). Always
+process threads from `published/threads/`, never from the repo root.
 
 ## Workflow for a request
 
-1. Find the input thread JSON in `threads/`. If the user dropped one at the
-   repo root, move it into `threads/<slug>.json` first.
+1. Ensure `published/` exists (see above). Find the input thread JSON in
+   `published/threads/`, moving it there from the repo root if needed.
 2. Pick the pipeline the user asked for (graph or chart).
 3. Run that folder's `prompt.md` against the thread JSON to produce the data.
-4. Copy the template into `output/<slug>-<graph|chart>.html`.
+4. Copy the template into `published/output/<slug>-<graph|chart>.html`.
 5. Replace the `"__*_DATA_PLACEHOLDER__"` string with the combined JSON object.
 6. Publish — see below.
 
-## Publishing — IMPORTANT
+## Publishing
 
-`threads/` and `output/` are **not part of the `main` branch**. Locally they
-are symlinks into `.site/`, a git worktree checked out to the `gh-pages`
-branch. `main` stays clean (templates + scripts only); inputs and outputs are
-versioned and published on `gh-pages`.
+To publish new or changed inputs/outputs, commit them on the `gh-pages` branch
+from inside the worktree and push:
 
-- **To publish** new or changed outputs, run: `./scripts/publish.sh "short message"`
-  It commits everything under `threads/` + `output/`, regenerates the gh-pages
-  `index.html`, and pushes `gh-pages` (if a remote is set).
-- **Never** `git add` / `git commit` files under `threads/` or `output/`
-  yourself, and never try to commit them to `main`. Use `publish.sh`. On `main`
-  these paths are git-ignored, so a stray `git add -A` silently skips them —
-  that is intentional, not a bug.
-- **First run / fresh clone:** run `./scripts/setup.sh` once. It creates the
-  `gh-pages` worktree and the `threads/` + `output/` symlinks, and pulls any
-  already-published content.
-- **To pull teammates' published outputs:** `./scripts/sync.sh`.
-- Do not run destructive git commands inside `.site/`.
+```sh
+cd published && git add -A && git commit -m "short message" && git push
+```
+
+That's the whole publish step — plain git, run inside `published/`.
+
+- The `published/index.html` landing page lists outputs automatically; you
+  never edit or regenerate it.
+- Never commit inputs/outputs to `main`. On `main` the `published/` path is
+  git-ignored, so a stray `git add -A` on `main` silently skips it — that is
+  intentional, not a bug.
+- To pull teammates' published content: `cd published && git pull`.
 - Adding the GitHub remote is the user's job, not yours.
 
 ## Naming conventions
 
 - Slugs: kebab-case (`dark-matter`, not `dark_matter`).
-- Thread input: `threads/<slug>.json`.
-- Output: `output/<slug>-graph.html` or `output/<slug>-chart.html`.
+- Thread input: `published/threads/<slug>.json`.
+- Output: `published/output/<slug>-graph.html` or `<slug>-chart.html`.
