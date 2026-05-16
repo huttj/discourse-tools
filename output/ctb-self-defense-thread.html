@@ -1,0 +1,1333 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tweet Plot Visualizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
+    <!--
+      To produce a finished plot:
+        1. Duplicate this file (e.g. cp chart-template.html my-thread.html).
+        2. On the data line below, replace the placeholder string
+           __CHART_DATA_PLACEHOLDER__ — surrounding quotes included — with the
+           combined JSON object for your thread. The result should read:
+               window.__EMBEDDED_DATA__ = { "pfps": { ... }, ... };
+           The combined object carries both the scraped tweets and the
+           categorization, with these five keys:
+               { pfps, tweets, axes, categories, data }
+           (A nested form, { tweetData: {...}, categorizationData: {...} },
+           is also accepted.)
+        3. Open the file in a browser.
+
+      Without embedded data the page falls back to a paste-in form. You can
+      also append ?load=<url> to fetch a JSON file at runtime instead of
+      embedding it.
+    -->
+    <script>window.__EMBEDDED_DATA__ = {"pfps":{"GsuGrinding":"https://pbs.twimg.com/profile_images/1332012902165966854/fRrzanhZ_400x400.jpg","tracewoodgrains":"https://pbs.twimg.com/profile_images/2049165545791225856/ePQIM55K_400x400.jpg","ASFleischman":"https://pbs.twimg.com/profile_images/2052185017787219969/QHIPqNxM_400x400.jpg","tackyswat":"https://pbs.twimg.com/profile_images/2005475006470639616/YFo7fEh6_400x400.png","gs457gs":"https://pbs.twimg.com/profile_images/2038110443034783744/d6JwUlaa_400x400.jpg","driftingwendigo":"https://pbs.twimg.com/profile_images/2046771617829732352/mMo9GY9-_400x400.jpg","jtd941":"https://pbs.twimg.com/profile_images/1419536010954907648/trpnP40i_400x400.jpg","DudeRubble":"https://pbs.twimg.com/profile_images/1859947971535618048/KLZwQZsn_400x400.jpg","jonnyswift8":"https://pbs.twimg.com/profile_images/1854177543059857421/kOBW6NQk_400x400.jpg","shotpianist":"https://pbs.twimg.com/profile_images/1949133001444483073/hdb_97UQ_400x400.jpg","whitefeelimgs":"https://pbs.twimg.com/profile_images/1876723680237006850/BFjFL3Vx_400x400.jpg","PoeticEdamame":"https://pbs.twimg.com/profile_images/1860759220968189952/29Ej236B_400x400.jpg","troy_mcartor":"https://pbs.twimg.com/profile_images/1589044229350850560/56F_VUeZ_400x400.jpg","dugmartsch":"https://pbs.twimg.com/profile_images/1613527433168273409/SEHsY2kp_400x400.jpg","Guyvermectin":"https://pbs.twimg.com/profile_images/1944167553179193344/OQmZbAo2_400x400.jpg","TrueNorthish":"https://pbs.twimg.com/profile_images/1167135187916005376/pxJTBZyc_400x400.jpg","K9Kommisar":"https://pbs.twimg.com/profile_images/2052243914103369734/mKtupshZ_400x400.jpg","BillJelavich":"https://pbs.twimg.com/profile_images/1255945379268493313/kbwA8gy1_400x400.jpg","userofmarijuana":"https://pbs.twimg.com/profile_images/1129492104021856257/nDpjP7Za_400x400.png","RipstickRipper":"https://pbs.twimg.com/profile_images/1436233752598908933/9RNzy8-F_400x400.jpg","Langerhans_isle":"https://pbs.twimg.com/profile_images/687889856765116416/s4lFpayF_400x400.png","YeOldeWordSmyth":"https://pbs.twimg.com/profile_images/1059027893827715072/_4NXR6ft_400x400.jpg","BellaRudd1":"https://pbs.twimg.com/profile_images/1602851563675844608/-oTo0Nhc_400x400.jpg","MunicipleOrrery":"https://pbs.twimg.com/profile_images/1868134308889923585/fGXn3P1F_400x400.jpg","blorksnksnn":"https://pbs.twimg.com/profile_images/1560774463217668097/wOsuojre_400x400.jpg","MathiasRusted":"https://pbs.twimg.com/profile_images/1747856472577277952/0xWQAEza_400x400.jpg","GhoulieGhostie":"https://pbs.twimg.com/profile_images/1855827157584384000/lSpudhcX_400x400.jpg","papayathreesome":"https://pbs.twimg.com/profile_images/2009172101589024768/rXJpjFWF_400x400.jpg","MikeRobinsonLaw":"https://pbs.twimg.com/profile_images/1559053695932928006/6-0owetE_400x400.jpg","AraucariaArauc1":"https://pbs.twimg.com/profile_images/1379399252447739904/45n_P3Kl_400x400.jpg","Godel_number":"https://pbs.twimg.com/profile_images/1613012468384813057/uAYp5cIl_400x400.jpg","ognuliscic":"https://pbs.twimg.com/profile_images/1909517852442271744/bCYNN4eE_400x400.jpg","animalologist":"https://pbs.twimg.com/profile_images/1588239278328451075/2Qp0XzVF_400x400.jpg","_candroid":"https://pbs.twimg.com/profile_images/1853540214469165056/7_sjhO0H_400x400.jpg","castor_wheels":"https://pbs.twimg.com/profile_images/2051635014903664649/eCf60Mcx_400x400.jpg","lolowhat":"https://pbs.twimg.com/profile_images/1317605744280293376/KlcV3sQM_400x400.jpg","EliMolden":"https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png","IgorBrigadir":"https://pbs.twimg.com/profile_images/1951059716999729153/YtJbYw8l_400x400.png","ComputerEnjoye1":"https://pbs.twimg.com/profile_images/1576980766067654656/4Bd-E58S_400x400.jpg","K011235K":"https://pbs.twimg.com/profile_images/1132125102009544705/xTKaI3Nj_400x400.png","cool_junk_1000":"https://pbs.twimg.com/profile_images/1636927983054356480/ANekIVd__400x400.jpg","mykola":"https://pbs.twimg.com/profile_images/1950984454341570561/4qgUbrjU_400x400.jpg","KevubASelene":"https://pbs.twimg.com/profile_images/1848062608378621952/Yn_UHrta_400x400.jpg","teafortillerman":"https://pbs.twimg.com/profile_images/2022808875234103296/Al1h5Tv3_400x400.jpg","subcountability":"https://pbs.twimg.com/profile_images/1955969826217721859/Eq2wz7_U_400x400.jpg","FirstAidSack":"https://pbs.twimg.com/profile_images/2006415320848670720/MICfBP3E_400x400.png","foardeetou":"https://pbs.twimg.com/profile_images/2000024650852544516/cQweW0jw_400x400.jpg","realmaxmeme":"https://pbs.twimg.com/profile_images/1943232536110325760/xNrXlbzq_400x400.jpg","PlateauDynamics":"https://pbs.twimg.com/profile_images/1999024787276902401/LjUNAlXB_400x400.jpg","Veyrion_":"https://pbs.twimg.com/profile_images/2042267254956429312/cHCx13cz_400x400.jpg","standing5033":"https://pbs.twimg.com/profile_images/1913314557356830720/DqUCfB18_400x400.jpg","helms29131":"https://pbs.twimg.com/profile_images/1968995684918706176/lBUHLfD8_400x400.jpg","affrodiziac_":"https://pbs.twimg.com/profile_images/2039767604584493056/tQd4363Z_400x400.jpg","PostNASA":"https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png","liquorloser":"https://pbs.twimg.com/profile_images/1348475477506322434/YtiHGF4d_400x400.jpg"},"tweets":[{"id":"2054724428601098714","author":"GsuGrinding","name":"GSU","text":"I’d briefly return to the other side as a special prosecutor to put this dude away.","likes":30,"timestamp":"2026-05-14T00:44:13.000Z","url":"https://x.com/GsuGrinding/status/2054724428601098714","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054724529465798897","author":"tracewoodgrains","name":"Jack","text":"pour one out for his defense attorney","likes":64,"timestamp":"2026-05-14T00:44:37.000Z","url":"https://x.com/tracewoodgrains/status/2054724529465798897","replyTo":"2054761854572912719","replyToScreenNames":[],"media":[]},{"id":"2054725496886173947","author":"ASFleischman","name":"Andrew Fleischman","text":"But he may not have a viable self-defense claim under Tennessee law.\n\nIn State v. Benson, a man demanded oral sex from a woman and push her head towards his crotch. She started swinging. She bloodied his nose. He shot her.\n\nThe jury was not charged on self defense.","likes":81,"timestamp":"2026-05-14T00:48:28.000Z","url":"https://x.com/ASFleischman/status/2054725496886173947","replyTo":null,"replyToScreenNames":[],"media":[{"type":"photo","url":"https://pbs.twimg.com/media/HIPZsDsWwAAFTgZ?format=png&name=900x900"},{"type":"photo","url":"https://pbs.twimg.com/media/HIPZ804XwAAZBOz?format=png&name=large"}]},{"id":"2054725637282091232","author":"tackyswat","name":"Toby","text":"That's not exactly true. The judge can keep it from going to the jury decision depending on the circumstances!","likes":0,"timestamp":"2026-05-14T00:49:01.000Z","url":"https://x.com/tackyswat/status/2054725637282091232","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054725694223970806","author":"gs457gs","name":"gs457","text":"Seems like that would be a fundamental miscarriage of justice and a due process violation. Don’t mean to cape up for CTB, who sucks.","likes":0,"timestamp":"2026-05-14T00:49:15.000Z","url":"https://x.com/gs457gs/status/2054725694223970806","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054726323470270682","author":"ASFleischman","name":"Andrew Fleischman","text":"The Supreme Court of Tennessee said he was not entitled to a self-defense charge at all, because in that State, you don't get a charge unless your evidence \"fairly raises\" self defense.\n\nYou can't shoot someone who punches you in the nose. Period.","likes":56,"timestamp":"2026-05-14T00:51:45.000Z","url":"https://x.com/ASFleischman/status/2054726323470270682","replyTo":"2054725496886173947","replyToScreenNames":[],"media":[{"type":"photo","url":"https://pbs.twimg.com/media/HIPaZxYXQAA6sMH?format=png&name=900x900"},{"type":"photo","url":"https://pbs.twimg.com/media/HIPad9iWwAAkoKG?format=png&name=small"},{"type":"photo","url":"https://pbs.twimg.com/media/HIPan-eWIAEETYU?format=png&name=360x360"}]},{"id":"2054726820038132120","author":"ASFleischman","name":"Andrew Fleischman","text":"Maybe there are facts in this case that gave this guy a reason to think his victim posed a deadly threat. \n\nBut even then, he has to deal with the provocation problem.\n\nScreaming the N word at people is provocation.","likes":49,"timestamp":"2026-05-14T00:53:43.000Z","url":"https://x.com/ASFleischman/status/2054726820038132120","replyTo":"2054726323470270682","replyToScreenNames":[],"media":[{"type":"photo","url":"https://pbs.twimg.com/media/HIPbC6tXMAA8dnk?format=png&name=small"}]},{"id":"2054727012963525076","author":"ASFleischman","name":"Andrew Fleischman","text":"And we know that the provocation was intentional. He was trying to start a fight. So if you provoke someone in using unlawful force, you need to indicate that you no longer want to fight, and the other person needs to continue.","likes":49,"timestamp":"2026-05-14T00:54:29.000Z","url":"https://x.com/ASFleischman/status/2054727012963525076","replyTo":"2054726820038132120","replyToScreenNames":[],"media":[{"type":"photo","url":"https://pbs.twimg.com/media/HIPbTRyXYAA3Rkg?format=png&name=small"}]},{"id":"2054727176818159737","author":"ASFleischman","name":"Andrew Fleischman","text":"Backing away might be enough to indicate an intent to stop the fight. But saying \"are you going to chimp out\" seems destined to further provoke the victim.","likes":48,"timestamp":"2026-05-14T00:55:08.000Z","url":"https://x.com/ASFleischman/status/2054727176818159737","replyTo":"2054727012963525076","replyToScreenNames":[],"media":[]},{"id":"2054727350642749951","author":"ASFleischman","name":"Andrew Fleischman","text":"This is just my cursory review of Tenneseee law, and I'm welcome to being corrected on the facts or my understanding of how they affect the case.\n\nBut I suspect this guy will not win on his self-defense claim.","likes":44,"timestamp":"2026-05-14T00:55:50.000Z","url":"https://x.com/ASFleischman/status/2054727350642749951","replyTo":"2054727176818159737","replyToScreenNames":[],"media":[]},{"id":"2054727971227721876","author":"ASFleischman","name":"Andrew Fleischman","text":"Jury nullification exists and it goes in both directions.","likes":28,"timestamp":"2026-05-14T00:58:17.000Z","url":"https://x.com/ASFleischman/status/2054727971227721876","replyTo":"2054848120916254984","replyToScreenNames":[],"media":[]},{"id":"2054728098151559185","author":"gs457gs","name":"gs457","text":"Jury nullification is gay imo.","likes":1,"timestamp":"2026-05-14T00:58:48.000Z","url":"https://x.com/gs457gs/status/2054728098151559185","replyTo":"2054727971227721876","replyToScreenNames":[],"media":[]},{"id":"2054729094235910176","author":"ASFleischman","name":"Andrew Fleischman","text":"I'm not a big fan but it's kind of baked in","likes":4,"timestamp":"2026-05-14T01:02:45.000Z","url":"https://x.com/ASFleischman/status/2054729094235910176","replyTo":"2054728098151559185","replyToScreenNames":[],"media":[]},{"id":"2054729380761362573","author":"driftingwendigo","name":"Wendigo","text":"","likes":2,"timestamp":"2026-05-14T01:03:54.000Z","url":"https://x.com/driftingwendigo/status/2054729380761362573","replyTo":null,"replyToScreenNames":[],"media":[{"type":"video","url":"https://video.twimg.com/tweet_video/HIPderjXMAEViqz.mp4","poster":"https://pbs.twimg.com/tweet_video_thumb/HIPderjXMAEViqz.jpg"}]},{"id":"2054729864943386857","author":"jtd941","name":"JTD941","text":"Do you believe that jury deliberations should be recorded a la grand jury testimony and preserved for appeal?","likes":0,"timestamp":"2026-05-14T01:05:49.000Z","url":"https://x.com/jtd941/status/2054729864943386857","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054731489011495092","author":"DudeRubble","name":"Guy Caley","text":"Wouldn't he just request a bench trial?","likes":1,"timestamp":"2026-05-14T01:12:16.000Z","url":"https://x.com/DudeRubble/status/2054731489011495092","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054731496984821819","author":"ASFleischman","name":"Andrew Fleischman","text":"No I believe exactly the opposite the process should be secret.","likes":23,"timestamp":"2026-05-14T01:12:18.000Z","url":"https://x.com/ASFleischman/status/2054731496984821819","replyTo":"2054727971227721876","replyToScreenNames":[],"media":[]},{"id":"2054731742183907700","author":"tracewoodgrains","name":"Jack","text":"Here are some of my beliefs:\n- Fighting words muddy self-defense claims\n- You cannot respond to ordinary force with deadly force\n- Premeditation hurts your case\n\n- and a lot of people will use the below logic to defend a moron who got just what he wanted","likes":124,"timestamp":"2026-05-14T01:13:17.000Z","url":"https://x.com/tracewoodgrains/status/2054731742183907700","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054732267679826170","author":"jonnyswift8","name":"jonny swift","text":"No DA is going to set the precedent that, in their jurisdiction, irl streamers can go around doing hate crimes to shoot people when they try to retaliate.","likes":13,"timestamp":"2026-05-14T01:15:22.000Z","url":"https://x.com/jonnyswift8/status/2054732267679826170","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054733969204142422","author":"shotpianist","name":"Marco","text":"Can you do this in court? Show the jury just one post that's in response to another without the context?","likes":7,"timestamp":"2026-05-14T01:22:08.000Z","url":"https://x.com/shotpianist/status/2054733969204142422","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054734423916941660","author":"tracewoodgrains","name":"Jack","text":"yes. if the context is relevant the other side can and will bring it in\n\nthere might be other reasons the post is ruled inadmissible, but it has a strong case for admissibility imo. goes to motive, intent, plan, absence of mistake, etc","likes":24,"timestamp":"2026-05-14T01:23:56.000Z","url":"https://x.com/tracewoodgrains/status/2054734423916941660","replyTo":"2054762487992508421","replyToScreenNames":[],"media":[]},{"id":"2054734871256277365","author":"jtd941","name":"JTD941","text":"But if a jury votes to convict a defendant because \"we just think he's a dick,\" isn't that a problem?\n\nAnd it could be recorded while being kept secret, a la grand jury testimony.","likes":2,"timestamp":"2026-05-14T01:25:43.000Z","url":"https://x.com/jtd941/status/2054734871256277365","replyTo":"2054731496984821819","replyToScreenNames":[],"media":[]},{"id":"2054735072939360258","author":"whitefeelimgs","name":"JoeI","text":"Informative thread thanks","likes":3,"timestamp":"2026-05-14T01:26:31.000Z","url":"https://x.com/whitefeelimgs/status/2054735072939360258","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054735939193254023","author":"PoeticEdamame","name":"PoeticEdamame","text":"I haven't seen any confirmation that he called this one the n-word.","likes":4,"timestamp":"2026-05-14T01:29:57.000Z","url":"https://x.com/PoeticEdamame/status/2054735939193254023","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054738244319776931","author":"troy_mcartor","name":"Troy McArtor","text":"yea..... that's not gonna go well for him","likes":2,"timestamp":"2026-05-14T01:39:07.000Z","url":"https://x.com/troy_mcartor/status/2054738244319776931","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054740449605087481","author":"dugmartsch","name":"strangehours","text":"@devahaz i think this is the thread you were looking for. \n\nIn tennessee, if you provoke and then don't attempt to flee, you don't even get to claim self defense. \n\n1st degree murder light him up.","likes":9,"timestamp":"2026-05-14T01:47:53.000Z","url":"https://x.com/dugmartsch/status/2054740449605087481","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054741149030531125","author":"Guyvermectin","name":"Guyvermectin 〽️","text":"There are multiple videos of him telling racial slurs at people a jury would not be his friend","likes":1,"timestamp":"2026-05-14T01:50:39.000Z","url":"https://x.com/Guyvermectin/status/2054741149030531125","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054741788816974000","author":"ASFleischman","name":"Andrew Fleischman","text":"I can't imagine an elected judge wants to be his friend.","likes":16,"timestamp":"2026-05-14T01:53:12.000Z","url":"https://x.com/ASFleischman/status/2054741788816974000","replyTo":"2054731496984821819","replyToScreenNames":[],"media":[]},{"id":"2054742282801209451","author":"TrueNorthish","name":"Timothy Brown","text":"Judgment notwithstanding the verdict. When the court determines no reasonable jury could reach the verdict based on the evidence.\n\nApplication varies by jurisdiction.","likes":0,"timestamp":"2026-05-14T01:55:10.000Z","url":"https://x.com/TrueNorthish/status/2054742282801209451","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054743159767277770","author":"K9Kommisar","name":"Kanine Kommando Klub","text":"That sucks for him tbh. Hot White guys are the most oppressed people in this nation. If you don’t want to be called a Niɡɡeг don’t act like one!","likes":3,"timestamp":"2026-05-14T01:58:39.000Z","url":"https://x.com/K9Kommisar/status/2054743159767277770","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054743862606786994","author":"DudeRubble","name":"Guy Caley","text":"Perhaps not, but one would hope they would follow the law.","likes":1,"timestamp":"2026-05-14T02:01:26.000Z","url":"https://x.com/DudeRubble/status/2054743862606786994","replyTo":"2054741788816974000","replyToScreenNames":[],"media":[]},{"id":"2054744006588789055","author":"BillJelavich","name":"Tim Wicinski","text":"Not at all. Every defense lawyer will tell you “don’t be a  dipshit”","likes":3,"timestamp":"2026-05-14T02:02:01.000Z","url":"https://x.com/BillJelavich/status/2054744006588789055","replyTo":"2054734871256277365","replyToScreenNames":[],"media":[]},{"id":"2054745558540075346","author":"jtd941","name":"JTD941","text":"That hardly seems different than juries being swayed to convict based on things like racial or other protected-class animus.\n\nIn other words, finding a defendant guilty less because of the strength of the evidence and more on personal feelings that are extrinsic to matters of guilt or innocence.","likes":0,"timestamp":"2026-05-14T02:08:11.000Z","url":"https://x.com/jtd941/status/2054745558540075346","replyTo":"2054744006588789055","replyToScreenNames":[],"media":[]},{"id":"2054749077703893406","author":"userofmarijuana","name":"official government nih account","text":"The guy is a piece of shit but it still feels like self defense if he was being repeatedly punched.","likes":3,"timestamp":"2026-05-14T02:22:10.000Z","url":"https://x.com/userofmarijuana/status/2054749077703893406","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054749557721088086","author":"RipstickRipper","name":"Sam","text":"People on here think there are more Americans who agree with the whole “saying the word to get a reaction to prove a point” gambit than the there really are. I’d bet $20 >50% of people would look at the altercation+the tweet and say “sounds like chud deserved it”.","likes":5,"timestamp":"2026-05-14T02:24:04.000Z","url":"https://x.com/RipstickRipper/status/2054749557721088086","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054750381985480861","author":"Langerhans_isle","name":"Al Bumin","text":"If they get the sense you wanted to kill the person anyway, they may just ignore the self-defense part entirely.","likes":8,"timestamp":"2026-05-14T02:27:21.000Z","url":"https://x.com/Langerhans_isle/status/2054750381985480861","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054759527958863974","author":"YeOldeWordSmyth","name":"Dr. Mike Barker","text":"It's visibility limited, but it's in a thread where he talks about premeditated self-defense. This is going to be exhibit A","likes":6,"timestamp":"2026-05-14T03:03:41.000Z","url":"https://x.com/YeOldeWordSmyth/status/2054759527958863974","replyTo":"2054734423916941660","replyToScreenNames":[],"media":[{"type":"photo","url":"https://pbs.twimg.com/media/HIP45s0WoAAwG4j?format=jpg&name=900x900"},{"type":"photo","url":"https://pbs.twimg.com/media/HIP45tCWkAAsHrI?format=jpg&name=small"}]},{"id":"2054760546243641461","author":"tracewoodgrains","name":"Jack","text":"\"premeditated self defense\" is such a cool phrase to be cross-examined on in a courtroom","likes":72,"timestamp":"2026-05-14T03:07:44.000Z","url":"https://x.com/tracewoodgrains/status/2054760546243641461","replyTo":"2054731742183907700","replyToScreenNames":[],"media":[{"type":"photo","url":"https://pbs.twimg.com/media/HIP5tmOXIAABjHw?format=png&name=small"}]},{"id":"2054760703928447115","author":"tracewoodgrains","name":"Jack","text":"man, that's going to be fun on cross","likes":9,"timestamp":"2026-05-14T03:08:22.000Z","url":"https://x.com/tracewoodgrains/status/2054760703928447115","replyTo":"2054759527958863974","replyToScreenNames":[],"media":[]},{"id":"2054761854572912719","author":"tracewoodgrains","name":"Jack","text":"did you see where he explicitly concedes premeditation, too?","likes":38,"timestamp":"2026-05-14T03:12:56.000Z","url":"https://x.com/tracewoodgrains/status/2054761854572912719","replyTo":null,"replyToScreenNames":[],"media":[{"type":"photo","url":"https://pbs.twimg.com/media/HIP5tmOXIAABjHw?format=png&name=small"}]},{"id":"2054762386306015419","author":"BellaRudd1","name":"Bella Rudd","text":"hmm. charge the black dude with assault & charge the chud dude with attempted murder?","likes":15,"timestamp":"2026-05-14T03:15:03.000Z","url":"https://x.com/BellaRudd1/status/2054762386306015419","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054762487992508421","author":"tracewoodgrains","name":"Jack","text":"sounds about right, yeah","likes":13,"timestamp":"2026-05-14T03:15:27.000Z","url":"https://x.com/tracewoodgrains/status/2054762487992508421","replyTo":"2054760546243641461","replyToScreenNames":[],"media":[]},{"id":"2054763362589024412","author":"BellaRudd1","name":"Bella Rudd","text":"it seems rather hard to refute\nthe chud had been planning to shoot\nwe still would prefer\n'don't punch at a slur'\nso therefore charge either galoot!","likes":14,"timestamp":"2026-05-14T03:18:55.000Z","url":"https://x.com/BellaRudd1/status/2054763362589024412","replyTo":"2054762487992508421","replyToScreenNames":[],"media":[]},{"id":"2054766233501749669","author":"MunicipleOrrery","name":"Municipal Orrery","text":"Do we want antifa-adjacent people running around trying to provoke people into \"attacking\" them, and then responding with  homicide?\n\nI don't, anyway.","likes":13,"timestamp":"2026-05-14T03:30:20.000Z","url":"https://x.com/MunicipleOrrery/status/2054766233501749669","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054767996946530447","author":"blorksnksnn","name":"blorksnksnn","text":"I don't know this guy.  Does he have enough money to buy a pardon from POTUS?","likes":2,"timestamp":"2026-05-14T03:37:20.000Z","url":"https://x.com/blorksnksnn/status/2054767996946530447","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054774387182551361","author":"MathiasRusted","name":"Mathias Rust","text":"Those aren't at all the same things, why are you comparing them","likes":1,"timestamp":"2026-05-14T04:02:44.000Z","url":"https://x.com/MathiasRusted/status/2054774387182551361","replyTo":"2054745558540075346","replyToScreenNames":[],"media":[]},{"id":"2054778681516528013","author":"jtd941","name":"JTD941","text":"I am comparing them because there are, in fact, functional similarities.","likes":0,"timestamp":"2026-05-14T04:19:48.000Z","url":"https://x.com/jtd941/status/2054778681516528013","replyTo":"2054774387182551361","replyToScreenNames":[],"media":[]},{"id":"2054781974271668480","author":"GhoulieGhostie","name":"Ghoulie Ghostie","text":"Cryyyyyyyyyyyyyyy","likes":0,"timestamp":"2026-05-14T04:32:53.000Z","url":"https://x.com/GhoulieGhostie/status/2054781974271668480","replyTo":"2054724204516233305","replyToScreenNames":[],"media":[]},{"id":"2054788469038227614","author":"papayathreesome","name":"papaya ꙮ","text":"sorry to say but it would be super fun trial to follow","likes":2,"timestamp":"2026-05-14T04:58:41.000Z","url":"https://x.com/papayathreesome/status/2054788469038227614","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054804426297102843","author":"MikeRobinsonLaw","name":"Mike Robinson","text":"The opposite is true as well. I saw a Gwinnett jury acquit a guy who everyone in the courtroom knew for an absolute fact was guilty of stealing this guy’s motorcycle. The victim turned out to be an absolutely insufferable asshole when the ADA put him on the stand. Acquittal.","likes":3,"timestamp":"2026-05-14T06:02:06.000Z","url":"https://x.com/MikeRobinsonLaw/status/2054804426297102843","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054813052298473542","author":"AraucariaArauc1","name":"Araucaria Araucana","text":"He sounds like a moron. I had to read down the linked thread to find out, but I'm glad nobody died.","likes":2,"timestamp":"2026-05-14T06:36:22.000Z","url":"https://x.com/AraucariaArauc1/status/2054813052298473542","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054818336014537038","author":"Godel_number","name":"Zach","text":"This may be the single least sympathetic defendant imaginable in a self defence trial. I simply do not know how to assemble a jury that would let this guy walk","likes":4,"timestamp":"2026-05-14T06:57:22.000Z","url":"https://x.com/Godel_number/status/2054818336014537038","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054823543624392990","author":"ognuliscic","name":"mr dumbo e/dec 🇹🇼🇨🇳🇮🇱🇵🇸🇺🇦🇷🇺🇼🇸🇳🇿","text":"nah\nlet's say you start a restaurant near someone else's restaurant\nyou know the owner of the restaurant is a violent guy and are planning on defending yourself if he attacks\nhe shows up to your restaurant, punches you, and then you shoot him","likes":4,"timestamp":"2026-05-14T07:18:04.000Z","url":"https://x.com/ognuliscic/status/2054823543624392990","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054848120916254984","author":"ASFleischman","name":"Andrew Fleischman","text":"He's lucky he didn't kill the guy.\n\nBut he is going to absolutely get murdered in prison.","likes":18,"timestamp":"2026-05-14T08:55:43.000Z","url":"https://x.com/ASFleischman/status/2054848120916254984","replyTo":"2054727350642749951","replyToScreenNames":[],"media":[]},{"id":"2054852483680231683","author":"animalologist","name":"taco belle","text":"Courageously suggesting that violent white supremacists aren’t good people, and that they’re angling for a race war. Not sure if you’ve noticed that they’re dead serious & there’s a lot of them. Chud’s got plenty of fans & I wouldn’t be surprised if there’s way more violence committed in his name after he gets that guilty verdict","likes":25,"timestamp":"2026-05-14T09:13:04.000Z","url":"https://x.com/animalologist/status/2054852483680231683","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054855725604557156","author":"animalologist","name":"taco belle","text":"Good lord the next few years are gonna be awful. Deadass we’re probably past the point of no return; I suspect this specific case is gonna be a flashpoint for a whole lot of turmoil & violence. And of course it’s a fucking live-streamer. Incredibly stupid timeline","likes":20,"timestamp":"2026-05-14T09:25:57.000Z","url":"https://x.com/animalologist/status/2054855725604557156","replyTo":"2054852483680231683","replyToScreenNames":[],"media":[{"type":"photo","url":"https://pbs.twimg.com/media/HIRQZH_W0AAiBgj?format=jpg&name=small"}]},{"id":"2054868907958186477","author":"_candroid","name":"robot.chihuahua","text":"A jury can convict someone out of spite, but I presume in those cases there are options open to the defendent (e.g. appeal)? \n\nMy impression was that it really only worked like that in the other direction.","likes":0,"timestamp":"2026-05-14T10:18:19.000Z","url":"https://x.com/_candroid/status/2054868907958186477","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054872992866353525","author":"ASFleischman","name":"Andrew Fleischman","text":"If anything, a judge is more likely to convict on weak evidence. \n\nYou absolutely do not want a bench trial unless you really know the judge.","likes":2,"timestamp":"2026-05-14T10:34:33.000Z","url":"https://x.com/ASFleischman/status/2054872992866353525","replyTo":"2054743862606786994","replyToScreenNames":[],"media":[]},{"id":"2054876070097080657","author":"castor_wheels","name":"CastorWheels","text":"Given that this guy was still tweeting afterward the event, I somehow suspect that he will not be nice, well-behaved client who does his case lots of favors.","likes":3,"timestamp":"2026-05-14T10:46:47.000Z","url":"https://x.com/castor_wheels/status/2054876070097080657","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054899347175649753","author":"lolowhat","name":"lolowhat","text":"you psychopaths wish for jurys yo judge unfairly because of you ideology? sick fucks","likes":0,"timestamp":"2026-05-14T12:19:17.000Z","url":"https://x.com/lolowhat/status/2054899347175649753","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054905061608710190","author":"EliMolden","name":"eli molden","text":"Holy comparison lmfao","likes":0,"timestamp":"2026-05-14T12:41:59.000Z","url":"https://x.com/EliMolden/status/2054905061608710190","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054924704918442130","author":"IgorBrigadir","name":"Igor Brigadir 🇺🇦","text":"hahah you have no idea how deeply i feel that mutuals / network proximity thing - had the exact same thing about something else earlier lmao","likes":0,"timestamp":"2026-05-14T14:00:02.000Z","url":"https://x.com/IgorBrigadir/status/2054924704918442130","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054927561977708892","author":"ComputerEnjoye1","name":"ComputerEnjoyer","text":"Can he get a bench trial?","likes":0,"timestamp":"2026-05-14T14:11:24.000Z","url":"https://x.com/ComputerEnjoye1/status/2054927561977708892","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054933862527172655","author":"K011235K","name":"K","text":"Go find the posts of the man who stalked him, intending to attack him, and then reconsider.","likes":1,"timestamp":"2026-05-14T14:36:26.000Z","url":"https://x.com/K011235K/status/2054933862527172655","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054947456690098413","author":"cool_junk_1000","name":"stork","text":"\"you can question is motives, his methods and his personal life, but not his courage\"\n\nYes lol I'm only questioning his motives, methods, and personal life. Let's give him what he wants and send him to jail for a long time.","likes":3,"timestamp":"2026-05-14T15:30:27.000Z","url":"https://x.com/cool_junk_1000/status/2054947456690098413","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054949293375570086","author":"troy_mcartor","name":"Troy McArtor","text":"The south is cursed w heroes that are physically brave and morally cowardly","likes":2,"timestamp":"2026-05-14T15:37:45.000Z","url":"https://x.com/troy_mcartor/status/2054949293375570086","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054957531030524056","author":"mykola","name":"Your Friend Myk","text":"This is that high openness / low discernment configuration that makes tpot’s inevitable trajectory really obvious and embarrassing tbh.","likes":4,"timestamp":"2026-05-14T16:10:29.000Z","url":"https://x.com/mykola/status/2054957531030524056","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054970131034370484","author":"KevubASelene","name":"Kevin","text":"Idk if I follow that account or not but I think we're all guilty of following someone because they said something reasonable/notable one time and then months later realizing they're actually a psycho","likes":1,"timestamp":"2026-05-14T17:00:33.000Z","url":"https://x.com/KevubASelene/status/2054970131034370484","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2054971118608388395","author":"animalologist","name":"taco belle","text":"His bio is eyebrow-raising and his entire feed is like this! I’m not judging this is more of a “hello have you noticed this person is nuts”","likes":2,"timestamp":"2026-05-14T17:04:28.000Z","url":"https://x.com/animalologist/status/2054971118608388395","replyTo":"2054855725604557156","replyToScreenNames":[],"media":[]},{"id":"2054971212715929927","author":"animalologist","name":"taco belle","text":"Sigh","likes":1,"timestamp":"2026-05-14T17:04:51.000Z","url":"https://x.com/animalologist/status/2054971212715929927","replyTo":"2054971118608388395","replyToScreenNames":[],"media":[]},{"id":"2054971313651941778","author":"animalologist","name":"taco belle","text":"I hate this sooo bad","likes":1,"timestamp":"2026-05-14T17:05:15.000Z","url":"https://x.com/animalologist/status/2054971313651941778","replyTo":"2054971212715929927","replyToScreenNames":[],"media":[]},{"id":"2054971514559042033","author":"teafortillerman","name":"Joe Bingham","text":"A shame especially because it's pretty imperative right now that we demonstrate violence in response to the N word is just as impermissible as violence in response to, say, a date's surprise penis.","likes":1,"timestamp":"2026-05-14T17:06:03.000Z","url":"https://x.com/teafortillerman/status/2054971514559042033","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2055067011709796820","author":"subcountability","name":"nk","text":"Kaku has spent the last 30 yeard writing popsci books - I mean literally one every 2 years. He doesn't represent much of anything.","likes":1,"timestamp":"2026-05-14T23:25:31.000Z","url":"https://x.com/subcountability/status/2055067011709796820","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2055075544060817642","author":"FirstAidSack","name":"FirstAidSack","text":"Any science that isn't an ultimate theory of everything will be really really bad metaphysics.","likes":0,"timestamp":"2026-05-14T23:59:25.000Z","url":"https://x.com/FirstAidSack/status/2055075544060817642","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2055101414653739277","author":"foardeetou","name":"Revelator42","text":"The universe is a fundamental infinity unless you break conservation and destroy physics entirely. Our math doesn’t even function UNLESS spacetime is infinite. Otherwise there’d be ends to the coordinate axes and no irrational numbers. Its a nonphysical singularity mind state","likes":0,"timestamp":"2026-05-15T01:42:13.000Z","url":"https://x.com/foardeetou/status/2055101414653739277","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2055149015147421787","author":"realmaxmeme","name":"Max DunRingill","text":"So, being like \"it's god\" is a superior explanation?","likes":1,"timestamp":"2026-05-15T04:51:22.000Z","url":"https://x.com/realmaxmeme/status/2055149015147421787","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2055196608426381633","author":"PlateauDynamics","name":"The Plateau Guy","text":"O","likes":4,"timestamp":"2026-05-15T08:00:29.000Z","url":"https://x.com/PlateauDynamics/status/2055196608426381633","replyTo":null,"replyToScreenNames":[],"media":[{"type":"photo","url":"https://pbs.twimg.com/media/HIWGa_VXQAEYO3-?format=jpg&name=small"}]},{"id":"2055210252581179519","author":"Veyrion_","name":"Veyrion","text":"The issue is that some scientists think that just because they are good in one domain they can suddenly do philosophy. But philosophy isn't that simple to say the least. Metaphysics is the domain of philosophers and cannot be done by physicists.","likes":0,"timestamp":"2026-05-15T08:54:42.000Z","url":"https://x.com/Veyrion_/status/2055210252581179519","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2055269201363747258","author":"standing5033","name":"Cure 8","text":"They can’t make any advances in real physics, so they come up with ridiculous theories, most of which are designed to negate the fine-tuning argument for a creator","likes":3,"timestamp":"2026-05-15T12:48:57.000Z","url":"https://x.com/standing5033/status/2055269201363747258","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2055298846343962698","author":"helms29131","name":"S u c r e m c e s","text":"I have no dog in this fight, but now you've got me curious . . . \nwhat SHOULD physics nerds be working on?","likes":0,"timestamp":"2026-05-15T14:46:45.000Z","url":"https://x.com/helms29131/status/2055298846343962698","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2055311452135707122","author":"affrodiziac_","name":"aphrodiziac","text":"i'm sure you wanted to say theoretical physics","likes":0,"timestamp":"2026-05-15T15:36:50.000Z","url":"https://x.com/affrodiziac_/status/2055311452135707122","replyTo":null,"replyToScreenNames":[],"media":[]},{"id":"2055314105536561160","author":"PostNASA","name":"Fan Post NASA Lies","text":"They don't even try to hide it","likes":1,"timestamp":"2026-05-15T15:47:23.000Z","url":"https://x.com/PostNASA/status/2055314105536561160","replyTo":null,"replyToScreenNames":[],"media":[{"type":"video","url":null,"poster":"https://pbs.twimg.com/amplify_video_thumb/2055314048565334016/img/8bbdPLFyd2qKQMqO.jpg"}]},{"id":"2055335225106800715","author":"liquorloser","name":"The kid lucky","text":"Do you think this excerpt from pop science writer michio kaku is representative of the entirety of the modern field of physics","likes":3,"timestamp":"2026-05-15T17:11:18.000Z","url":"https://x.com/liquorloser/status/2055335225106800715","replyTo":null,"replyToScreenNames":[],"media":[]}],"axes":[{"label":"Reasoning mode","positive":"Technical legal analysis","negative":"Moral or political reaction"},{"label":"Stance on the shooter","positive":"Self-defense plausible / sympathetic","negative":"Condemns the shooter, wants conviction"},{"label":"Faith in the legal process","positive":"Trusts juries and courts to get it right","negative":"Sees the process as corruptible or bias-driven"},{"label":"Register","positive":"Earnest engagement","negative":"Flippant, ironic, or meme"}],"categories":[{"id":"legal_doctrine","label":"Tennessee Self-Defense Doctrine","coords":[70,-37,20,66]},{"id":"jury_process","label":"Jury Nullification & Process Debate","coords":[46,3,-15,65]},{"id":"condemnation","label":"Condemnation & Moral Framing","coords":[5,-60,1,11]},{"id":"shooter_sympathizers","label":"Sympathizers & Devil's Advocates","coords":[18,47,-7,43]},{"id":"race_war_alarm","label":"Race-War & Political Alarm","coords":[-48,-45,-20,58]},{"id":"edgelord_sneers","label":"Edgelord & Detached Sneers","coords":[-40,2,5,-55]},{"id":"memes_social","label":"Memes & Social Noise","coords":[-37,-8,-2,-35]},{"id":"off_topic_physics","label":"Off-Topic Physics Tangent","coords":[27,-2,0,42]}],"data":{"2054724428601098714":{"coords":[-30,-80,0,-10],"categories":["condemnation"],"explanation":"Hyperbolic prosecutorial fantasy — wants the shooter put away, framed as eager condemnation rather than analysis."},"2054724529465798897":{"coords":[-40,-55,0,-65],"categories":["condemnation"],"explanation":"A flippant dunk implying the defense is hopeless before any argument is made."},"2054725496886173947":{"coords":[95,-25,30,90],"categories":["legal_doctrine"],"explanation":"Opens the legal thread by citing State v. Benson to question whether a self-defense charge is even available."},"2054725637282091232":{"coords":[80,10,40,75],"categories":["legal_doctrine"],"explanation":"Corrects the doctrine — notes a judge can withhold the self-defense question from the jury."},"2054725694223970806":{"coords":[25,30,-25,55],"categories":["shooter_sympathizers"],"explanation":"Frames denial of a self-defense charge as a due-process problem, while disclaiming sympathy for the defendant."},"2054726323470270682":{"coords":[95,-35,30,85],"categories":["legal_doctrine"],"explanation":"Cites the Tennessee Supreme Court rule that self-defense must be 'fairly raised' before it reaches a jury."},"2054726820038132120":{"coords":[90,-45,25,80],"categories":["legal_doctrine"],"explanation":"Introduces the provocation problem — slurs count as provocation that undercuts a self-defense claim."},"2054727012963525076":{"coords":[90,-55,25,80],"categories":["legal_doctrine"],"explanation":"Argues the provocation was intentional, so the shooter forfeits self-defense unless he withdrew."},"2054727176818159737":{"coords":[85,-55,20,75],"categories":["legal_doctrine"],"explanation":"Continues the doctrine: taunting the victim further is the opposite of signalling withdrawal."},"2054727350642749951":{"coords":[80,-40,30,90],"categories":["legal_doctrine"],"explanation":"Closes the analysis humbly, inviting correction while predicting the self-defense claim fails."},"2054727971227721876":{"coords":[40,-10,-20,65],"categories":["jury_process"],"explanation":"Notes jury nullification cuts both ways — a pivot from doctrine toward the process debate."},"2054728098151559185":{"coords":[-25,0,15,-55],"categories":["edgelord_sneers"],"explanation":"Dismisses jury nullification with a flippant pejorative — register over substance."},"2054729094235910176":{"coords":[30,0,-10,55],"categories":["jury_process"],"explanation":"Concedes nullification is distasteful but treats it as a baked-in feature of the system."},"2054729380761362573":{"coords":[0,0,0,-30],"categories":["memes_social"],"explanation":"An empty reply carrying only media — no argument."},"2054729864943386857":{"coords":[55,0,-25,75],"categories":["jury_process"],"explanation":"Earnest process question: should jury deliberations be recorded for appeal like grand jury testimony?"},"2054731489011495092":{"coords":[45,15,0,60],"categories":["jury_process"],"explanation":"Procedural question — wonders whether the defendant would simply request a bench trial."},"2054731496984821819":{"coords":[50,0,35,70],"categories":["jury_process"],"explanation":"Argues the opposite of recording deliberations — the process should stay secret."},"2054731742183907700":{"coords":[70,-65,10,80],"categories":["legal_doctrine"],"explanation":"Lays out a tight legal checklist (fighting words, deadly force, premeditation) and predicts people will excuse a moron."},"2054732267679826170":{"coords":[25,-70,15,70],"categories":["condemnation"],"explanation":"Practical-political read: no DA will let irl streamers shoot people who retaliate to hate crimes."},"2054733969204142422":{"coords":[60,0,5,70],"categories":["legal_doctrine"],"explanation":"Evidentiary question — can a single post be shown to a jury stripped of its context?"},"2054734423916941660":{"coords":[90,-30,30,80],"categories":["legal_doctrine"],"explanation":"Explains admissibility doctrine: relevant context comes in, and the post speaks to motive and intent."},"2054734871256277365":{"coords":[50,20,-55,75],"categories":["jury_process"],"explanation":"Sharpens the worry — a conviction based on 'he's a dick' is a problem even if the process is secret."},"2054735072939360258":{"coords":[-5,0,10,45],"categories":["memes_social"],"explanation":"A content-free thank-you for the thread."},"2054735939193254023":{"coords":[40,40,0,65],"categories":["shooter_sympathizers"],"explanation":"Challenges the factual premise — questions whether the shooter slurred this particular victim."},"2054738244319776931":{"coords":[-10,-50,0,-20],"categories":["condemnation"],"explanation":"Flippant agreement that things will go badly for the shooter."},"2054740449605087481":{"coords":[55,-75,10,40],"categories":["condemnation"],"explanation":"Tags someone in and restates the provocation rule with relish — 'light him up.'"},"2054741149030531125":{"coords":[30,-55,-10,55],"categories":["condemnation"],"explanation":"Points to videos of slurs as evidence a jury will hold against him."},"2054741788816974000":{"coords":[30,-45,-20,55],"categories":["jury_process"],"explanation":"Doubts a bench trial helps — an elected judge has no incentive to side with him."},"2054742282801209451":{"coords":[90,10,40,80],"categories":["legal_doctrine"],"explanation":"Introduces JNOV — a court can override a verdict no reasonable jury could reach."},"2054743159767277770":{"coords":[-60,30,0,-90],"categories":["edgelord_sneers"],"explanation":"An ironic edgelord post mock-defending the shooter with a stylized slur."},"2054743862606786994":{"coords":[35,10,55,65],"categories":["jury_process"],"explanation":"Hopes judges will simply follow the law regardless of the defendant."},"2054744006588789055":{"coords":[15,-40,5,-15],"categories":["condemnation"],"explanation":"Quips that the lesson for any defense lawyer is 'don't be a dipshit.'"},"2054745558540075346":{"coords":[55,15,-65,75],"categories":["jury_process"],"explanation":"Argues conviction-on-feelings is no different from conviction by racial animus — both corrupt the verdict."},"2054749077703893406":{"coords":[20,60,0,60],"categories":["shooter_sympathizers"],"explanation":"Devil’s advocate: concedes the shooter is awful but says repeated punches still feel like self-defense."},"2054749557721088086":{"coords":[10,-30,-40,55],"categories":["jury_process"],"explanation":"Predicts most Americans would side with the puncher, betting on public sympathy against the shooter."},"2054750381985480861":{"coords":[55,-35,0,65],"categories":["legal_doctrine"],"explanation":"Notes juries that sense a desire to kill will discard the self-defense theory entirely."},"2054759527958863974":{"coords":[55,-55,5,60],"categories":["legal_doctrine"],"explanation":"Flags a post about 'premeditated self-defense' as the prosecution's Exhibit A."},"2054760546243641461":{"coords":[30,-65,5,-45],"categories":["condemnation"],"explanation":"Mocks 'premeditated self defense' as a phrase no one wants to defend on cross-examination."},"2054760703928447115":{"coords":[15,-60,0,-55],"categories":["condemnation"],"explanation":"A short gleeful aside about how badly cross-examination will go."},"2054761854572912719":{"coords":[55,-65,5,5],"categories":["legal_doctrine"],"explanation":"Points to an explicit concession of premeditation as further damaging evidence."},"2054762386306015419":{"coords":[40,-30,20,40],"categories":["legal_doctrine"],"explanation":"Proposes a charging split — assault for the puncher, attempted murder for the shooter."},"2054762487992508421":{"coords":[25,-35,15,35],"categories":["legal_doctrine"],"explanation":"Brief endorsement of that charging split."},"2054763362589024412":{"coords":[35,-25,15,30],"categories":["legal_doctrine"],"explanation":"Argues the premeditation is hard to refute but still prefers a norm against punching over slurs — charge both."},"2054766233501749669":{"coords":[15,45,0,55],"categories":["shooter_sympathizers"],"explanation":"Reframes the danger as antifa-style provocateurs baiting attacks, sympathizing with the shooter's frame."},"2054767996946530447":{"coords":[-20,0,-30,-45],"categories":["memes_social"],"explanation":"A cynical political quip about buying a presidential pardon."},"2054774387182551361":{"coords":[45,0,20,55],"categories":["jury_process"],"explanation":"Rejects the analogy between vibes-convictions and bias-convictions."},"2054778681516528013":{"coords":[50,10,-50,60],"categories":["jury_process"],"explanation":"Defends the analogy, insisting the two kinds of unfair conviction are functionally similar."},"2054781974271668480":{"coords":[-70,0,0,-90],"categories":["memes_social"],"explanation":"Pure noise — a taunting 'cry' with no argument."},"2054788469038227614":{"coords":[-30,-15,0,-55],"categories":["memes_social"],"explanation":"A flippant aside that the trial would be fun to follow."},"2054804426297102843":{"coords":[65,15,-35,75],"categories":["jury_process"],"explanation":"Offers a courtroom anecdote of a jury acquitting a guilty man because the victim was insufferable."},"2054813052298473542":{"coords":[-15,-40,0,50],"categories":["condemnation"],"explanation":"A mild reaction calling the shooter a moron, relieved no one died."},"2054818336014537038":{"coords":[20,-80,-15,65],"categories":["condemnation"],"explanation":"Calls him the least sympathetic self-defense defendant imaginable — no jury would acquit."},"2054823543624392990":{"coords":[55,55,0,55],"categories":["shooter_sympathizers"],"explanation":"A restaurant hypothetical testing whether premeditated defense against a known aggressor counts."},"2054848120916254984":{"coords":[10,-70,5,40],"categories":["condemnation"],"explanation":"Predicts prison violence for the shooter — condemnation by grim forecast."},"2054852483680231683":{"coords":[-40,-55,-15,60],"categories":["race_war_alarm"],"explanation":"Shifts to political alarm — frames the shooter as a white supremacist angling for a race war."},"2054855725604557156":{"coords":[-55,-35,-25,55],"categories":["race_war_alarm"],"explanation":"Escalates the alarm, predicting the case becomes a flashpoint for broader violence."},"2054868907958186477":{"coords":[60,15,-10,70],"categories":["jury_process"],"explanation":"Process question — assumes a spite-conviction at least leaves the defendant an appeal."},"2054872992866353525":{"coords":[70,20,-25,70],"categories":["jury_process"],"explanation":"Warns a bench trial is riskier — a judge is likelier to convict on weak evidence."},"2054876070097080657":{"coords":[25,-55,0,50],"categories":["condemnation"],"explanation":"Observes that a defendant still tweeting post-incident will be a self-sabotaging client."},"2054899347175649753":{"coords":[-50,50,-30,-35],"categories":["shooter_sympathizers"],"explanation":"Angrily accuses the thread of wishing for ideologically unfair juries, defending the shooter."},"2054905061608710190":{"coords":[-50,0,0,-75],"categories":["memes_social"],"explanation":"A dismissive 'lmfao' reply with no content."},"2054924704918442130":{"coords":[-40,0,0,-30],"categories":["memes_social"],"explanation":"An inside-joke aside about mutuals and network proximity, unrelated to the case."},"2054927561977708892":{"coords":[40,15,0,55],"categories":["jury_process"],"explanation":"A bare procedural question about whether a bench trial is available."},"2054933862527172655":{"coords":[25,65,0,45],"categories":["shooter_sympathizers"],"explanation":"Sympathizer claim — says the victim was a stalker who intended to attack."},"2054947456690098413":{"coords":[5,-65,0,-30],"categories":["condemnation"],"explanation":"Sarcastically embraces 'questioning his motives and methods' and calls for a long sentence."},"2054949293375570086":{"coords":[-30,-50,0,15],"categories":["condemnation"],"explanation":"An aphoristic condemnation — physically brave but morally cowardly southern 'heroes.'"},"2054957531030524056":{"coords":[-35,-25,0,-20],"categories":["edgelord_sneers"],"explanation":"A detached sneer diagnosing the subculture as high-openness, low-discernment."},"2054970131034370484":{"coords":[-35,-30,0,30],"categories":["memes_social"],"explanation":"Social commentary on realizing someone you followed is a psycho."},"2054971118608388395":{"coords":[-25,-50,0,35],"categories":["condemnation"],"explanation":"Condemns the shooter's character after reading his bio and feed."},"2054971212715929927":{"coords":[-40,-15,0,-30],"categories":["memes_social"],"explanation":"A one-word sigh of exasperation."},"2054971313651941778":{"coords":[-55,-25,0,-25],"categories":["memes_social"],"explanation":"A pure expression of disgust with no argument."},"2054971514559042033":{"coords":[10,30,0,40],"categories":["shooter_sympathizers"],"explanation":"Argues it is imperative to treat violence-over-a-slur as impermissible, defending the shooter’s framing."},"2055067011709796820":{"coords":[35,5,0,55],"categories":["off_topic_physics"],"explanation":"Off-topic — dismisses Michio Kaku as an unrepresentative popsci writer."},"2055075544060817642":{"coords":[40,-5,0,45],"categories":["off_topic_physics"],"explanation":"Off-topic — claims any science short of a theory of everything is bad metaphysics."},"2055101414653739277":{"coords":[50,10,0,40],"categories":["off_topic_physics"],"explanation":"Off-topic — asserts the universe must be infinite or physics breaks."},"2055149015147421787":{"coords":[25,-10,0,30],"categories":["off_topic_physics"],"explanation":"Off-topic — asks whether invoking God is a superior explanation."},"2055196608426381633":{"coords":[-60,0,0,-85],"categories":["memes_social"],"explanation":"An empty 'O' reply — pure noise."},"2055210252581179519":{"coords":[45,0,0,55],"categories":["off_topic_physics"],"explanation":"Off-topic — argues metaphysics belongs to philosophers, not physicists."},"2055269201363747258":{"coords":[30,-15,0,40],"categories":["off_topic_physics"],"explanation":"Off-topic — claims physicists invent theories to negate the fine-tuning argument."},"2055298846343962698":{"coords":[10,5,0,55],"categories":["off_topic_physics"],"explanation":"Off-topic — earnestly asks what physicists should be working on instead."},"2055311452135707122":{"coords":[15,0,0,30],"categories":["off_topic_physics"],"explanation":"Off-topic — a pedantic correction to 'theoretical physics.'"},"2055314105536561160":{"coords":[-10,-10,0,20],"categories":["off_topic_physics"],"explanation":"Off-topic — a terse 'they don't even try to hide it' with media."},"2055335225106800715":{"coords":[25,5,0,50],"categories":["off_topic_physics"],"explanation":"Off-topic — asks whether a Kaku excerpt represents all of modern physics."}}};</script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel" data-presets="react,typescript">
+const { useState, useRef, useEffect } = React;
+
+const TweetPlotVisualizer = () => {
+  const [tweetInput, setTweetInput] = useState('');
+  const [categorizationInput, setCategorizationInput] = useState('');
+  const [tweetData, setTweetData] = useState(null);
+  const [categorizationData, setCategorizationData] = useState(null);
+  const [hoveredTweet, setHoveredTweet] = useState(null);
+  const [hoveredCategory, setHoveredCategory] = useState(null);
+  const [categoryTooltipPos, setCategoryTooltipPos] = useState(null);
+  const [selectedTweets, setSelectedTweets] = useState(new Set());
+  const [error, setError] = useState('');
+  const [timelineTime, setTimelineTime] = useState(0);
+  const [minTime, setMinTime] = useState(0);
+  const [maxTime, setMaxTime] = useState(0);
+  const [selectedAxes, setSelectedAxes] = useState({ x: 0, y: 1 });
+  const [axisDirections, setAxisDirections] = useState({ x: 1, y: 1 });
+  const [showAxisPicker, setShowAxisPicker] = useState(null);
+  const [isSelecting, setIsSelecting] = useState(false);
+  const [selectionStart, setSelectionStart] = useState(null);
+  const [selectionEnd, setSelectionEnd] = useState(null);
+  const [detailsWidth, setDetailsWidth] = useState(384);
+  const [isResizing, setIsResizing] = useState(false);
+  const [zoom, setZoom] = useState(1);
+  const [panOffset, setPanOffset] = useState({ x: 0, y: 0 });
+  const [isPanning, setIsPanning] = useState(false);
+  const [panStart, setPanStart] = useState(null);
+  const [spacePressed, setSpacePressed] = useState(false);
+  const [showReplyEdges, setShowReplyEdges] = useState(false);
+  const svgRef = useRef(null);
+
+  const CATEGORY_COLORS = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E2', '#F8B739', '#52B788'];
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.code === 'Space' && !spacePressed) {
+        e.preventDefault();
+        setSpacePressed(true);
+      } else if (e.code === 'ArrowLeft') {
+        e.preventDefault();
+        setTimelineTime(Math.max(minTime, timelineTime - (maxTime - minTime) / 100));
+      } else if (e.code === 'ArrowRight') {
+        e.preventDefault();
+        setTimelineTime(Math.min(maxTime, timelineTime + (maxTime - minTime) / 100));
+      }
+    };
+
+    const handleKeyUp = (e) => {
+      if (e.code === 'Space') {
+        e.preventDefault();
+        setSpacePressed(false);
+        setIsPanning(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+    };
+  }, [spacePressed, minTime, maxTime, timelineTime]);
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (isResizing) {
+        const newWidth = window.innerWidth - e.clientX;
+        setDetailsWidth(Math.max(300, Math.min(800, newWidth)));
+      }
+    };
+
+    const handleMouseUp = () => {
+      if (isResizing) {
+        setIsResizing(false);
+      }
+    };
+
+    if (isResizing) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+      return () => {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+      };
+    }
+  }, [isResizing]);
+
+  // Validate a parsed tweet + categorization pair and, if it checks out,
+  // push it into state. Returns true on success.
+  const applyData = (tweets, categorization) => {
+    setError('');
+
+    // Validate tweet data structure
+    if (!tweets || !tweets.tweets) {
+      setError('Tweet data missing "tweets" array');
+      return false;
+    }
+    if (!Array.isArray(tweets.tweets)) {
+      setError('Tweet data "tweets" must be an array');
+      return false;
+    }
+    if (tweets.tweets.length === 0) {
+      setError('Tweet data "tweets" array is empty');
+      return false;
+    }
+    if (!tweets.pfps) {
+      setError('Tweet data missing "pfps" object');
+      return false;
+    }
+
+    // Validate first tweet has required fields
+    const firstTweet = tweets.tweets[0];
+    if (!firstTweet.id) {
+      setError('Tweets missing "id" field');
+      return false;
+    }
+    if (!firstTweet.timestamp) {
+      setError('Tweets missing "timestamp" field');
+      return false;
+    }
+    if (!firstTweet.author) {
+      setError('Tweets missing "author" field');
+      return false;
+    }
+
+    // Validate categorization data structure
+    if (!categorization || !categorization.axes) {
+      setError('Categorization data missing "axes" array');
+      return false;
+    }
+    if (!Array.isArray(categorization.axes)) {
+      setError('Categorization data "axes" must be an array');
+      return false;
+    }
+    if (categorization.axes.length === 0) {
+      setError('Categorization data "axes" array is empty');
+      return false;
+    }
+    if (!categorization.categories) {
+      setError('Categorization data missing "categories" array');
+      return false;
+    }
+    if (!Array.isArray(categorization.categories)) {
+      setError('Categorization data "categories" must be an array');
+      return false;
+    }
+    if (!categorization.data) {
+      setError('Categorization data missing "data" object');
+      return false;
+    }
+
+    // Validate axes structure
+    const firstAxis = categorization.axes[0];
+    if (!firstAxis.positive || !firstAxis.negative) {
+      setError('Axes missing "positive" or "negative" labels');
+      return false;
+    }
+
+    // Validate categories structure
+    if (categorization.categories.length > 0) {
+      const firstCat = categorization.categories[0];
+      if (!firstCat.id) {
+        setError('Categories missing "id" field');
+        return false;
+      }
+      if (!firstCat.coords || !Array.isArray(firstCat.coords)) {
+        setError('Categories missing "coords" array');
+        return false;
+      }
+    }
+
+    // Validate that tweet data has coordinates
+    let coordCount = 0;
+    for (const tweet of tweets.tweets) {
+      if (categorization.data[tweet.id]?.coords) {
+        coordCount++;
+      }
+    }
+
+    if (coordCount === 0) {
+      setError('No tweets have coordinate data in categorization.data');
+      return false;
+    }
+
+    // Validate coordinate dimensions match axes
+    const firstTweetWithCoords = tweets.tweets.find(t => categorization.data[t.id]?.coords);
+    if (firstTweetWithCoords) {
+      const coords = categorization.data[firstTweetWithCoords.id].coords;
+      if (coords.length < categorization.axes.length) {
+        setError(`Coordinate dimensions (${coords.length}) less than number of axes (${categorization.axes.length})`);
+        return false;
+      }
+    }
+
+    setTweetData(tweets);
+    setCategorizationData(categorization);
+
+    const timestamps = tweets.tweets.map(t => new Date(t.timestamp).getTime());
+    const min = Math.min(...timestamps);
+    const max = Math.max(...timestamps);
+    setMinTime(min);
+    setMaxTime(max);
+    setTimelineTime(max);
+    setSelectedAxes({ x: 0, y: Math.min(1, categorization.axes.length - 1) });
+    setAxisDirections({ x: 1, y: 1 });
+    setSelectedTweets(new Set());
+    setZoom(1);
+    setPanOffset({ x: 0, y: 0 });
+    setShowReplyEdges(false);
+    setError('');
+    return true;
+  };
+
+  const parseJSON = () => {
+    try {
+      setError('');
+      const tweets = JSON.parse(tweetInput);
+      const categorization = JSON.parse(categorizationInput);
+      applyData(tweets, categorization);
+    } catch (e) {
+      setError('Error parsing JSON: ' + e.message + '\n\nStack: ' + e.stack);
+    }
+  };
+
+  // Split a single combined object into the tweet + categorization pair the
+  // visualizer expects. Accepts either a flat object with all five keys
+  // ({ pfps, tweets, axes, categories, data }) or a nested object
+  // ({ tweetData, categorizationData }).
+  const splitCombined = (obj) => {
+    if (obj && obj.tweetData && obj.categorizationData) {
+      return [obj.tweetData, obj.categorizationData];
+    }
+    return [
+      { pfps: obj.pfps || {}, tweets: obj.tweets || [] },
+      {
+        axes: obj.axes || [],
+        categories: obj.categories || [],
+        data: obj.data || {},
+      },
+    ];
+  };
+
+  // On mount, pick up data embedded in the page or fetched via ?load=<url>.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const loadUrl = params.get('load');
+
+    if (loadUrl) {
+      fetch(loadUrl)
+        .then(r => r.json())
+        .then(obj => {
+          const [t, c] = splitCombined(obj);
+          applyData(t, c);
+        })
+        .catch(e => setError('Failed to load ' + loadUrl + ': ' + e.message));
+      return;
+    }
+
+    const embedded = window.__EMBEDDED_DATA__;
+    if (embedded && typeof embedded === 'object') {
+      const [t, c] = splitCombined(embedded);
+      applyData(t, c);
+    }
+  }, []);
+
+  const handleAxisClick = (side) => {
+    setShowAxisPicker(side);
+  };
+
+  const selectAxis = (side, axisIndex) => {
+    if (side === 'left' || side === 'right') {
+      setSelectedAxes(prev => ({ ...prev, x: axisIndex }));
+      setAxisDirections(prev => ({ ...prev, x: side === 'left' ? -1 : 1 }));
+    } else {
+      setSelectedAxes(prev => ({ ...prev, y: axisIndex }));
+      setAxisDirections(prev => ({ ...prev, y: side === 'top' ? 1 : -1 }));
+    }
+    setShowAxisPicker(null);
+  };
+
+  const getCategoryColor = (categoryId) => {
+    const index = categorizationData.categories.findIndex(c => c.id === categoryId);
+    return CATEGORY_COLORS[index % CATEGORY_COLORS.length];
+  };
+
+  const getTweetColors = (tweetId) => {
+    if (!categorizationData.data[tweetId]) return ['#999999'];
+    const categories = categorizationData.data[tweetId].categories || [];
+    if (categories.length === 0) return ['#999999'];
+    return categories.map(catId => getCategoryColor(catId));
+  };
+
+  // Deterministic jitter based on tweet ID
+  const getJitter = (tweetId, coordKey) => {
+    // Use tweet ID to generate consistent random offset
+    let hash = 0;
+    const str = tweetId + coordKey;
+    for (let i = 0; i < str.length; i++) {
+      hash = ((hash << 5) - hash) + str.charCodeAt(i);
+      hash = hash & hash;
+    }
+    // Convert to a value between -1 and 1
+    return (Math.abs(hash) % 1000) / 500 - 1;
+  };
+
+  const [jitterAmount, setJitterAmount] = useState(40);
+
+  const coordsToPixels = (coords, width, height, tweetId = null) => {
+    const xValue = coords[selectedAxes.x] * axisDirections.x;
+    const yValue = coords[selectedAxes.y] * axisDirections.y;
+
+    const padding = 80;
+    const plotWidth = width - 2 * padding;
+    const plotHeight = height - 2 * padding;
+
+    const allCoords = [];
+    tweetData.tweets.forEach(tweet => {
+      if (categorizationData.data[tweet.id]?.coords) {
+        allCoords.push(categorizationData.data[tweet.id].coords);
+      }
+    });
+    categorizationData.categories.forEach(cat => {
+      allCoords.push(cat.coords);
+    });
+
+    if (allCoords.length === 0) return [0, 0];
+
+    const allX = allCoords.map(c => c[selectedAxes.x] * axisDirections.x);
+    const allY = allCoords.map(c => c[selectedAxes.y] * axisDirections.y);
+    const minX = Math.min(...allX);
+    const maxX = Math.max(...allX);
+    const minY = Math.min(...allY);
+    const maxY = Math.max(...allY);
+
+    const rangeX = maxX - minX || 1;
+    const rangeY = maxY - minY || 1;
+
+    const margin = 0.1;
+    const expandedRangeX = rangeX * (1 + 2 * margin);
+    const expandedRangeY = rangeY * (1 + 2 * margin);
+
+    const normalizedX = (xValue - minX + rangeX * margin) / expandedRangeX;
+    const normalizedY = (yValue - minY + rangeY * margin) / expandedRangeY;
+
+    let pixelX = (normalizedX - 0.5) * plotWidth;
+    let pixelY = (0.5 - normalizedY) * plotHeight;
+
+    // Always apply jitter to tweets
+    if (tweetId) {
+      const jitterX = getJitter(tweetId, 'x') * jitterAmount;
+      const jitterY = getJitter(tweetId, 'y') * jitterAmount;
+      pixelX += jitterX;
+      pixelY += jitterY;
+    }
+
+    return [pixelX, pixelY];
+  };
+
+  const isTweetVisible = (tweet) => {
+    return new Date(tweet.timestamp).getTime() <= timelineTime;
+  };
+
+  const convexHull = (points) => {
+    if (points.length < 3) return points;
+
+    // Safety check: limit number of points to prevent crashes
+    if (points.length > 10000) {
+      console.warn('Too many points for convex hull, sampling...');
+      const step = Math.ceil(points.length / 1000);
+      points = points.filter((_, i) => i % step === 0);
+    }
+
+    const hull = [];
+    let leftmost = 0;
+    for (let i = 1; i < points.length; i++) {
+      if (points[i][0] < points[leftmost][0]) leftmost = i;
+    }
+
+    let current = leftmost;
+    let iterations = 0;
+    const maxIterations = points.length * 2; // Safety limit
+
+    do {
+      hull.push(points[current]);
+      let next = (current + 1) % points.length;
+
+      for (let i = 0; i < points.length; i++) {
+        const cross = (points[next][0] - points[current][0]) * (points[i][1] - points[current][1]) -
+                     (points[next][1] - points[current][1]) * (points[i][0] - points[current][0]);
+        if (cross < 0) next = i;
+      }
+
+      current = next;
+      iterations++;
+
+      // Safety check to prevent infinite loops
+      if (iterations > maxIterations) {
+        console.error('Convex hull exceeded max iterations');
+        break;
+      }
+    } while (current !== leftmost && iterations < maxIterations);
+
+    return hull;
+  };
+
+  const getCategoryBlob = (categoryId, width, height) => {
+    try {
+      const tweetsInCategory = tweetData.tweets.filter(tweet => {
+        if (!isTweetVisible(tweet)) return false;
+        const data = categorizationData.data[tweet.id];
+        return data?.categories?.includes(categoryId);
+      });
+
+      if (tweetsInCategory.length === 0) return null;
+
+      let points = tweetsInCategory.map(tweet => {
+        const coords = categorizationData.data[tweet.id].coords;
+        return coordsToPixels(coords, width, height, tweet.id);
+      });
+
+      console.log(`Category ${categoryId}: ${points.length} points`, points);
+
+      if (points.length === 1) {
+        const x = points[0][0];
+        const y = points[0][1];
+        const numSegments = 32;
+        const radius = 40;
+        let path = `M ${x + radius} ${y}`;
+        for (let i = 1; i <= numSegments; i++) {
+          const angle = (i / numSegments) * 2 * Math.PI;
+          const px = x + radius * Math.cos(angle);
+          const py = y + radius * Math.sin(angle);
+          path += ` L ${px} ${py}`;
+        }
+        return path + ' Z';
+      }
+
+      // Add padding points around each original point to ensure minimum size
+      const paddedPoints = [];
+      const minPadding = 30; // Minimum padding around each point
+
+      points.forEach(point => {
+        // Add the original point
+        paddedPoints.push(point);
+
+        // Add 8 surrounding points for minimum area
+        const angles = [0, Math.PI/4, Math.PI/2, 3*Math.PI/4, Math.PI, 5*Math.PI/4, 3*Math.PI/2, 7*Math.PI/4];
+        angles.forEach(angle => {
+          paddedPoints.push([
+            point[0] + minPadding * Math.cos(angle),
+            point[1] + minPadding * Math.sin(angle)
+          ]);
+        });
+      });
+
+      const hull = convexHull(paddedPoints);
+
+      if (!hull || hull.length < 3) return null;
+
+      const centroid = hull.reduce((acc, p) => [acc[0] + p[0], acc[1] + p[1]], [0, 0]);
+      centroid[0] /= hull.length;
+      centroid[1] /= hull.length;
+
+      const expandedHull = hull.map((point) => {
+        const x = point[0];
+        const y = point[1];
+        const dx = x - centroid[0];
+        const dy = y - centroid[1];
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const expandDist = 30; // Reduced from 60
+        return [x + (dx / dist) * expandDist, y + (dy / dist) * expandDist];
+      });
+
+      if (expandedHull.length < 3) return null;
+
+      // Limit smoothing points for performance
+      const pointsPerSegment = Math.min(32, Math.floor(500 / expandedHull.length));
+
+      // First, add interpolated points between hull vertices
+      const smoothedPoints = [];
+
+      for (let i = 0; i < expandedHull.length; i++) {
+        const curr = expandedHull[i];
+        const next = expandedHull[(i + 1) % expandedHull.length];
+
+        for (let j = 0; j < pointsPerSegment; j++) {
+          const t = j / pointsPerSegment;
+          const smoothT = t * t * t * (t * (t * 6 - 15) + 10);
+          const px = curr[0] + (next[0] - curr[0]) * smoothT;
+          const py = curr[1] + (next[1] - curr[1]) * smoothT;
+          smoothedPoints.push([px, py]);
+        }
+      }
+
+      // Safety check
+      if (smoothedPoints.length > 5000) {
+        console.warn('Too many smoothed points, reducing...');
+        const step = Math.ceil(smoothedPoints.length / 1000);
+        const reduced = [];
+        for (let i = 0; i < smoothedPoints.length; i += step) {
+          reduced.push(smoothedPoints[i]);
+        }
+        return `M ${reduced[0][0]} ${reduced[0][1]} ` +
+               reduced.slice(1).map(p => `L ${p[0]} ${p[1]}`).join(' ') + ' Z';
+      }
+
+      // Second pass: subdivide vertices to further smooth corners
+      const subdividedPoints = [];
+      for (let i = 0; i < smoothedPoints.length; i++) {
+        const prev = smoothedPoints[(i - 1 + smoothedPoints.length) % smoothedPoints.length];
+        const curr = smoothedPoints[i];
+        const next = smoothedPoints[(i + 1) % smoothedPoints.length];
+
+        const t1 = 0.15;
+
+        const p1x = curr[0] + (prev[0] - curr[0]) * t1;
+        const p1y = curr[1] + (prev[1] - curr[1]) * t1;
+
+        const p2x = curr[0] + (next[0] - curr[0]) * t1;
+        const p2y = curr[1] + (next[1] - curr[1]) * t1;
+
+        subdividedPoints.push([p1x, p1y]);
+        subdividedPoints.push([p2x, p2y]);
+      }
+
+      let path = `M ${subdividedPoints[0][0]} ${subdividedPoints[0][1]}`;
+      for (let i = 1; i < subdividedPoints.length; i++) {
+        path += ` L ${subdividedPoints[i][0]} ${subdividedPoints[i][1]}`;
+      }
+
+      return path + ' Z';
+    } catch (e) {
+      console.error('Error generating category blob:', e);
+      return null;
+    }
+  };
+
+  const handleTweetClick = (e, tweetId) => {
+    if (spacePressed || isPanning) {
+      e.stopPropagation();
+      return;
+    }
+
+    e.stopPropagation();
+    const newSelection = new Set(selectedTweets);
+
+    if (e.metaKey || e.ctrlKey) {
+      if (newSelection.has(tweetId)) {
+        newSelection.delete(tweetId);
+      } else {
+        newSelection.add(tweetId);
+      }
+    } else if (e.shiftKey) {
+      newSelection.delete(tweetId);
+    } else {
+      if (newSelection.has(tweetId) && newSelection.size === 1) {
+        newSelection.clear();
+      } else {
+        newSelection.clear();
+        newSelection.add(tweetId);
+      }
+    }
+
+    setSelectedTweets(newSelection);
+  };
+
+  const handleCategoryClick = (e, categoryId) => {
+    if (spacePressed || isPanning) {
+      e.stopPropagation();
+      return;
+    }
+
+    e.stopPropagation();
+    const tweetsInCategory = tweetData.tweets
+      .filter(tweet => categorizationData.data[tweet.id]?.categories?.includes(categoryId))
+      .map(t => t.id);
+
+    const newSelection = new Set(selectedTweets);
+
+    // Check if all tweets in category are already selected
+    const allSelected = tweetsInCategory.every(id => newSelection.has(id));
+
+    if (e.metaKey || e.ctrlKey) {
+      if (allSelected) {
+        // All are selected, so toggle them off
+        tweetsInCategory.forEach(id => newSelection.delete(id));
+      } else {
+        // Not all selected, so select all
+        tweetsInCategory.forEach(id => newSelection.add(id));
+      }
+    } else if (e.shiftKey) {
+      tweetsInCategory.forEach(id => newSelection.delete(id));
+    } else {
+      newSelection.clear();
+      tweetsInCategory.forEach(id => newSelection.add(id));
+    }
+
+    setSelectedTweets(newSelection);
+  };
+
+  const handleSvgMouseDown = (e) => {
+    if (spacePressed) {
+      e.preventDefault();
+      setIsPanning(true);
+      setPanStart({ x: e.clientX - panOffset.x, y: e.clientY - panOffset.y });
+      return;
+    }
+
+    if (!svgRef.current) return;
+    const rect = svgRef.current.getBoundingClientRect();
+    const svgX = (e.clientX - rect.left - width/2 - panOffset.x) / zoom;
+    const svgY = (e.clientY - rect.top - height/2 - panOffset.y) / zoom;
+    setIsSelecting(true);
+    setSelectionStart({ x: svgX, y: svgY });
+    setSelectionEnd({ x: svgX, y: svgY });
+    if (!e.metaKey && !e.ctrlKey) {
+      setSelectedTweets(new Set());
+    }
+  };
+
+  const handleSvgMouseMove = (e) => {
+    if (isPanning) {
+      e.preventDefault();
+      setPanOffset({
+        x: e.clientX - panStart.x,
+        y: e.clientY - panStart.y
+      });
+      return;
+    }
+
+    if (!isSelecting || !svgRef.current) return;
+    const rect = svgRef.current.getBoundingClientRect();
+    const svgX = (e.clientX - rect.left - width/2 - panOffset.x) / zoom;
+    const svgY = (e.clientY - rect.top - height/2 - panOffset.y) / zoom;
+    setSelectionEnd({ x: svgX, y: svgY });
+  };
+
+  const handleSvgMouseUp = (e) => {
+    if (isPanning) {
+      setIsPanning(false);
+      return;
+    }
+
+    if (!isSelecting) return;
+
+    const minX = Math.min(selectionStart.x, selectionEnd.x);
+    const maxX = Math.max(selectionStart.x, selectionEnd.x);
+    const minY = Math.min(selectionStart.y, selectionEnd.y);
+    const maxY = Math.max(selectionStart.y, selectionEnd.y);
+
+    const newSelection = new Set(selectedTweets);
+
+    tweetData.tweets.forEach(tweet => {
+      if (!categorizationData.data[tweet.id]) return;
+      const coordPair = coordsToPixels(categorizationData.data[tweet.id].coords, 1200, 900);
+      const x = coordPair[0];
+      const y = coordPair[1];
+      if (x >= minX && x <= maxX && y >= minY && y <= maxY) {
+        if (e.shiftKey) newSelection.delete(tweet.id);
+        else newSelection.add(tweet.id);
+      }
+    });
+
+    setSelectedTweets(newSelection);
+    setIsSelecting(false);
+    setSelectionStart(null);
+    setSelectionEnd(null);
+  };
+
+  const handleWheel = (e) => {
+    e.preventDefault();
+    const delta = e.deltaY * -0.01;
+    const newZoom = Math.min(Math.max(0.5, zoom + delta * zoom * 0.5), 5);
+
+    if (svgRef.current) {
+      const rect = svgRef.current.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+
+      const zoomRatio = newZoom / zoom;
+
+      setPanOffset({
+        x: mouseX - (mouseX - panOffset.x) * zoomRatio,
+        y: mouseY - (mouseY - panOffset.y) * zoomRatio
+      });
+    }
+
+    setZoom(newZoom);
+  };
+
+  const isCategorySelected = (categoryId) => {
+    const tweetsInCategory = tweetData.tweets
+      .filter(tweet => categorizationData.data[tweet.id]?.categories?.includes(categoryId))
+      .map(t => t.id);
+
+    if (tweetsInCategory.length === 0) return false;
+    return tweetsInCategory.every(id => selectedTweets.has(id));
+  };
+
+  const getSelectedCategories = () => {
+    return categories.filter(cat => isCategorySelected(cat.id)).map(cat => cat.id);
+  };
+
+  const getTweetOpacity = (tweetId) => {
+    if (hoveredTweet) {
+      return tweetId === hoveredTweet ? 1 : 0.1;
+    }
+    if (selectedTweets.size > 0) {
+      return selectedTweets.has(tweetId) ? 1 : 0.1;
+    }
+    if (hoveredCategory) {
+      const data = categorizationData.data[tweetId];
+      return data?.categories?.includes(hoveredCategory) ? 1 : 0.1;
+    }
+    return 1;
+  };
+
+  const handleResizeMouseDown = (e) => {
+    e.preventDefault();
+    setIsResizing(true);
+  };
+
+  if (!tweetData || !categorizationData) {
+    return (
+      <div className="w-full h-screen flex items-center justify-center bg-gray-50 p-8">
+        <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg p-6">
+          <h1 className="text-2xl font-bold mb-4">Tweet Plot Visualizer</h1>
+
+          <div className="mb-4">
+            <label className="block text-sm font-semibold mb-2">Tweet Data JSON:</label>
+            <textarea
+              className="w-full h-48 p-4 border border-gray-300 rounded font-mono text-sm"
+              placeholder='{"pfps": {...}, "tweets": [...]}'
+              value={tweetInput}
+              onChange={(e) => setTweetInput(e.target.value)}
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-sm font-semibold mb-2">Categorization Data JSON:</label>
+            <textarea
+              className="w-full h-48 p-4 border border-gray-300 rounded font-mono text-sm"
+              placeholder='{"axes": [...], "categories": [...], "data": {...}}'
+              value={categorizationInput}
+              onChange={(e) => setCategorizationInput(e.target.value)}
+            />
+          </div>
+
+          {error && <div className="mt-2 text-red-600 text-sm whitespace-pre-wrap font-mono max-h-48 overflow-y-auto bg-red-50 p-3 rounded">{error}</div>}
+
+          <button
+            className="mt-4 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            onClick={parseJSON}
+          >
+            Generate Plot
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const width = 1200;
+  const height = 900;
+  const axes = categorizationData.axes;
+  const categories = categorizationData.categories;
+  const tweets = tweetData.tweets;
+  const pfps = tweetData.pfps;
+
+  const xAxis = axes[selectedAxes.x];
+  const yAxis = axes[selectedAxes.y];
+  const xLabel = axisDirections.x === 1 ? xAxis.positive : xAxis.negative;
+  const xLabelNeg = axisDirections.x === 1 ? xAxis.negative : xAxis.positive;
+  const yLabel = axisDirections.y === 1 ? yAxis.positive : yAxis.negative;
+  const yLabelNeg = axisDirections.y === 1 ? yAxis.negative : yAxis.positive;
+
+  const visibleTweets = tweets.filter(isTweetVisible);
+
+  const displayTweets = hoveredTweet
+    ? [tweets.find(t => t.id === hoveredTweet)]
+    : hoveredCategory
+    ? visibleTweets.filter(t => categorizationData.data[t.id]?.categories?.includes(hoveredCategory))
+    : selectedTweets.size > 0
+    ? visibleTweets.filter(t => selectedTweets.has(t.id))
+    : visibleTweets;
+
+  const selectedCategories = getSelectedCategories();
+
+  return (
+    <div className="w-full h-screen flex flex-col bg-gray-50">
+      <div className="p-4 bg-white border-b flex-shrink-0">
+        <div className="flex items-center gap-4 max-w-6xl mx-auto">
+          <button
+            className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+            onClick={() => setTimelineTime(Math.max(minTime, timelineTime - (maxTime - minTime) / 100))}
+          >
+            ←
+          </button>
+          <div className="flex-1">
+            <div className="text-sm mb-1">{new Date(timelineTime).toLocaleString()}</div>
+            <input
+              type="range"
+              min={minTime}
+              max={maxTime}
+              value={timelineTime}
+              onChange={(e) => setTimelineTime(parseInt(e.target.value))}
+              className="w-full"
+            />
+          </div>
+          <button
+            className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+            onClick={() => setTimelineTime(Math.min(maxTime, timelineTime + (maxTime - minTime) / 100))}
+          >
+            →
+          </button>
+          <div className="flex items-center gap-2">
+            <button
+              className="px-3 py-1 bg-gray-600 text-white rounded hover:bg-gray-700"
+              onClick={() => setZoom(Math.max(0.5, zoom - 0.2))}
+            >
+              −
+            </button>
+            <span className="text-sm w-16 text-center">{Math.round(zoom * 100)}%</span>
+            <button
+              className="px-3 py-1 bg-gray-600 text-white rounded hover:bg-gray-700"
+              onClick={() => setZoom(Math.min(5, zoom + 0.2))}
+            >
+              +
+            </button>
+            <button
+              className="px-3 py-1 bg-gray-600 text-white rounded hover:bg-gray-700"
+              onClick={() => { setZoom(1); setPanOffset({ x: 0, y: 0 }); }}
+            >
+              Reset
+            </button>
+          </div>
+          <div className="flex items-center gap-2">
+            <label className="text-sm">Jitter:</label>
+            <button
+              className="px-2 py-1 bg-gray-600 text-white rounded hover:bg-gray-700"
+              onClick={() => setJitterAmount(Math.max(0, jitterAmount - 10))}
+            >
+              −
+            </button>
+            <span className="text-sm w-12 text-center">{jitterAmount}</span>
+            <button
+              className="px-2 py-1 bg-gray-600 text-white rounded hover:bg-gray-700"
+              onClick={() => setJitterAmount(Math.min(100, jitterAmount + 10))}
+            >
+              +
+            </button>
+          </div>
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={showReplyEdges}
+              onChange={(e) => setShowReplyEdges(e.target.checked)}
+              className="w-4 h-4"
+            />
+            <span className="text-sm">Show Reply Edges</span>
+          </label>
+          <button
+            className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
+            onClick={() => {
+              setTweetData(null);
+              setCategorizationData(null);
+            }}
+          >
+            Load New Data
+          </button>
+        </div>
+      </div>
+
+      <div className="flex-1 flex overflow-hidden">
+        <div
+          className="flex-1 flex items-center justify-center relative overflow-hidden"
+          style={{ cursor: spacePressed ? (isPanning ? 'grabbing' : 'grab') : 'default' }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+              overflow: 'hidden',
+              background: 'white'
+            }}
+          >
+          <svg
+            ref={svgRef}
+            width="100%"
+            height="100%"
+            className="bg-white"
+            onMouseDown={handleSvgMouseDown}
+            onMouseMove={handleSvgMouseMove}
+            onMouseUp={handleSvgMouseUp}
+            onWheel={handleWheel}
+            style={{
+              position: 'absolute',
+              left: 0,
+              top: 0
+            }}
+          >
+            <g transform={`translate(${width/2 + panOffset.x}, ${height/2 + panOffset.y}) scale(${zoom})`}>
+              <line x1={-width/2 + 80} y1="0" x2={width/2 - 80} y2="0" stroke="#666" strokeWidth={2/zoom} />
+              <line x1="0" y1={-height/2 + 80} x2="0" y2={height/2 - 80} stroke="#666" strokeWidth={2/zoom} />
+
+              <text
+                x="0"
+                y={-height/2 + 30}
+                textAnchor="middle"
+                className="text-sm font-semibold cursor-pointer hover:text-blue-600"
+                fontSize={14/zoom}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleAxisClick('top');
+                }}
+              >
+                {yLabel}
+              </text>
+              <text
+                x="0"
+                y={height/2 - 20}
+                textAnchor="middle"
+                className="text-sm font-semibold cursor-pointer hover:text-blue-600"
+                fontSize={14/zoom}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleAxisClick('bottom');
+                }}
+              >
+                {yLabelNeg}
+              </text>
+              <text
+                x={-width/2 + 20}
+                y="-10"
+                textAnchor="start"
+                className="text-sm font-semibold cursor-pointer hover:text-blue-600"
+                fontSize={14/zoom}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleAxisClick('left');
+                }}
+              >
+                {xLabelNeg}
+              </text>
+              <text
+                x={width/2 - 20}
+                y="-10"
+                textAnchor="end"
+                className="text-sm font-semibold cursor-pointer hover:text-blue-600"
+                fontSize={14/zoom}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleAxisClick('right');
+                }}
+              >
+                {xLabel}
+              </text>
+
+              <g id="category-blobs">
+                {categories.map(category => {
+                  const blobPath = getCategoryBlob(category.id, width, height);
+                  if (!blobPath) return null;
+                  const isHovered = hoveredCategory === category.id;
+                  const isSelected = selectedCategories.includes(category.id);
+                  const shouldFill = isHovered || isSelected;
+
+                  let strokeOpacity = 0.7;
+                  if (hoveredCategory && hoveredCategory !== category.id) {
+                    strokeOpacity = 0.2;
+                  }
+
+                  return (
+                    <path
+                      key={category.id}
+                      d={blobPath}
+                      fill={shouldFill ? getCategoryColor(category.id) : 'none'}
+                      fillOpacity={shouldFill ? 0.25 : 0}
+                      stroke={getCategoryColor(category.id)}
+                      strokeWidth={3/zoom}
+                      strokeOpacity={strokeOpacity}
+                      style={{
+                        cursor: 'pointer',
+                        pointerEvents: 'all'
+                      }}
+                      onMouseEnter={(e) => {
+                        setHoveredCategory(category.id);
+                        const rect = svgRef.current.getBoundingClientRect();
+                        setCategoryTooltipPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+                      }}
+                      onMouseMove={(e) => {
+                        const rect = svgRef.current.getBoundingClientRect();
+                        setCategoryTooltipPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+                      }}
+                      onMouseLeave={() => {
+                        setHoveredCategory(null);
+                        setCategoryTooltipPos(null);
+                      }}
+                      onClick={(e) => handleCategoryClick(e, category.id)}
+                    />
+                  );
+                })}
+              </g>
+
+              {showReplyEdges && (
+                <g id="reply-edges">
+                  {tweets.map(tweet => {
+                    if (!isTweetVisible(tweet) || !categorizationData.data[tweet.id]) return null;
+                    if (!tweet.reply_to) return null;
+
+                    const replyToTweet = tweets.find(t => t.id === tweet.reply_to);
+                    if (!replyToTweet || !isTweetVisible(replyToTweet) || !categorizationData.data[replyToTweet.id]) return null;
+
+                    const fromCoords = coordsToPixels(categorizationData.data[tweet.id].coords, width, height);
+                    const toCoords = coordsToPixels(categorizationData.data[replyToTweet.id].coords, width, height);
+
+                    return (
+                      <line
+                        key={`edge-${tweet.id}`}
+                        x1={fromCoords[0]}
+                        y1={fromCoords[1]}
+                        x2={toCoords[0]}
+                        y2={toCoords[1]}
+                        stroke="#999"
+                        strokeWidth={1/zoom}
+                        strokeOpacity={0.3}
+                        pointerEvents="none"
+                      />
+                    );
+                  })}
+                </g>
+              )}
+
+              <g id="tweets">
+                {tweets
+                  .map((tweet, origIndex) => ({ tweet, origIndex }))
+                  .sort((a, b) => {
+                    const aSelected = selectedTweets.has(a.tweet.id);
+                    const bSelected = selectedTweets.has(b.tweet.id);
+                    const aHovered = hoveredTweet === a.tweet.id;
+                    const bHovered = hoveredTweet === b.tweet.id;
+
+                    if (aHovered && !bHovered) return 1;
+                    if (bHovered && !aHovered) return -1;
+
+                    if (aSelected && !bSelected) return 1;
+                    if (bSelected && !aSelected) return -1;
+
+                    return a.origIndex - b.origIndex;
+                  })
+                  .map(({ tweet }) => {
+                  if (!isTweetVisible(tweet) || !categorizationData.data[tweet.id]) return null;
+
+                  const coords = categorizationData.data[tweet.id].coords;
+                  const baseCoords = coordsToPixels(coords, width, height, tweet.id);
+                  const x = baseCoords[0];
+                  const y = baseCoords[1];
+                  const colors = getTweetColors(tweet.id);
+                  const isSelected = selectedTweets.has(tweet.id);
+
+                  const baseRadius = 20;
+                  const minRadius = 4;
+                  const maxRadius = 32;
+                  const radius = Math.max(minRadius, Math.min(maxRadius, baseRadius * Math.pow(zoom, 0.5))) / zoom;
+                  const ringWidth = 3 / zoom;
+
+                  return (
+                    <g
+                      key={tweet.id}
+                      onMouseEnter={() => setHoveredTweet(tweet.id)}
+                      onMouseLeave={() => setHoveredTweet(null)}
+                      onClick={(e) => handleTweetClick(e, tweet.id)}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      {colors.length === 1 ? (
+                        <circle
+                          cx={x}
+                          cy={y}
+                          r={radius + ringWidth / 2}
+                          fill="none"
+                          stroke={colors[0]}
+                          strokeWidth={ringWidth}
+                          opacity={getTweetOpacity(tweet.id)}
+                        />
+                      ) : (
+                        colors.map((color, idx) => {
+                          const numColors = colors.length;
+                          const segmentAngle = (2 * Math.PI) / numColors;
+                          const startAngle = idx * segmentAngle - Math.PI / 2;
+                          const endAngle = (idx + 1) * segmentAngle - Math.PI / 2;
+
+                          const innerRadius = radius;
+                          const outerRadius = radius + ringWidth;
+
+                          const x1Inner = x + innerRadius * Math.cos(startAngle);
+                          const y1Inner = y + innerRadius * Math.sin(startAngle);
+                          const x1Outer = x + outerRadius * Math.cos(startAngle);
+                          const y1Outer = y + outerRadius * Math.sin(startAngle);
+
+                          const x2Inner = x + innerRadius * Math.cos(endAngle);
+                          const y2Inner = y + innerRadius * Math.sin(endAngle);
+                          const x2Outer = x + outerRadius * Math.cos(endAngle);
+                          const y2Outer = y + outerRadius * Math.sin(endAngle);
+
+                          const largeArc = segmentAngle > Math.PI ? 1 : 0;
+
+                          const pathData = [
+                            `M ${x1Inner} ${y1Inner}`,
+                            `L ${x1Outer} ${y1Outer}`,
+                            `A ${outerRadius} ${outerRadius} 0 ${largeArc} 1 ${x2Outer} ${y2Outer}`,
+                            `L ${x2Inner} ${y2Inner}`,
+                            `A ${innerRadius} ${innerRadius} 0 ${largeArc} 0 ${x1Inner} ${y1Inner}`,
+                            `Z`
+                          ].join(' ');
+
+                          return (
+                            <path
+                              key={idx}
+                              d={pathData}
+                              fill={color}
+                              opacity={getTweetOpacity(tweet.id)}
+                            />
+                          );
+                        })
+                      )}
+
+                      <g opacity={getTweetOpacity(tweet.id)}>
+                        {pfps[tweet.author] && (
+                          <image
+                            href={pfps[tweet.author]}
+                            x={x - radius}
+                            y={y - radius}
+                            width={radius * 2}
+                            height={radius * 2}
+                            clipPath={`circle(${radius}px at ${radius}px ${radius}px)`}
+                          />
+                        )}
+                      </g>
+                    </g>
+                  );
+                })}
+              </g>
+
+              {isSelecting && selectionStart && selectionEnd && (
+                <rect
+                  x={Math.min(selectionStart.x, selectionEnd.x)}
+                  y={Math.min(selectionStart.y, selectionEnd.y)}
+                  width={Math.abs(selectionEnd.x - selectionStart.x)}
+                  height={Math.abs(selectionEnd.y - selectionStart.y)}
+                  fill="rgba(59, 130, 246, 0.2)"
+                  stroke="#3B82F6"
+                  strokeWidth={2 / zoom}
+                  strokeDasharray="5,5"
+                />
+              )}
+            </g>
+          </svg>
+
+          {hoveredCategory && categoryTooltipPos && (
+            <div
+              className="absolute bg-gray-900 text-white px-3 py-1 rounded text-sm pointer-events-none shadow-lg"
+              style={{
+                left: categoryTooltipPos.x + 15,
+                top: categoryTooltipPos.y - 10,
+                zIndex: 1000
+              }}
+            >
+              {categories.find(c => c.id === hoveredCategory)?.label}
+            </div>
+          )}
+          </div>
+
+          {showAxisPicker && (
+            <div
+              className="absolute bg-white border-2 border-blue-600 rounded-lg shadow-xl p-3 z-50"
+              style={{
+                left: showAxisPicker === 'left' ? '100px' : showAxisPicker === 'right' ? 'auto' : '50%',
+                right: showAxisPicker === 'right' ? '100px' : 'auto',
+                top: showAxisPicker === 'top' ? '120px' : showAxisPicker === 'bottom' ? 'auto' : '50%',
+                bottom: showAxisPicker === 'bottom' ? '120px' : 'auto',
+                transform: (showAxisPicker === 'top' || showAxisPicker === 'bottom') ? 'translateX(-50%)' : 'translateY(-50%)'
+              }}
+            >
+              <div className="text-xs font-semibold text-gray-700 mb-2">Select Axis:</div>
+              <div className="space-y-1">
+                {axes.map((axis, idx) => (
+                  <button
+                    key={idx}
+                    className="block w-full text-left px-3 py-2 text-sm hover:bg-blue-50 rounded"
+                    onClick={() => selectAxis(showAxisPicker, idx)}
+                  >
+                    <div className="font-semibold">{axis.label}</div>
+                    <div className="text-xs text-gray-600">
+                      {showAxisPicker === 'left' || showAxisPicker === 'bottom' ? axis.negative : axis.positive}
+                    </div>
+                  </button>
+                ))}
+              </div>
+              <button
+                className="mt-2 w-full text-xs text-gray-500 hover:text-gray-700"
+                onClick={() => setShowAxisPicker(null)}
+              >
+                Cancel
+              </button>
+            </div>
+          )}
+
+          <div className="absolute bottom-4 left-4 bg-white/90 rounded px-3 py-2 text-xs text-gray-600">
+            Hold SPACE and drag to pan • Scroll to zoom • Arrow keys for timeline • Shift to deselect
+          </div>
+        </div>
+
+        <div
+          className="bg-gray-400 hover:bg-blue-500 cursor-ew-resize flex-shrink-0"
+          style={{ width: '6px' }}
+          onMouseDown={handleResizeMouseDown}
+        />
+
+        <div className="bg-white shadow-lg flex flex-col" style={{ width: `${detailsWidth}px` }}>
+          <div className="p-4 border-b flex-shrink-0">
+            <h2 className="font-bold">Details</h2>
+          </div>
+          <div className="flex-1 overflow-y-auto p-4">
+            {displayTweets.length === 0 ? (
+              <p className="text-gray-500 italic">Hover or click tweets to view</p>
+            ) : (
+              <div className="space-y-4">
+                {displayTweets.map(tweet => {
+                  if (!tweet) return null;
+                  const tweetMeta = categorizationData.data[tweet.id];
+                  return (
+                    <div key={tweet.id} className="border-b pb-4 last:border-b-0">
+                      <div className="flex items-start gap-2 mb-2">
+                        <div className="flex items-center gap-2 flex-1">
+                          {pfps[tweet.author] && (
+                            <img src={pfps[tweet.author]} className="w-8 h-8 rounded-full flex-shrink-0" alt="" />
+                          )}
+                          <div className="flex-1 min-w-0">
+                            <div className="font-bold truncate">@{tweet.author}</div>
+                            <div className="text-xs text-gray-500">
+                              {new Date(tweet.timestamp).toLocaleString()}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2 flex-shrink-0">
+                          {tweetMeta?.categories && (
+                            <div className="flex gap-1">
+                              {tweetMeta.categories.map(catId => (
+                                <div
+                                  key={catId}
+                                  className="w-3 h-3 rounded-full"
+                                  style={{ backgroundColor: getCategoryColor(catId) }}
+                                  title={categories.find(c => c.id === catId)?.label}
+                                />
+                              ))}
+                            </div>
+                          )}
+                          <div className="text-xs text-gray-600">❤️ {tweet.likes}</div>
+                        </div>
+                      </div>
+                      <p className="text-sm mb-2">{tweet.text}</p>
+                      {tweetMeta?.explanation && (
+                        <p className="text-xs italic text-gray-600 bg-gray-50 p-2 rounded">
+                          {tweetMeta.explanation}
+                        </p>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div className="p-4 bg-white border-t flex-shrink-0">
+        <div className="flex flex-wrap gap-4 justify-center">
+          {categories.map(cat => (
+            <div
+              key={cat.id}
+              className="flex items-center gap-2 cursor-pointer hover:opacity-70"
+              onClick={(e) => handleCategoryClick(e, cat.id)}
+              onMouseEnter={() => setHoveredCategory(cat.id)}
+              onMouseLeave={() => setHoveredCategory(null)}
+            >
+              <div className="w-4 h-4 rounded" style={{ backgroundColor: getCategoryColor(cat.id) }} />
+              <span className="text-sm">{cat.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<TweetPlotVisualizer />);
+    </script>
+  </body>
+</html>

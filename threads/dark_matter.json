@@ -1,0 +1,995 @@
+{
+  "captured_at": "2026-05-15T19:09:02.919Z",
+  "tweet_count": 44,
+  "queue_count": 44,
+  "queued": [
+    {
+      "id": "2054605370795114535",
+      "url": "https://x.com/Kekius_Sage/status/2054605370795114535",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054605377673863638",
+      "url": "https://x.com/Kekius_Sage/status/2054605377673863638",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054605385210941650",
+      "url": "https://x.com/Kekius_Sage/status/2054605385210941650",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054605394576842960",
+      "url": "https://x.com/Kekius_Sage/status/2054605394576842960",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054667168977973429",
+      "url": "https://x.com/URGNews/status/2054667168977973429",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2055191537538003204",
+      "url": "https://x.com/JCeacc/status/2055191537538003204",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2055335761294316024",
+      "url": "https://x.com/CircumjovialLLC/status/2055335761294316024",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054665195423740190",
+      "url": "https://x.com/uncleboss143581/status/2054665195423740190",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054976079211679882",
+      "url": "https://x.com/OckhamMan/status/2054976079211679882",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054837046972207343",
+      "url": "https://x.com/yacineHLD/status/2054837046972207343",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054901088201953789",
+      "url": "https://x.com/edgar_training/status/2054901088201953789",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054615691421225257",
+      "url": "https://x.com/Ripuhiring/status/2054615691421225257",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054968563543232756",
+      "url": "https://x.com/waefrebeorn/status/2054968563543232756",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054627474479206884",
+      "url": "https://x.com/CalderVenn/status/2054627474479206884",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054732636099133535",
+      "url": "https://x.com/MarhinDeMosr/status/2054732636099133535",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2045951129507291420",
+      "url": "https://x.com/MarhinDeMosr/status/2045951129507291420",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054644531367489776",
+      "url": "https://x.com/x9dogg/status/2054644531367489776",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054687415382470837",
+      "url": "https://x.com/Bumperpunk/status/2054687415382470837",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054608501696327915",
+      "url": "https://x.com/Brohonatron/status/2054608501696327915",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054683429334089779",
+      "url": "https://x.com/TheEmperorSon/status/2054683429334089779",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054681011569807682",
+      "url": "https://x.com/the_treewizard/status/2054681011569807682",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054631169086394838",
+      "url": "https://x.com/megalithictimes/status/2054631169086394838",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054925290288087391",
+      "url": "https://x.com/samiannoesis/status/2054925290288087391",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054937365332861053",
+      "url": "https://x.com/akers213/status/2054937365332861053",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054893366140080426",
+      "url": "https://x.com/Drndarsky/status/2054893366140080426",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054612657630576902",
+      "url": "https://x.com/made_in_ca/status/2054612657630576902",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054913992733122812",
+      "url": "https://x.com/avbeist/status/2054913992733122812",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054796658119209203",
+      "url": "https://x.com/CircumjovialLLC/status/2054796658119209203",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054644746677579858",
+      "url": "https://x.com/Magi42/status/2054644746677579858",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054989222319116566",
+      "url": "https://x.com/RatclownAlpha/status/2054989222319116566",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054966557630234919",
+      "url": "https://x.com/NickInBytes/status/2054966557630234919",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054682171877495087",
+      "url": "https://x.com/TheRealRonEaker/status/2054682171877495087",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054791249593311582",
+      "url": "https://x.com/ScottApogee/status/2054791249593311582",
+      "discovered_from": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2055311452135707122",
+      "url": "https://x.com/affrodiziac_/status/2055311452135707122",
+      "discovered_from": "https://x.com/JohannesAchill/status/2055044057655648352"
+    },
+    {
+      "id": "2055067011709796820",
+      "url": "https://x.com/subcountability/status/2055067011709796820",
+      "discovered_from": "https://x.com/JohannesAchill/status/2055044057655648352"
+    },
+    {
+      "id": "2055101414653739277",
+      "url": "https://x.com/foardeetou/status/2055101414653739277",
+      "discovered_from": "https://x.com/JohannesAchill/status/2055044057655648352"
+    },
+    {
+      "id": "2055196608426381633",
+      "url": "https://x.com/PlateauDynamics/status/2055196608426381633",
+      "discovered_from": "https://x.com/JohannesAchill/status/2055044057655648352"
+    },
+    {
+      "id": "2055314105536561160",
+      "url": "https://x.com/PostNASA/status/2055314105536561160",
+      "discovered_from": "https://x.com/JohannesAchill/status/2055044057655648352"
+    },
+    {
+      "id": "2055075544060817642",
+      "url": "https://x.com/FirstAidSack/status/2055075544060817642",
+      "discovered_from": "https://x.com/JohannesAchill/status/2055044057655648352"
+    },
+    {
+      "id": "2055269201363747258",
+      "url": "https://x.com/standing5033/status/2055269201363747258",
+      "discovered_from": "https://x.com/JohannesAchill/status/2055044057655648352"
+    },
+    {
+      "id": "2055210252581179519",
+      "url": "https://x.com/Veyrion_/status/2055210252581179519",
+      "discovered_from": "https://x.com/JohannesAchill/status/2055044057655648352"
+    },
+    {
+      "id": "2055149015147421787",
+      "url": "https://x.com/realmaxmeme/status/2055149015147421787",
+      "discovered_from": "https://x.com/JohannesAchill/status/2055044057655648352"
+    },
+    {
+      "id": "2055298846343962698",
+      "url": "https://x.com/helms29131/status/2055298846343962698",
+      "discovered_from": "https://x.com/JohannesAchill/status/2055044057655648352"
+    },
+    {
+      "id": "2055335225106800715",
+      "url": "https://x.com/liquorloser/status/2055335225106800715",
+      "discovered_from": "https://x.com/JohannesAchill/status/2055044057655648352"
+    }
+  ],
+  "tweets": [
+    {
+      "id": "2054605365376160030",
+      "created_at": "2026-05-13T16:51:06.000Z",
+      "text": "Physicist Michio Kaku suggests dark matter isn’t matter at all. It is gravity leaking from a parallel dimension.",
+      "screen_name": "Kekius_Sage",
+      "name": "Kekius Maximus",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2040407364868673536/vhyqWwNy_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [
+        {
+          "type": "photo",
+          "url": "https://pbs.twimg.com/media/HINrX1HboAANsXn?format=jpg&name=small"
+        },
+        {
+          "type": "photo",
+          "url": "https://pbs.twimg.com/media/HINsoffboAAFCRM?format=png&name=360x360"
+        }
+      ],
+      "reply_count": 1662,
+      "retweet_count": 3426,
+      "favorite_count": 20947,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054605370795114535",
+      "created_at": "2026-05-13T16:51:07.000Z",
+      "text": "Think of a two-story house. You cannot see the people living on the floor above you, but you can hear their footsteps vibrating through the ceiling.",
+      "screen_name": "Kekius_Sage",
+      "name": "Kekius Maximus",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2040407364868673536/vhyqWwNy_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 33,
+      "retweet_count": 41,
+      "favorite_count": 1468,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030",
+      "inferred_in_reply_to_id": "2054605365376160030"
+    },
+    {
+      "id": "2054605377673863638",
+      "created_at": "2026-05-13T16:51:09.000Z",
+      "text": "Kaku argues that dark matter is the footstep of a galaxy residing in another dimension. It interacts with our reality only through the carrier of gravity.",
+      "screen_name": "Kekius_Sage",
+      "name": "Kekius Maximus",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2040407364868673536/vhyqWwNy_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 27,
+      "retweet_count": 36,
+      "favorite_count": 1071,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030",
+      "inferred_in_reply_to_id": "2054605370795114535"
+    },
+    {
+      "id": "2054605385210941650",
+      "created_at": "2026-05-13T16:51:11.000Z",
+      "text": "Physics does not require the universe to be a single, isolated sheet. It only requires the system to be logically consistent. \n\nWhat we perceive as missing mass is simply the gravitational data of a neighboring universe.",
+      "screen_name": "Kekius_Sage",
+      "name": "Kekius Maximus",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2040407364868673536/vhyqWwNy_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 9,
+      "retweet_count": 20,
+      "favorite_count": 721,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030",
+      "inferred_in_reply_to_id": "2054605377673863638"
+    },
+    {
+      "id": "2054605394576842960",
+      "created_at": "2026-05-13T16:51:13.000Z",
+      "text": "The next revolution in cosmology won't be finding a new particle in a collider.\n\nIt will be the realization that we are living in a high dimensional stack. We are just deaf to the layers sitting right on top of us.",
+      "screen_name": "Kekius_Sage",
+      "name": "Kekius Maximus",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2040407364868673536/vhyqWwNy_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 45,
+      "retweet_count": 34,
+      "favorite_count": 744,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030",
+      "inferred_in_reply_to_id": "2054605385210941650"
+    },
+    {
+      "id": "2054608501696327915",
+      "created_at": "2026-05-13T17:03:34.000Z",
+      "text": "I like him better than NDT, but still a gatekeeper.\n\nAnything is possible now. Disclosure will be about portals. Fringe was predictive programming. Anyone who has read Raymond E. Feists's Riftwar Saga will have a head start.",
+      "screen_name": "Brohonatron",
+      "name": "Brohonatron",
+      "pfp_url": "https://pbs.twimg.com/profile_images/896180594501013504/b885xRyU_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [
+        {
+          "type": "photo",
+          "url": "https://pbs.twimg.com/media/HINvih8bsAAn63R?format=jpg&name=small"
+        }
+      ],
+      "reply_count": 1,
+      "retweet_count": 2,
+      "favorite_count": 16,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054612657630576902",
+      "created_at": "2026-05-13T17:20:05.000Z",
+      "text": "The wheels on the bus goes round and round. \nWe'll hear from more physicist with all different conclusions. \nHere's the universe saying to them.\nThe universe doesn't care about what we think. \nWe haven't gotten out their and as a joke we sent the bendover probe .\nAlien Joke 🤣",
+      "screen_name": "made_in_ca",
+      "name": "riϏϏ forde",
+      "pfp_url": "https://pbs.twimg.com/profile_images/1397321429289512969/2R8vhjss_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 2,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054615691421225257",
+      "created_at": "2026-05-13T17:32:08.000Z",
+      "text": "What, You mean to say, dimensions have plumbing problem.",
+      "screen_name": "Ripuhiring",
+      "name": "Ripu",
+      "pfp_url": "https://pbs.twimg.com/profile_images/745361634885959682/o50qyFF2_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [
+        {
+          "type": "photo",
+          "url": "https://pbs.twimg.com/amplify_video_thumb/2054615669979938816/img/rSNw4vZtqOdDwCpX.jpg"
+        },
+        {
+          "type": "video",
+          "url": null,
+          "poster": "https://pbs.twimg.com/amplify_video_thumb/2054615669979938816/img/rSNw4vZtqOdDwCpX.jpg"
+        }
+      ],
+      "reply_count": 4,
+      "retweet_count": 5,
+      "favorite_count": 69,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054627474479206884",
+      "created_at": "2026-05-13T18:18:57.000Z",
+      "text": "i think he’s leaking some gravity on my leg and telling me it’s raining",
+      "screen_name": "CalderVenn",
+      "name": "Calder Venn",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2051907810758213638/Pcq2dA70_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 7,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054631169086394838",
+      "created_at": "2026-05-13T18:33:38.000Z",
+      "text": "Nope. The effects of gravity in spacetime are symmetricaly reproduced in quantum by proper/other means. In any case before proposing anything one should be capable of showing a logical cosmogony in which what we state makes sense. Else it almost seems we are trying to guess. I could add more but cui prodest?",
+      "screen_name": "megalithictimes",
+      "name": "The New Megalithic Times",
+      "pfp_url": "https://pbs.twimg.com/profile_images/1851230489597575168/A_xQId-8_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054644531367489776",
+      "created_at": "2026-05-13T19:26:44.000Z",
+      "text": "Kaku bullshitting about astrophysics since my childhood.",
+      "screen_name": "x9dogg",
+      "name": "kkahlo",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2028538554398425088/urCfj_k6_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 15,
+      "retweet_count": 21,
+      "favorite_count": 1921,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054644746677579858",
+      "created_at": "2026-05-13T19:27:35.000Z",
+      "text": "Parallel? Most of the known physical dimensions are not parallel but orthogonal. Sure, something like that could arise from various theories, such as the many-worlds interpretation (MWI) of quantum mechanics, where gravity could affect through the extra dimension(s).",
+      "screen_name": "Magi42",
+      "name": "Marko Grönroos",
+      "pfp_url": "https://pbs.twimg.com/profile_images/1316646611829825536/V1-xe-9M_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054665195423740190",
+      "created_at": "2026-05-13T20:48:51.000Z",
+      "text": "🩸ATHEISM's DILEMMA\n💫So, can you explain what the Universe is actually EXPANDING INTO⁉️ \n💥A balloon expands in our hands, but what does the expanding universe expand into ?",
+      "screen_name": "uncleboss143581",
+      "name": "Touchstone Truth",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2004962728226533377/TGCv5PuG_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [
+        {
+          "type": "photo",
+          "url": "https://pbs.twimg.com/media/HIOgkAPWkAAz2lF?format=jpg&name=small"
+        }
+      ],
+      "reply_count": 9,
+      "retweet_count": 3,
+      "favorite_count": 13,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054667168977973429",
+      "created_at": "2026-05-13T20:56:41.000Z",
+      "text": "",
+      "screen_name": "URGNews",
+      "name": "A.J Urquidi",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2048799574387752960/Sg_hMVAu_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [
+        {
+          "type": "video",
+          "url": null,
+          "poster": "https://pbs.twimg.com/amplify_video_thumb/2054667074438332416/img/MqyJhygNTgsmKmEy.jpg"
+        }
+      ],
+      "reply_count": 6,
+      "retweet_count": 12,
+      "favorite_count": 72,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054681011569807682",
+      "created_at": "2026-05-13T21:51:41.000Z",
+      "text": "I love a career of suggesting unprovable possibilities",
+      "screen_name": "the_treewizard",
+      "name": "Jim",
+      "pfp_url": "https://pbs.twimg.com/profile_images/1360275382369361920/XcDAjzfS_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 5,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054682171877495087",
+      "created_at": "2026-05-13T21:56:18.000Z",
+      "text": "The comments on this post could keep me laughing for years.   Many of us grasp general aspects of various theories.  When you start trying to point out the “errors” of some of the maybe 50 greatest living physicists, you lose.",
+      "screen_name": "TheRealRonEaker",
+      "name": "Ron Eaker",
+      "pfp_url": "https://pbs.twimg.com/profile_images/1845832696192253962/63yW9CdN_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 4,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054683429334089779",
+      "created_at": "2026-05-13T22:01:18.000Z",
+      "text": "Moody Blues - The Best Way To Travel\n\nAnd you can fly\n\nHigh as a kite, if you want to\nFaster than light, if you want to\nSpeeding through the universe\nThinking is the best way to travel\nIt's all a dream\n\nLight passing by on the screen\nAnd there's you and I on the beam\nSpeeding through the universe\nThinking is the best way to travel\nWe ride the waves\n\nDistance is gone, will we find out\nHow life began, will we find out\nSpeeding through the universe\nThinking is the best way to travel\n\nSongwriters: Mike Pinder of The Moody Blues.",
+      "screen_name": "TheEmperorSon",
+      "name": "The Emperor Son",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2051130135630225408/mRDZP_N6_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [
+        {
+          "type": "photo",
+          "url": "https://pbs.twimg.com/media/HIOzowoWIAAXpTB?format=jpg&name=small"
+        }
+      ],
+      "reply_count": 0,
+      "retweet_count": 1,
+      "favorite_count": 17,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054687415382470837",
+      "created_at": "2026-05-13T22:17:08.000Z",
+      "text": "We're reached the point in history (maybe my favorite so far) when the conversations learned Cosmologists have over glasses of Priorat at physics conferences in Lucerne are indistinguishable from the conversations stoned baristas have over ramen and GTA: Vice City in St Louis.",
+      "screen_name": "Bumperpunk",
+      "name": "Aaron Fullen",
+      "pfp_url": "https://pbs.twimg.com/profile_images/1874147713249325056/dlbIloId_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 18,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054732636099133535",
+      "created_at": "2026-05-14T01:16:50.000Z",
+      "text": "And HIRS keeps it all in this universe.\nAnd resolves dark energy, inflation, horizon/flatness/monopole problems, CMB quadrupole anomaly, and more.\nIs it right, or is it B.S.?\nI don't know, but it can be tested, unlike gravity from another universe.\n",
+      "screen_name": "MarhinDeMosr",
+      "name": "Darrel Murphy",
+      "pfp_url": "https://pbs.twimg.com/profile_images/1913392121492500480/4O1KnZLe_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [
+        {
+          "type": "photo",
+          "url": "https://pbs.twimg.com/media/HIPfzh7XEAAr2_o?format=jpg&name=small"
+        },
+        {
+          "type": "photo",
+          "url": "https://pbs.twimg.com/media/HGSto7UWgAAXabD?format=png&name=240x240"
+        }
+      ],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054791249593311582",
+      "created_at": "2026-05-14T05:09:44.000Z",
+      "text": "Kaku started going off the woo-filled deep end about 20 yrs ago.",
+      "screen_name": "ScottApogee",
+      "name": "Scott Miller - Apogee/3D Realms Founder ☢️",
+      "pfp_url": "https://pbs.twimg.com/profile_images/1604542530456002561/jpK6OiDN_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 3,
+      "retweet_count": 0,
+      "favorite_count": 32,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054796658119209203",
+      "created_at": "2026-05-14T05:31:14.000Z",
+      "text": "Absolute nonsense. Dimensions are orthogonal, not parallel, and if two \"universes\" are interacting, they are by definition one universe. Kaku leaks bullshit to get attention, that's all that's leaking here.",
+      "screen_name": "CircumjovialLLC",
+      "name": "Circumjovial",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2035437261056286720/PAzygu0o_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 3,
+      "retweet_count": 1,
+      "favorite_count": 30,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030",
+      "inferred_in_reply_to_id": "2055335761294316024"
+    },
+    {
+      "id": "2054837046972207343",
+      "created_at": "2026-05-14T08:11:43.000Z",
+      "text": "well if you think this is crazy you haven't met quantum mechanics yet, or the \"M\" theory ect ect  \n\nfor reference string theory is the least crazy of the current theories we try to describe the universe with.",
+      "screen_name": "yacineHLD",
+      "name": "yacine",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2052791996901650433/hDADbIdK_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 1,
+      "retweet_count": 1,
+      "favorite_count": 1,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054893366140080426",
+      "created_at": "2026-05-14T11:55:31.000Z",
+      "text": "Well that may have concluded my theory on space traveling.... Science needs to work out how to gravitate off Dark matter to speed around Space. 👌 🎉",
+      "screen_name": "Drndarsky",
+      "name": "©LaviYoXWade",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2039599616715333632/uO4lC88m_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054901088201953789",
+      "created_at": "2026-05-14T12:26:12.000Z",
+      "text": "What if it's not extra gravity at all? But simply a fact that time runs faster in places where there is less baryonic mass?\n\nWe're not seeing galaxies running faster than they should given their mass or planets older than the universe. It's just time ticking faster over there.",
+      "screen_name": "edgar_training",
+      "name": "Edgar Training",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2011125701890441216/2ITFgNrr_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 2,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054913992733122812",
+      "created_at": "2026-05-14T13:17:28.000Z",
+      "text": "So it's basically loot-drops from linearly \"earlier\" competing block-universes? /leftclick",
+      "screen_name": "avbeist",
+      "name": "Jan Richard Johansen",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2047885567938228224/fVkreXSF_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054925290288087391",
+      "created_at": "2026-05-14T14:02:22.000Z",
+      "text": "That's seriously provocative and amazing! Novel dimensions are impossible to verify these days, so most thought provoking\n\nThe Multiverse. As a benefit we can get more Spiderman in the Multiverse movies maybe",
+      "screen_name": "samiannoesis",
+      "name": "Samian Noesis",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2017206867173208064/D_XaLlEZ_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054937365332861053",
+      "created_at": "2026-05-14T14:50:21.000Z",
+      "text": "This guy is a part time spook hack. Watch 'em. You can't trust what he says. It can turn into \"deceptive intellectual razzle dazzle,\" any time of the day.  \n\nThe untold story: \n\nThere's never been any such thing as dark matter and now the lie is unraveling so it's time to come up",
+      "screen_name": "akers213",
+      "name": "Ronald Akers",
+      "pfp_url": "https://pbs.twimg.com/profile_images/1749211406749122560/PN9QrpCL_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 2,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054966557630234919",
+      "created_at": "2026-05-14T16:46:21.000Z",
+      "text": "‘our universe, reverberating with the footsteps of gravity, via dark matter from a parallel universe’",
+      "screen_name": "NickInBytes",
+      "name": "Nick Moore",
+      "pfp_url": "https://pbs.twimg.com/profile_images/1933204343953764355/UppDrJmx_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [
+        {
+          "type": "photo",
+          "url": "https://pbs.twimg.com/amplify_video_thumb/2054966492899557377/img/4TpY3ONeO0tPeRvP.jpg"
+        },
+        {
+          "type": "photo",
+          "url": "https://pbs.twimg.com/media/HIS1IzfaUAAEhQN?format=jpg&name=small"
+        },
+        {
+          "type": "photo",
+          "url": "https://pbs.twimg.com/media/HIS1I0ibgAMSTqY?format=jpg&name=small"
+        },
+        {
+          "type": "video",
+          "url": null,
+          "poster": "https://pbs.twimg.com/amplify_video_thumb/2054966492899557377/img/4TpY3ONeO0tPeRvP.jpg"
+        }
+      ],
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054968563543232756",
+      "created_at": "2026-05-14T16:54:19.000Z",
+      "text": "my theorem is being talked about and accepted as multiple discovery by the string theory people?\n\nVICTORY SCREECH",
+      "screen_name": "waefrebeorn",
+      "name": "WuBu ⪋ WaefreBeorn 🇺🇸 👑",
+      "pfp_url": "https://pbs.twimg.com/profile_images/1963220221197422592/iPQTiArc_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [
+        {
+          "type": "photo",
+          "url": "https://pbs.twimg.com/media/HIS3BJLW4AAfC8R?format=jpg&name=360x360"
+        },
+        {
+          "type": "photo",
+          "url": "https://pbs.twimg.com/media/HIS3BJMW0AAvfUc?format=jpg&name=small"
+        }
+      ],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054976079211679882",
+      "created_at": "2026-05-14T17:24:11.000Z",
+      "text": "That's the best thing about string theory.  When something unexpected happens you just add another dimension that no one can access or test to disprove it.",
+      "screen_name": "OckhamMan",
+      "name": "Okham Man",
+      "pfp_url": "https://pbs.twimg.com/profile_images/1970563745412751360/UNgckD0K_400x400.png",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 23,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2054989222319116566",
+      "created_at": "2026-05-14T18:16:25.000Z",
+      "text": "Nobody ever listens to old Ratclown telling people how Space and Time works. Gotta wait til famous TV scientist says it's parallel universe gravity leaking in, when I can imagine a 5th dimension of space time with a finite number of the same galaxy in the same 3d space  and 4th",
+      "screen_name": "RatclownAlpha",
+      "name": "Ratclown Pottytime",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2045591225710055424/PVeT8keP_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2055067011709796820",
+      "created_at": "2026-05-14T23:25:31.000Z",
+      "text": "Kaku has spent the last 30 yeard writing popsci books - I mean literally one every 2 years. He doesn't represent much of anything.",
+      "screen_name": "subcountability",
+      "name": "nk",
+      "pfp_url": "https://pbs.twimg.com/profile_images/1955969826217721859/Eq2wz7_U_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/JohannesAchill/status/2055044057655648352"
+    },
+    {
+      "id": "2055075544060817642",
+      "created_at": "2026-05-14T23:59:25.000Z",
+      "text": "Any science that isn't an ultimate theory of everything will be really really bad metaphysics.",
+      "screen_name": "FirstAidSack",
+      "name": "FirstAidSack",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2006415320848670720/MICfBP3E_400x400.png",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/JohannesAchill/status/2055044057655648352"
+    },
+    {
+      "id": "2055101414653739277",
+      "created_at": "2026-05-15T01:42:13.000Z",
+      "text": "The universe is a fundamental infinity unless you break conservation and destroy physics entirely. Our math doesn’t even function UNLESS spacetime is infinite. Otherwise there’d be ends to the coordinate axes and no irrational numbers. Its a nonphysical singularity mind state",
+      "screen_name": "foardeetou",
+      "name": "Revelator42",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2000024650852544516/cQweW0jw_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/JohannesAchill/status/2055044057655648352"
+    },
+    {
+      "id": "2055149015147421787",
+      "created_at": "2026-05-15T04:51:22.000Z",
+      "text": "So, being like \"it's god\" is a superior explanation?",
+      "screen_name": "realmaxmeme",
+      "name": "Max DunRingill",
+      "pfp_url": "https://pbs.twimg.com/profile_images/1943232536110325760/xNrXlbzq_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/JohannesAchill/status/2055044057655648352"
+    },
+    {
+      "id": "2055191537538003204",
+      "created_at": "2026-05-15T07:40:20.000Z",
+      "text": "And scientists living in that other dimension are wondering why galaxies in their universe are moving as if they had less mass than they actually have.",
+      "screen_name": "JCeacc",
+      "name": "JC 🇱🇻🤝🇺🇦 e/acc",
+      "pfp_url": "https://pbs.twimg.com/profile_images/809080167415054336/veo9jSoi_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    },
+    {
+      "id": "2055196608426381633",
+      "created_at": "2026-05-15T08:00:29.000Z",
+      "text": "O",
+      "screen_name": "PlateauDynamics",
+      "name": "The Plateau Guy",
+      "pfp_url": "https://pbs.twimg.com/profile_images/1999024787276902401/LjUNAlXB_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [
+        {
+          "type": "photo",
+          "url": "https://pbs.twimg.com/media/HIWGa_VXQAEYO3-?format=jpg&name=small"
+        }
+      ],
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 4,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/JohannesAchill/status/2055044057655648352"
+    },
+    {
+      "id": "2055210252581179519",
+      "created_at": "2026-05-15T08:54:42.000Z",
+      "text": "The issue is that some scientists think that just because they are good in one domain they can suddenly do philosophy. But philosophy isn't that simple to say the least. Metaphysics is the domain of philosophers and cannot be done by physicists.",
+      "screen_name": "Veyrion_",
+      "name": "Veyrion",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2042267254956429312/cHCx13cz_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/JohannesAchill/status/2055044057655648352"
+    },
+    {
+      "id": "2055269201363747258",
+      "created_at": "2026-05-15T12:48:57.000Z",
+      "text": "They can’t make any advances in real physics, so they come up with ridiculous theories, most of which are designed to negate the fine-tuning argument for a creator",
+      "screen_name": "standing5033",
+      "name": "Cure 8",
+      "pfp_url": "https://pbs.twimg.com/profile_images/1913314557356830720/DqUCfB18_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 3,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/JohannesAchill/status/2055044057655648352"
+    },
+    {
+      "id": "2055298846343962698",
+      "created_at": "2026-05-15T14:46:45.000Z",
+      "text": "I have no dog in this fight, but now you've got me curious . . . \nwhat SHOULD physics nerds be working on?",
+      "screen_name": "helms29131",
+      "name": "S u c r e m c e s",
+      "pfp_url": "https://pbs.twimg.com/profile_images/1968995684918706176/lBUHLfD8_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 1,
+      "favorite_count": 0,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/JohannesAchill/status/2055044057655648352"
+    },
+    {
+      "id": "2055311452135707122",
+      "created_at": "2026-05-15T15:36:50.000Z",
+      "text": "i'm sure you wanted to say theoretical physics",
+      "screen_name": "affrodiziac_",
+      "name": "aphrodiziac",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2039767604584493056/tQd4363Z_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/JohannesAchill/status/2055044057655648352"
+    },
+    {
+      "id": "2055314105536561160",
+      "created_at": "2026-05-15T15:47:23.000Z",
+      "text": "They don't even try to hide it",
+      "screen_name": "PostNASA",
+      "name": "Fan Post NASA Lies",
+      "pfp_url": "https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png",
+      "in_reply_to_screen_names": [],
+      "media": [
+        {
+          "type": "photo",
+          "url": "https://pbs.twimg.com/amplify_video_thumb/2055314048565334016/img/8bbdPLFyd2qKQMqO.jpg"
+        },
+        {
+          "type": "video",
+          "url": null,
+          "poster": "https://pbs.twimg.com/amplify_video_thumb/2055314048565334016/img/8bbdPLFyd2qKQMqO.jpg"
+        }
+      ],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 2,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/JohannesAchill/status/2055044057655648352"
+    },
+    {
+      "id": "2055335225106800715",
+      "created_at": "2026-05-15T17:11:18.000Z",
+      "text": "Do you think this excerpt from pop science writer michio kaku is representative of the entirety of the modern field of physics",
+      "screen_name": "liquorloser",
+      "name": "The kid lucky",
+      "pfp_url": "https://pbs.twimg.com/profile_images/1348475477506322434/YtiHGF4d_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 3,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/JohannesAchill/status/2055044057655648352"
+    },
+    {
+      "id": "2055335761294316024",
+      "created_at": "2026-05-15T17:13:26.000Z",
+      "text": "Recent experimental evidence that any physical problem can be solved by adding dimensions:",
+      "screen_name": "CircumjovialLLC",
+      "name": "Circumjovial",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2035437261056286720/PAzygu0o_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [
+        {
+          "type": "photo",
+          "url": "https://pbs.twimg.com/ext_tw_video_thumb/2055159562685075456/pu/img/4QS3Q6ialYrGlwwf.jpg"
+        },
+        {
+          "type": "video",
+          "url": null,
+          "poster": "https://pbs.twimg.com/ext_tw_video_thumb/2055159562685075456/pu/img/4QS3Q6ialYrGlwwf.jpg"
+        }
+      ],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/Kekius_Sage/status/2054605365376160030"
+    }
+  ]
+}
