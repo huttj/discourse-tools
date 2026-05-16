@@ -1,0 +1,1012 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Install Thread Scraper</title>
+    <style>
+      body { font: 15px/1.5 system-ui, -apple-system, sans-serif; max-width: 680px; margin: 40px auto; padding: 0 16px; color: #222; }
+      h1 { margin-bottom: 4px; }
+      p { color: #555; }
+      .drag {
+        display: inline-block; padding: 10px 16px; margin: 18px 0;
+        background: #1d9bf0; color: #fff; text-decoration: none;
+        border-radius: 6px; font-weight: 600;
+      }
+      .drag:hover { background: #1a8cd8; }
+      ol li { margin-bottom: 6px; }
+      pre { background: #f4f4f4; padding: 12px; border-radius: 6px; overflow: auto; font-size: 12px; max-height: 200px; }
+      code { background: #f4f4f4; padding: 1px 5px; border-radius: 3px; }
+      .row { display: flex; gap: 8px; align-items: center; }
+      button { padding: 6px 12px; border: 1px solid #ccc; background: #fff; border-radius: 4px; cursor: pointer; font: inherit; }
+    </style>
+  </head>
+  <body>
+    <h1>Thread Scraper <span id="version" style="font-size: 13px; color: #888; font-weight: normal;"></span></h1>
+    <p>Drag the link below to your bookmarks bar, then click it on any X/Twitter thread page.</p>
+
+    <p><a id="bm" class="drag" href="javascript:void(0)">📥 Scrape Thread</a></p>
+
+    <h3>Usage</h3>
+    <ol>
+      <li>Open a thread on <code>x.com</code> or <code>twitter.com</code>.</li>
+      <li>Click the <strong>Scrape Thread</strong> bookmarklet — a panel appears bottom-right.</li>
+      <li>Click <strong>Auto-scroll</strong>. It scrolls to top, then down, capturing tweets and queuing linked threads.</li>
+      <li>Click <strong>Process queue</strong> to crawl every queued link sequentially — a single worker tab opens, loads each page, scrapes it, and moves on. Click <strong>Stop</strong> to halt.</li>
+      <li>Use <strong>Rescan page</strong> to re-capture the current page (handy after <strong>Reset all</strong>).</li>
+      <li>Click <strong>Download JSON</strong> (or <strong>Copy JSON</strong>) when done.</li>
+    </ol>
+
+    <h3>Notes</h3>
+    <ul>
+      <li>Hooks <code>fetch</code> / <code>XHR</code> at install time — the initial page-load request was already consumed, but scrolling up to the thread root re-fetches it.</li>
+      <li>Stores URLs (pfp, media), not base64, by default. Toggle <strong>Capture pfp base64</strong> in the panel to inline profile pictures as data URIs in the export.</li>
+      <li>Reply structure: each tweet has <code>in_reply_to_status_id</code> and <code>conversation_id</code>.</li>
+      <li><strong>Process queue</strong> reuses one worker tab, navigating it from page to page (no tab storm). Allow pop-ups for the site once.</li>
+    </ul>
+
+    <div class="row">
+      <button id="copy-btn">Copy bookmarklet source</button>
+      <span id="status" style="color:#888"></span>
+    </div>
+    <pre id="src">loading…</pre>
+
+    <script>
+// Thread scraper. Loaded by install.html to construct a bookmarklet.
+// Bump SCRAPER_VERSION on every meaningful change.
+// v4 (2026-05-14): DOM scraping fallback
+// v5 (2026-05-14): localStorage accumulation across pages, link queue,
+//                  reply-parent inference from DOM order, broader show-more
+// v6 (2026-05-14): force GraphQL replay via performance entries + captured auth
+// v7 (2026-05-14): faster auto-scroll, queue captured tweets with replies
+// v8 (2026-05-15): sequential queue processing in a single worker tab
+//                  (deep crawl), Rescan-page button, optional pfp base64 capture
+window.__SCRAPER_VERSION = "v8";
+window.__SCRAPER = function () {
+  const VERSION = "v8";
+  if (window.__threadScraperInstalled) {
+    if (window.__threadScraper) window.__threadScraper._show();
+    console.log("[scraper " + VERSION + "] already installed");
+    return;
+  }
+  window.__threadScraperInstalled = true;
+
+  // --- Persisted state ----------------------------------------------------
+  const STORAGE_KEY = "__threadScraperTweets_v1";
+  const QUEUE_KEY = "__threadScraperQueue_v1";
+  const VISITED_KEY = "__threadScraperVisited_v1";
+  const SETTINGS_KEY = "__threadScraperSettings_v1";
+
+  function loadTweets() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return new Map();
+      const obj = JSON.parse(raw);
+      return new Map(Object.entries(obj));
+    } catch (e) { return new Map(); }
+  }
+  function saveTweets() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(Object.fromEntries(tweets))); }
+    catch (e) { console.warn("[scraper] save tweets failed", e); }
+  }
+  function loadQueue() {
+    try { return new Map(JSON.parse(localStorage.getItem(QUEUE_KEY) || "[]")); }
+    catch (e) { return new Map(); }
+  }
+  function saveQueue() {
+    try { localStorage.setItem(QUEUE_KEY, JSON.stringify(Array.from(queue.entries()))); }
+    catch (e) { console.warn("[scraper] save queue failed", e); }
+  }
+  function loadVisited() {
+    try { return new Set(JSON.parse(localStorage.getItem(VISITED_KEY) || "[]")); }
+    catch (e) { return new Set(); }
+  }
+  function saveVisited() {
+    try { localStorage.setItem(VISITED_KEY, JSON.stringify(Array.from(visited))); }
+    catch (e) { console.warn("[scraper] save visited failed", e); }
+  }
+  function loadSettings() {
+    try { return Object.assign({ pfpBase64: false }, JSON.parse(localStorage.getItem(SETTINGS_KEY) || "{}")); }
+    catch (e) { return { pfpBase64: false }; }
+  }
+  function saveSettings() {
+    try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); }
+    catch (e) { console.warn("[scraper] save settings failed", e); }
+  }
+
+  const tweets = loadTweets();
+  const queue = loadQueue(); // Map<id, {url, discovered_from}>
+  const visited = loadVisited(); // Set<id> — tweets we've focal-scraped
+  const settings = loadSettings();
+  const pfpCache = new Map(); // url -> base64 data URI. In-memory only (kept out of localStorage to dodge the quota).
+
+  // Debounced persistence
+  let saveTimer = null;
+  function scheduleSave() {
+    if (saveTimer) return;
+    saveTimer = setTimeout(() => { saveTweets(); saveQueue(); saveVisited(); saveTimer = null; }, 600);
+  }
+
+  // --- Scan context -------------------------------------------------------
+  // A ctx bundles the document/window being scraped so the same scan code
+  // works against the current page *and* the worker tab used by Process queue.
+  function makeCtx(win) {
+    win = win || window;
+    const loc = win.location;
+    const m = (loc.pathname || "").match(/^\/([^\/]+)\/status\/(\d+)/);
+    return {
+      win, doc: win.document, url: loc.href, host: loc.host,
+      focalId: m ? m[2] : null,
+      focalScreenName: m ? m[1] : null,
+      pageOrder: [], // per-page first-seen tweet IDs, for reply inference
+    };
+  }
+  const ctx0 = makeCtx(window); // the page the bookmarklet was clicked on
+
+  if (ctx0.focalId) {
+    queue.delete(ctx0.focalId);
+    visited.add(ctx0.focalId);
+    saveVisited();
+    saveQueue();
+  }
+
+  // --- Stats --------------------------------------------------------------
+  const stats = { responses_seen: 0, graphql_hits: 0, json_parsed: 0, dom_scanned: 0, dom_with_fiber: 0, gql_replayed: 0, pfp_fetched: 0 };
+  const URL_RE = /\/i\/api\/graphql\/|\/graphql\//;
+
+  // Public Twitter web client bearer — same for everyone, hardcoded in their bundle.
+  // We override with whatever we capture from Headers.set/append if Twitter sets one.
+  const DEFAULT_BEARER =
+    "Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA";
+  let capturedAuth = null;
+  let capturedTransId = null;
+
+  // Hook Headers to capture auth/transaction-id used by Twitter's own requests
+  const origHSet = Headers.prototype.set;
+  Headers.prototype.set = function (name, value) {
+    try {
+      const ln = String(name).toLowerCase();
+      if (ln === "authorization" && typeof value === "string" && value.indexOf("Bearer ") === 0) capturedAuth = value;
+      else if (ln === "x-client-transaction-id" && typeof value === "string") capturedTransId = value;
+    } catch (e) {}
+    return origHSet.apply(this, arguments);
+  };
+  const origHAppend = Headers.prototype.append;
+  Headers.prototype.append = function (name, value) {
+    try {
+      const ln = String(name).toLowerCase();
+      if (ln === "authorization" && typeof value === "string" && value.indexOf("Bearer ") === 0) capturedAuth = value;
+      else if (ln === "x-client-transaction-id" && typeof value === "string") capturedTransId = value;
+    } catch (e) {}
+    return origHAppend.apply(this, arguments);
+  };
+
+  function getCookie(name) {
+    const m = document.cookie.match(new RegExp("(?:^|; )" + name + "=([^;]+)"));
+    return m ? decodeURIComponent(m[1]) : null;
+  }
+
+  function buildAuthHeaders() {
+    const csrf = getCookie("ct0");
+    if (!csrf) return null;
+    const h = {
+      authorization: capturedAuth || DEFAULT_BEARER,
+      "x-csrf-token": csrf,
+      "x-twitter-active-user": "yes",
+      "x-twitter-auth-type": "OAuth2Session",
+      "x-twitter-client-language": "en",
+      "content-type": "application/json",
+    };
+    if (capturedTransId) h["x-client-transaction-id"] = capturedTransId;
+    return h;
+  }
+
+  function uniqueGqlUrls(win) {
+    win = win || window;
+    const entries = win.performance.getEntriesByType("resource");
+    const seen = new Set();
+    const out = [];
+    for (const e of entries) {
+      if (!URL_RE.test(e.name)) continue;
+      // Dedupe by (operation, variables) — same URL = same query
+      if (seen.has(e.name)) continue;
+      seen.add(e.name);
+      out.push(e.name);
+    }
+    return out;
+  }
+
+  // Replay GraphQL requests from a window's perf entries. `quiet` suppresses
+  // the alerts (used when driving the worker tab).
+  async function forceGQL(win, quiet) {
+    win = win || window;
+    const urls = uniqueGqlUrls(win);
+    if (urls.length === 0) {
+      if (!quiet) alert("No GraphQL URLs in perf entries yet. Scroll the page a bit first so Twitter makes some requests.");
+      return 0;
+    }
+    const headers = buildAuthHeaders();
+    if (!headers) { if (!quiet) alert("Missing ct0 cookie. Are you logged in?"); return 0; }
+    console.log("[scraper] replaying " + urls.length + " GQL URLs (auth: " + (capturedAuth ? "captured" : "default") + ")");
+    let totalAdded = 0;
+    let ok = 0, fail = 0;
+    for (const url of urls) {
+      try {
+        const res = await win.fetch(url, { credentials: "include", headers, method: "GET" });
+        const op = (url.match(/graphql\/[^\/]+\/([^?]+)/) || [])[1] || "?";
+        if (!res.ok) {
+          fail++;
+          console.warn("[scraper] " + op + " -> " + res.status);
+          continue;
+        }
+        const data = await res.json();
+        const before = tweets.size;
+        walk(data);
+        const added = tweets.size - before;
+        totalAdded += added;
+        ok++;
+        stats.gql_replayed++;
+        console.log("[scraper] " + op + ": +" + added);
+      } catch (e) {
+        fail++;
+        console.warn("[scraper] replay error", e);
+      }
+    }
+    scheduleSave();
+    updateUI();
+    console.log("[scraper] force GQL done: " + ok + " ok, " + fail + " failed, +" + totalAdded + " tweets");
+    return totalAdded;
+  }
+
+  // --- Network hooks (kept as belt-and-suspenders) ------------------------
+  const origJson = Response.prototype.json;
+  Response.prototype.json = function () {
+    const url = this.url || "";
+    stats.responses_seen++;
+    const p = origJson.call(this);
+    if (URL_RE.test(url)) {
+      stats.graphql_hits++;
+      p.then((d) => { stats.json_parsed++; walk(d); }).catch(() => {});
+    }
+    return p;
+  };
+  const origText = Response.prototype.text;
+  Response.prototype.text = function () {
+    const url = this.url || "";
+    const p = origText.call(this);
+    if (URL_RE.test(url)) {
+      stats.graphql_hits++;
+      p.then((t) => { try { walk(JSON.parse(t)); stats.json_parsed++; } catch (e) {} }).catch(() => {});
+    }
+    return p;
+  };
+  const origFetch = window.fetch;
+  window.fetch = function () {
+    const args = arguments;
+    const p = origFetch.apply(this, args);
+    const url = typeof args[0] === "string" ? args[0] : args[0] && args[0].url;
+    if (url && URL_RE.test(url)) {
+      p.then((r) => r.clone().json().then((d) => walk(d)).catch(() => {})).catch(() => {});
+    }
+    return p;
+  };
+  const origOpen = XMLHttpRequest.prototype.open;
+  const origSend = XMLHttpRequest.prototype.send;
+  XMLHttpRequest.prototype.open = function (method, url) {
+    this.__ts_url = url;
+    return origOpen.apply(this, arguments);
+  };
+  XMLHttpRequest.prototype.send = function () {
+    if (this.__ts_url && URL_RE.test(this.__ts_url)) {
+      this.addEventListener("load", () => { try { walk(JSON.parse(this.responseText)); } catch (e) {} });
+    }
+    return origSend.apply(this, arguments);
+  };
+
+  // --- GraphQL walking (if hooks ever fire) -------------------------------
+  function walk(obj, seen) {
+    seen = seen || new WeakSet();
+    if (!obj || typeof obj !== "object" || seen.has(obj)) return;
+    seen.add(obj);
+    const tn = obj.__typename;
+    if ((tn === "Tweet" || tn === "TweetTombstone") && obj.rest_id && obj.legacy) extractTweetGraphQL(obj);
+    if (tn === "TweetWithVisibilityResults" && obj.tweet) walk(obj.tweet, seen);
+    if (Array.isArray(obj)) {
+      for (let i = 0; i < obj.length; i++) walk(obj[i], seen);
+    } else {
+      for (const k of Object.keys(obj)) walk(obj[k], seen);
+    }
+  }
+
+  function extractTweetGraphQL(t) {
+    try {
+      const id = t.rest_id;
+      if (!id) return;
+      const legacy = t.legacy || {};
+      const userResult = (t.core && t.core.user_results && t.core.user_results.result) || {};
+      const userLegacy = userResult.legacy || {};
+      const userCore = userResult.core || {};
+      const noteTweet = t.note_tweet && t.note_tweet.note_tweet_results && t.note_tweet.note_tweet_results.result;
+      const mediaArr = (legacy.extended_entities && legacy.extended_entities.media) || (legacy.entities && legacy.entities.media) || [];
+      const media = mediaArr.map((m) => {
+        const out = { type: m.type, url: m.media_url_https };
+        if (m.video_info && m.video_info.variants) {
+          const mp4 = m.video_info.variants.filter((v) => v.content_type === "video/mp4").sort((a, b) => (b.bitrate || 0) - (a.bitrate || 0))[0];
+          if (mp4) out.video_url = mp4.url;
+        }
+        if (m.ext_alt_text) out.alt = m.ext_alt_text;
+        return out;
+      });
+      const incoming = {
+        id,
+        created_at: legacy.created_at,
+        text: (noteTweet && noteTweet.text) || legacy.full_text || "",
+        screen_name: userCore.screen_name || userLegacy.screen_name,
+        name: userCore.name || userLegacy.name,
+        pfp_url: (userLegacy.profile_image_url_https || "").replace("_normal", ""),
+        user_id: userResult.rest_id,
+        in_reply_to_status_id: legacy.in_reply_to_status_id_str || null,
+        in_reply_to_user_id: legacy.in_reply_to_user_id_str || null,
+        in_reply_to_screen_name: legacy.in_reply_to_screen_name || null,
+        conversation_id: legacy.conversation_id_str,
+        quoted_status_id: legacy.quoted_status_id_str || null,
+        media,
+        reply_count: legacy.reply_count,
+        retweet_count: legacy.retweet_count,
+        favorite_count: legacy.favorite_count,
+        lang: legacy.lang,
+        _source: "graphql",
+      };
+      upsertTweet(incoming);
+    } catch (e) { console.warn("[scraper] graphql extract failed", e); }
+  }
+
+  // --- React fiber extraction (fallback path) -----------------------------
+  function findReactKey(el, prefix) {
+    for (const k in el) if (k.startsWith(prefix)) return k;
+    return null;
+  }
+  function getFiber(el) {
+    const k = findReactKey(el, "__reactFiber$");
+    return k ? el[k] : null;
+  }
+  function findTweetShape(obj, depth, seen) {
+    if (!obj || typeof obj !== "object" || depth > 8 || seen.has(obj)) return null;
+    seen.add(obj);
+    const tn = obj.__typename;
+    if ((tn === "Tweet" || tn === "TweetTombstone") && obj.rest_id && obj.legacy) return obj;
+    if (tn === "TweetWithVisibilityResults" && obj.tweet) {
+      const r = findTweetShape(obj.tweet, depth + 1, seen);
+      if (r) return r;
+    }
+    if (Array.isArray(obj)) {
+      for (let i = 0; i < obj.length; i++) {
+        const r = findTweetShape(obj[i], depth + 1, seen);
+        if (r) return r;
+      }
+    } else {
+      for (const k in obj) {
+        if (k === "return" || k === "stateNode" || k === "child" || k === "sibling" || k === "alternate" || k === "_owner") continue;
+        const r = findTweetShape(obj[k], depth + 1, seen);
+        if (r) return r;
+      }
+    }
+    return null;
+  }
+  function findTweetForArticle(article) {
+    let fiber = getFiber(article);
+    let hops = 0;
+    while (fiber && hops < 40) {
+      const seen = new WeakSet();
+      const r = findTweetShape(fiber.memoizedProps, 0, seen) || findTweetShape(fiber.memoizedState, 0, seen);
+      if (r) return r;
+      fiber = fiber.return;
+      hops++;
+    }
+    return null;
+  }
+
+  // --- DOM scraping -------------------------------------------------------
+  function extractInlineText(el) {
+    let out = "";
+    for (const node of el.childNodes) {
+      if (node.nodeType === 3) out += node.textContent;
+      else if (node.nodeType === 1) {
+        if (node.tagName === "IMG") out += node.alt || "";
+        else out += extractInlineText(node);
+      }
+    }
+    return out;
+  }
+
+  function parseArticleDOM(a, ctx) {
+    try {
+      const timeEl = a.querySelector("time");
+      if (!timeEl) return null;
+      const timeLink = timeEl.closest("a");
+      if (!timeLink) return null;
+      const href = timeLink.getAttribute("href") || "";
+      const m = href.match(/^\/([^\/]+)\/status\/(\d+)/);
+      if (!m) return null;
+      const screen_name = m[1];
+      const id = m[2];
+      const created_at = timeEl.getAttribute("datetime");
+
+      const nameEl = a.querySelector('[data-testid="User-Name"]');
+      let name = null;
+      if (nameEl) {
+        const firstLink = nameEl.querySelector("a");
+        name = firstLink ? extractInlineText(firstLink).trim() : extractInlineText(nameEl).trim();
+      }
+
+      let pfp_url = null;
+      const avatarImg = a.querySelector('[data-testid="Tweet-User-Avatar"] img, [data-testid^="UserAvatar-Container-"] img');
+      if (avatarImg && avatarImg.src) pfp_url = avatarImg.src.replace("_normal", "_400x400");
+
+      const textEl = a.querySelector('[data-testid="tweetText"]');
+      const text = textEl ? extractInlineText(textEl) : "";
+
+      // "Replying to @x @y"
+      const in_reply_to_screen_names = [];
+      for (const d of a.querySelectorAll("div")) {
+        const t = d.textContent || "";
+        if (!t.startsWith("Replying to")) continue;
+        const inner = d.querySelector("div");
+        if (inner && inner.textContent.startsWith("Replying to")) continue;
+        for (const link of d.querySelectorAll('a[role="link"]')) {
+          const h = link.getAttribute("href") || "";
+          const mm = h.match(/^\/([^\/?#]+)$/);
+          if (mm && !in_reply_to_screen_names.includes(mm[1])) in_reply_to_screen_names.push(mm[1]);
+        }
+        break;
+      }
+
+      const media = [];
+      for (const img of a.querySelectorAll('[data-testid="tweetPhoto"] img')) {
+        if (img.src && !img.src.includes("emoji")) media.push({ type: "photo", url: img.src });
+      }
+      for (const v of a.querySelectorAll("video")) {
+        const entry = { type: v.getAttribute("poster") ? "video" : "gif", url: v.src || null };
+        if (v.poster) entry.poster = v.poster;
+        media.push(entry);
+      }
+
+      const parseCount = (el) => {
+        if (!el) return undefined;
+        const s = (el.getAttribute("aria-label") || "").match(/(\d[\d,\.]*)\s*(K|M)?/);
+        if (!s) return undefined;
+        let n = parseFloat(s[1].replace(/,/g, ""));
+        if (s[2] === "K") n *= 1000;
+        if (s[2] === "M") n *= 1_000_000;
+        return Math.round(n);
+      };
+      const reply_count = parseCount(a.querySelector('[data-testid="reply"]'));
+      const retweet_count = parseCount(a.querySelector('[data-testid="retweet"]'));
+      const favorite_count = parseCount(a.querySelector('[data-testid="like"], [data-testid="unlike"]'));
+
+      return {
+        id,
+        created_at,
+        text,
+        screen_name,
+        name,
+        pfp_url,
+        in_reply_to_screen_names,
+        media,
+        reply_count,
+        retweet_count,
+        favorite_count,
+        _source: "dom",
+        _scraped_on: ctx ? ctx.url : location.href,
+      };
+    } catch (e) {
+      console.warn("[scraper] parseArticleDOM failed", e);
+      return null;
+    }
+  }
+
+  // Merge two partial tweet records — prefer non-empty values, preserve any inferred fields
+  function upsertTweet(incoming) {
+    const id = incoming.id;
+    if (!id) return false;
+    const existing = tweets.get(id) || {};
+    const merged = Object.assign({}, existing);
+    for (const k of Object.keys(incoming)) {
+      const v = incoming[k];
+      if (v === null || v === undefined) {
+        if (merged[k] === undefined) merged[k] = v;
+        continue;
+      }
+      if (typeof v === "string" && v === "" && merged[k]) continue;
+      if (Array.isArray(v) && v.length === 0 && Array.isArray(merged[k]) && merged[k].length > 0) continue;
+      merged[k] = v;
+    }
+    const isNew = !tweets.has(id);
+    tweets.set(id, merged);
+    return isNew;
+  }
+
+  // --- Reply parent inference --------------------------------------------
+  function inferReplyParents(ctx) {
+    const order = ctx.pageOrder;
+    for (let i = 0; i < order.length; i++) {
+      const id = order[i];
+      const t = tweets.get(id);
+      if (!t) continue;
+      // If we have an exact GraphQL parent ID, prefer that
+      if (t.in_reply_to_status_id) { t.inferred_in_reply_to_id = t.in_reply_to_status_id; continue; }
+      const targets = t.in_reply_to_screen_names || [];
+      let parent = null;
+      for (let j = i - 1; j >= 0; j--) {
+        const cand = tweets.get(order[j]);
+        if (!cand) continue;
+        if (targets.length === 0) {
+          // Self-thread inference: same author, prior in order
+          if (cand.screen_name === t.screen_name) { parent = cand.id; break; }
+          continue;
+        }
+        if (targets.includes(cand.screen_name)) { parent = cand.id; break; }
+      }
+      if (parent) t.inferred_in_reply_to_id = parent;
+      else if (ctx.focalId && targets.includes(ctx.focalScreenName)) t.inferred_in_reply_to_id = ctx.focalId;
+    }
+  }
+
+  // --- Link queue ---------------------------------------------------------
+  function scanLinks(ctx) {
+    // Pass 1: every /status/ link not yet visited and not in queue.
+    // This catches "Show this thread", quoted tweets, in-text references, etc.
+    const links = ctx.doc.querySelectorAll('a[href*="/status/"]');
+    for (const a of links) {
+      const href = a.getAttribute("href") || "";
+      const m = href.match(/^\/([^\/?#]+)\/status\/(\d+)/);
+      if (!m) continue;
+      const sn = m[1];
+      const id = m[2];
+      if (visited.has(id)) continue;
+      if (queue.has(id)) continue;
+      const url = "https://" + ctx.host + "/" + sn + "/status/" + id;
+      queue.set(id, { url, discovered_from: ctx.url });
+    }
+    // Pass 2: every captured tweet whose own reply tree we haven't explored.
+    // A tweet visible here might have replies that don't all render on this page.
+    for (const t of tweets.values()) {
+      if (!t.id || !t.screen_name) continue;
+      if (visited.has(t.id)) continue;
+      if (queue.has(t.id)) continue;
+      // reply_count === 0 means definitely no replies → skip.
+      // reply_count missing/undefined means we couldn't parse it → still queue (generous).
+      if (t.reply_count === 0) continue;
+      const url = "https://" + ctx.host + "/" + t.screen_name + "/status/" + t.id;
+      queue.set(t.id, { url, discovered_from: ctx.url });
+    }
+  }
+
+  // --- Scan loop ---------------------------------------------------------
+  function scanDOM(ctx) {
+    ctx = ctx || ctx0;
+    const before = tweets.size;
+    const beforeQ = queue.size;
+    const nodes = ctx.doc.querySelectorAll('article[data-testid="tweet"]');
+    let foundFiber = 0;
+    for (const a of nodes) {
+      // Try fiber for richer data (rarely works on current X.com, but cheap)
+      const data = findTweetForArticle(a);
+      if (data) { extractTweetGraphQL(data); foundFiber++; }
+      const parsed = parseArticleDOM(a, ctx);
+      if (parsed) {
+        upsertTweet(parsed);
+        if (!ctx.pageOrder.includes(parsed.id)) ctx.pageOrder.push(parsed.id);
+      }
+    }
+    stats.dom_scanned += nodes.length;
+    stats.dom_with_fiber += foundFiber;
+    scanLinks(ctx);
+    inferReplyParents(ctx);
+    scheduleSave();
+    updateUI();
+    if (tweets.size > before || queue.size > beforeQ) {
+      console.log(`[scraper] +${tweets.size - before} tweets, +${queue.size - beforeQ} queued. totals: ${tweets.size}/${queue.size}`);
+    }
+    return tweets.size - before;
+  }
+
+  // --- Show-more clicking -------------------------------------------------
+  const clickedButtons = new WeakSet();
+  const SHOW_MORE_PATTERNS = [
+    /^show replies$/,
+    /^show more replies$/,
+    /^show more$/,
+    /^show probable spam$/,
+    /^show additional replies/,
+    /^view \d+ more repl/,
+    /^show post$/,
+    /^show sensitive content$/,
+  ];
+  function clickShowMore(ctx) {
+    ctx = ctx || ctx0;
+    const candidates = ctx.doc.querySelectorAll('button, [role="button"]');
+    let clicked = 0;
+    for (const el of candidates) {
+      if (clickedButtons.has(el)) continue;
+      const t = (el.textContent || "").trim().toLowerCase();
+      if (!t || t.length > 40) continue;
+      if (!SHOW_MORE_PATTERNS.some((p) => p.test(t))) continue;
+      // Don't click links — those navigate
+      if (el.tagName === "A" || el.closest("a")) continue;
+      const r = el.getBoundingClientRect();
+      if (r.bottom > -100 && r.top < (ctx.win.innerHeight || 800) + 200) {
+        try { el.click(); clickedButtons.add(el); clicked++; } catch (e) {}
+      }
+    }
+    if (clicked) console.log(`[scraper] clicked ${clicked} show-more`);
+  }
+
+  function sleep(ms) { return new Promise((r) => setTimeout(r, ms)); }
+
+  let scrolling = false, scrollStop = false;
+  let processing = false, processStop = false, worker = null;
+
+  async function autoScroll() {
+    if (scrolling) { scrollStop = true; return; }
+    scrolling = true; scrollStop = false;
+    setBtn("ts-scroll", "Stop");
+    scanDOM(ctx0);
+    window.scrollTo({ top: 0, behavior: "instant" });
+    await sleep(600);
+    scanDOM(ctx0);
+    let lastTotal = -1;
+    let stableFor = 0;
+    while (stableFor < 4 && !scrollStop) {
+      window.scrollBy({ top: Math.floor(window.innerHeight * 0.9), behavior: "instant" });
+      await sleep(350);
+      scanDOM(ctx0);
+      clickShowMore(ctx0);
+      await sleep(120);
+      scanDOM(ctx0);
+      const total = tweets.size + queue.size;
+      if (total === lastTotal) stableFor++;
+      else { stableFor = 0; lastTotal = total; }
+    }
+    scrolling = false; scrollStop = false;
+    setBtn("ts-scroll", "Auto-scroll");
+    saveTweets(); saveQueue(); saveVisited();
+    if (settings.pfpBase64) { setStatus("fetching pfp base64…"); await capturePfps(); }
+    setStatus("");
+    console.log(`[scraper] done. ${tweets.size} tweets / ${queue.size} queued.`);
+  }
+
+  // --- Sequential queue processing (single worker tab) --------------------
+  function shortUrl(url) {
+    return "…/" + ((url.match(/status\/(\d+)/) || [])[1] || url);
+  }
+
+  // Wait for the worker tab to finish navigating to `url` and render tweets.
+  async function waitForThread(w, url) {
+    let wantPath = "";
+    try { wantPath = new URL(url).pathname; } catch (e) {}
+    const deadline = Date.now() + 25000;
+    while (Date.now() < deadline) {
+      if (w.closed) return false;
+      try {
+        const d = w.document;
+        const onPath = w.location && w.location.pathname === wantPath;
+        if (onPath && d && d.readyState !== "loading" && d.querySelector('article[data-testid="tweet"]')) return true;
+      } catch (e) { /* transient cross-doc access during navigation */ }
+      await sleep(350);
+    }
+    try { return !!w.document.querySelector('article[data-testid="tweet"]'); }
+    catch (e) { return false; }
+  }
+
+  // Drive the worker tab: navigate to `url`, scroll, scan, replay GraphQL.
+  async function scrapePage(w, url) {
+    if (w.closed) return false;
+    setStatus("loading " + shortUrl(url));
+    try { w.location.href = url; } catch (e) { console.warn("[scraper] nav failed", e); return false; }
+    const ready = await waitForThread(w, url);
+    if (!ready) { setStatus("skipped (no thread) " + shortUrl(url)); return false; }
+
+    const ctx = makeCtx(w);
+    if (ctx.focalId) { visited.add(ctx.focalId); queue.delete(ctx.focalId); }
+    setStatus("scraping " + shortUrl(url));
+
+    scanDOM(ctx);
+    try { w.scrollTo({ top: 0, behavior: "instant" }); } catch (e) {}
+    await sleep(500);
+    scanDOM(ctx);
+
+    let lastTotal = -1, stableFor = 0, steps = 0;
+    while (stableFor < 4 && !processStop && steps < 400 && !w.closed) {
+      try { w.scrollBy({ top: Math.floor((w.innerHeight || 800) * 0.9), behavior: "instant" }); } catch (e) {}
+      await sleep(400);
+      scanDOM(ctx);
+      clickShowMore(ctx);
+      await sleep(150);
+      scanDOM(ctx);
+      steps++;
+      const total = tweets.size + queue.size;
+      if (total === lastTotal) stableFor++;
+      else { stableFor = 0; lastTotal = total; }
+    }
+    // Replay the worker tab's GraphQL for exact reply IDs / richer fields.
+    try { await forceGQL(w, true); } catch (e) {}
+    scheduleSave();
+    return true;
+  }
+
+  async function processQueue() {
+    if (processing) { processStop = true; setStatus("stopping…"); return; }
+    if (queue.size === 0) { alert("Queue is empty. Run Auto-scroll or Rescan page first to discover links."); return; }
+    if (!confirm(
+      "Process the queue one page at a time?\n\n" +
+      queue.size + " pages queued now. Links discovered while crawling are also processed (deep crawl), " +
+      "so the total will grow. A single worker tab opens and does the work — click Stop to halt."
+    )) return;
+
+    // window.open MUST happen synchronously inside this click gesture, or the
+    // pop-up blocker rejects it. We reuse this one tab for the whole run.
+    const w = window.open("about:blank", "ts-worker");
+    if (!w) {
+      alert("Pop-up blocked. Allow pop-ups for this site, then click Process queue again.");
+      return;
+    }
+    worker = w;
+    // Try to keep the controller tab focused so its timers aren't throttled.
+    try { w.blur(); window.focus(); } catch (e) {}
+
+    processing = true; processStop = false;
+    updateUI();
+    let done = 0;
+    const MAX = 2000; // safety cap on a runaway deep crawl
+    while (queue.size > 0 && !processStop && done < MAX) {
+      if (w.closed) { alert("Worker tab was closed — stopping."); break; }
+      const next = queue.entries().next().value;
+      if (!next) break;
+      const [id, v] = next;
+      // Remove + mark visited up front so a failed page can't loop forever.
+      queue.delete(id);
+      visited.add(id);
+      saveQueue(); saveVisited();
+      updateUI();
+      try { await scrapePage(w, v.url); }
+      catch (e) { console.warn("[scraper] page failed", e); }
+      done++;
+      updateUI();
+      await sleep(300);
+    }
+
+    try { if (worker && !worker.closed) worker.close(); } catch (e) {}
+    worker = null;
+    processing = false; processStop = false;
+    saveTweets(); saveQueue(); saveVisited();
+    if (settings.pfpBase64) { setStatus("fetching pfp base64…"); await capturePfps(); }
+    updateUI();
+    setStatus("done — " + done + " pages processed");
+    console.log(`[scraper] processQueue done: ${done} pages, ${tweets.size} tweets, ${queue.size} still queued`);
+  }
+
+  // --- Profile-picture base64 capture (opt-in) ----------------------------
+  async function capturePfps() {
+    const urls = new Set();
+    for (const t of tweets.values()) if (t.pfp_url) urls.add(t.pfp_url);
+    let added = 0, failed = 0;
+    for (const url of urls) {
+      if (pfpCache.has(url)) continue;
+      try {
+        const res = await fetch(url, { mode: "cors" });
+        if (!res.ok) { pfpCache.set(url, null); failed++; continue; }
+        const blob = await res.blob();
+        const dataUrl = await new Promise((resolve, reject) => {
+          const fr = new FileReader();
+          fr.onload = () => resolve(fr.result);
+          fr.onerror = reject;
+          fr.readAsDataURL(blob);
+        });
+        pfpCache.set(url, dataUrl);
+        added++; stats.pfp_fetched++;
+      } catch (e) {
+        pfpCache.set(url, null);
+        failed++;
+      }
+    }
+    if (added || failed) console.log(`[scraper] pfp base64: +${added}, ${failed} failed, ${pfpCache.size} cached`);
+    return added;
+  }
+
+  // --- Export -------------------------------------------------------------
+  function buildExport() {
+    // tweets is keyed by ID so it is already unique; the seen-set is a belt-
+    // and-suspenders guard so the exported array can never carry a dupe.
+    const sorted = Array.from(tweets.values())
+      .sort((a, b) => (a.id.length - b.id.length) || a.id.localeCompare(b.id));
+    const seen = new Set();
+    const list = [];
+    for (const t of sorted) {
+      if (seen.has(t.id)) continue;
+      seen.add(t.id);
+      if (settings.pfpBase64) {
+        list.push(Object.assign({}, t, { pfp_base64: (t.pfp_url && pfpCache.get(t.pfp_url)) || null }));
+      } else {
+        list.push(t);
+      }
+    }
+    return {
+      captured_at: new Date().toISOString(),
+      tweet_count: list.length,
+      queue_count: queue.size,
+      pfp_base64: settings.pfpBase64,
+      queued: Array.from(queue.entries()).map(([id, v]) => ({ id, ...v })),
+      tweets: list,
+    };
+  }
+  async function copyJSON() {
+    if (settings.pfpBase64) { setStatus("fetching pfp base64…"); await capturePfps(); setStatus(""); }
+    const data = buildExport();
+    const json = JSON.stringify(data, null, 2);
+    navigator.clipboard.writeText(json).then(
+      () => alert(`Copied ${data.tweet_count} tweets (${data.queue_count} queued) to clipboard.`),
+      (e) => { console.error(e); console.log(json); alert("Clipboard failed — JSON dumped to console."); }
+    );
+  }
+  async function downloadJSON() {
+    if (settings.pfpBase64) { setStatus("fetching pfp base64…"); await capturePfps(); setStatus(""); }
+    const data = buildExport();
+    const json = JSON.stringify(data, null, 2);
+    const blob = new Blob([json], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `threads-${new Date().toISOString().replace(/[:.]/g, "-")}.json`;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  // --- Queue actions ------------------------------------------------------
+  function clearQueue() {
+    if (!confirm(`Clear ${queue.size} queued links?`)) return;
+    queue.clear(); saveQueue(); updateUI();
+  }
+  function resetAll() {
+    if (!confirm(`Erase all ${tweets.size} tweets, ${queue.size} queued, and ${visited.size} visited?`)) return;
+    tweets.clear(); queue.clear(); visited.clear();
+    ctx0.pageOrder.length = 0;
+    pfpCache.clear();
+    saveTweets(); saveQueue(); saveVisited(); updateUI();
+    setStatus("reset — use Rescan page to re-capture this page");
+  }
+
+  // --- Panel UI -----------------------------------------------------------
+  const panel = document.createElement("div");
+  panel.id = "thread-scraper-panel";
+  panel.style.cssText =
+    "position:fixed;bottom:16px;right:16px;z-index:2147483647;background:#15202b;color:#fff;border:1px solid #38444d;border-radius:8px;padding:12px;font:13px system-ui,-apple-system,sans-serif;box-shadow:0 4px 16px rgba(0,0,0,.5);min-width:230px";
+  panel.innerHTML =
+    '<div style="font-weight:600;margin-bottom:2px;display:flex;justify-content:space-between;align-items:center"><span>Thread Scraper</span><span id="ts-close" style="cursor:pointer;opacity:.6;font-size:16px;line-height:1">×</span></div>' +
+    '<div style="font-size:11px;opacity:.55;margin-bottom:8px">' + VERSION + "</div>" +
+    '<div id="ts-count" style="margin-bottom:2px;opacity:.85">0 tweets · 0 queued · 0 visited</div>' +
+    '<div id="ts-status" style="font-size:11px;opacity:.6;margin-bottom:8px;min-height:14px"></div>' +
+    '<button id="ts-scroll">Auto-scroll</button>' +
+    '<button id="ts-rescan">Rescan page</button>' +
+    '<button id="ts-force">Force GQL</button>' +
+    '<button id="ts-process">Process queue</button>' +
+    '<div style="display:flex;gap:4px"><button id="ts-copy" style="flex:1">Copy</button><button id="ts-download" style="flex:1">Download</button></div>' +
+    '<label style="display:flex;align-items:center;gap:6px;font-size:12px;margin:8px 0 4px;cursor:pointer;opacity:.9"><input type="checkbox" id="ts-pfp" style="margin:0"><span>Capture pfp base64</span></label>' +
+    '<button id="ts-clearq" style="background:#536471">Clear queue</button>' +
+    '<button id="ts-reset" style="background:#536471">Reset all</button>';
+  for (const b of panel.querySelectorAll("button")) {
+    b.style.cssText += ";display:block;width:100%;margin-bottom:4px;padding:6px 8px;color:#fff;border:0;border-radius:4px;cursor:pointer;font:inherit";
+    if (!b.style.background) b.style.background = "#1d9bf0";
+  }
+  // Re-apply default blue (the loop above set background empty -> reset)
+  for (const id of ["ts-scroll", "ts-rescan", "ts-force", "ts-process", "ts-copy", "ts-download"]) {
+    panel.querySelector("#" + id).style.background = "#1d9bf0";
+  }
+  document.body.appendChild(panel);
+
+  function updateUI() {
+    const el = panel.querySelector("#ts-count");
+    if (el) el.textContent = `${tweets.size} tweets · ${queue.size} queued · ${visited.size} visited`;
+    const pb = panel.querySelector("#ts-process");
+    if (pb) pb.textContent = processing ? "Stop processing" : `Process queue (${queue.size})`;
+  }
+  function setBtn(id, text) {
+    const el = panel.querySelector("#" + id);
+    if (el) el.textContent = text;
+  }
+  function setStatus(msg) {
+    const el = panel.querySelector("#ts-status");
+    if (el) el.textContent = msg || "";
+  }
+
+  panel.querySelector("#ts-scroll").onclick = autoScroll;
+  panel.querySelector("#ts-rescan").onclick = () => {
+    setStatus("rescanning current page…");
+    const added = scanDOM(ctx0);
+    setStatus(`rescanned — ${tweets.size} tweets, ${queue.size} queued`);
+  };
+  panel.querySelector("#ts-force").onclick = () => {
+    setBtn("ts-force", "Replaying…");
+    forceGQL(window).finally(() => setBtn("ts-force", "Force GQL"));
+  };
+  panel.querySelector("#ts-process").onclick = processQueue;
+  panel.querySelector("#ts-copy").onclick = copyJSON;
+  panel.querySelector("#ts-download").onclick = downloadJSON;
+  panel.querySelector("#ts-clearq").onclick = clearQueue;
+  panel.querySelector("#ts-reset").onclick = resetAll;
+  panel.querySelector("#ts-close").onclick = () => (panel.style.display = "none");
+
+  const pfpToggle = panel.querySelector("#ts-pfp");
+  pfpToggle.checked = !!settings.pfpBase64;
+  pfpToggle.onchange = () => {
+    settings.pfpBase64 = pfpToggle.checked;
+    saveSettings();
+    if (settings.pfpBase64) {
+      setStatus("fetching pfp base64…");
+      capturePfps().then(() => setStatus(`pfp base64: ${pfpCache.size} cached`));
+    } else {
+      setStatus("pfp base64 capture off");
+    }
+  };
+
+  window.__threadScraper = {
+    version: VERSION,
+    tweets, queue, visited, stats, settings, pfpCache, ctx0,
+    export: buildExport,
+    copy: copyJSON,
+    download: downloadJSON,
+    autoScroll,
+    scanDOM,
+    walk,
+    findTweetForArticle,
+    inferReplyParents,
+    processQueue,
+    scrapePage,
+    capturePfps,
+    clearQueue,
+    resetAll,
+    forceGQL,
+    buildAuthHeaders,
+    uniqueGqlUrls,
+    _show: () => (panel.style.display = ""),
+  };
+
+  // Initial scan in case tweets are already rendered
+  setTimeout(() => { scanDOM(ctx0); }, 250);
+
+  // Periodic debug log
+  setInterval(() => {
+    console.log("[scraper]", { tweets: tweets.size, queued: queue.size, ...stats });
+  }, 8000);
+
+  updateUI();
+  console.log("[scraper " + VERSION + "] installed. loaded " + tweets.size + " tweets / " + queue.size + " queued from storage.");
+};
+
+    </script>
+    <script>
+      (function () {
+        if (typeof window.__SCRAPER !== "function") {
+          document.getElementById("src").textContent = "Failed to load scraper.js — open this page via http://, not file:// (e.g. `python -m http.server` in this directory).";
+          return;
+        }
+        const fnSrc = window.__SCRAPER.toString();
+        const wrapped = "(" + fnSrc + ")();";
+        const href = "javascript:" + encodeURIComponent(wrapped);
+        const link = document.getElementById("bm");
+        link.href = href;
+        document.getElementById("src").textContent = wrapped;
+        const ver = window.__SCRAPER_VERSION || "";
+        document.getElementById("version").textContent = ver;
+        document.title = "Install Thread Scraper " + ver;
+        link.textContent = "📥 Scrape " + ver;
+
+        document.getElementById("copy-btn").onclick = function () {
+          navigator.clipboard.writeText(href).then(
+            () => { document.getElementById("status").textContent = "Bookmarklet URL copied."; },
+            () => { document.getElementById("status").textContent = "Copy failed."; }
+          );
+        };
+      })();
+    </script>
+  </body>
+</html>

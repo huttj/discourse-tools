@@ -1,0 +1,1333 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tweet Plot Visualizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
+    <!--
+      To produce a finished plot:
+        1. Duplicate this file (e.g. cp chart-template.html my-thread.html).
+        2. On the data line below, replace the placeholder string
+           __CHART_DATA_PLACEHOLDER__ — surrounding quotes included — with the
+           combined JSON object for your thread. The result should read:
+               window.__EMBEDDED_DATA__ = { "pfps": { ... }, ... };
+           The combined object carries both the scraped tweets and the
+           categorization, with these five keys:
+               { pfps, tweets, axes, categories, data }
+           (A nested form, { tweetData: {...}, categorizationData: {...} },
+           is also accepted.)
+        3. Open the file in a browser.
+
+      Without embedded data the page falls back to a paste-in form. You can
+      also append ?load=<url> to fetch a JSON file at runtime instead of
+      embedding it.
+    -->
+    <script>window.__EMBEDDED_DATA__ = "__CHART_DATA_PLACEHOLDER__";</script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel" data-presets="react,typescript">
+const { useState, useRef, useEffect } = React;
+
+const TweetPlotVisualizer = () => {
+  const [tweetInput, setTweetInput] = useState('');
+  const [categorizationInput, setCategorizationInput] = useState('');
+  const [tweetData, setTweetData] = useState(null);
+  const [categorizationData, setCategorizationData] = useState(null);
+  const [hoveredTweet, setHoveredTweet] = useState(null);
+  const [hoveredCategory, setHoveredCategory] = useState(null);
+  const [categoryTooltipPos, setCategoryTooltipPos] = useState(null);
+  const [selectedTweets, setSelectedTweets] = useState(new Set());
+  const [error, setError] = useState('');
+  const [timelineTime, setTimelineTime] = useState(0);
+  const [minTime, setMinTime] = useState(0);
+  const [maxTime, setMaxTime] = useState(0);
+  const [selectedAxes, setSelectedAxes] = useState({ x: 0, y: 1 });
+  const [axisDirections, setAxisDirections] = useState({ x: 1, y: 1 });
+  const [showAxisPicker, setShowAxisPicker] = useState(null);
+  const [isSelecting, setIsSelecting] = useState(false);
+  const [selectionStart, setSelectionStart] = useState(null);
+  const [selectionEnd, setSelectionEnd] = useState(null);
+  const [detailsWidth, setDetailsWidth] = useState(384);
+  const [isResizing, setIsResizing] = useState(false);
+  const [zoom, setZoom] = useState(1);
+  const [panOffset, setPanOffset] = useState({ x: 0, y: 0 });
+  const [isPanning, setIsPanning] = useState(false);
+  const [panStart, setPanStart] = useState(null);
+  const [spacePressed, setSpacePressed] = useState(false);
+  const [showReplyEdges, setShowReplyEdges] = useState(false);
+  const svgRef = useRef(null);
+
+  const CATEGORY_COLORS = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E2', '#F8B739', '#52B788'];
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.code === 'Space' && !spacePressed) {
+        e.preventDefault();
+        setSpacePressed(true);
+      } else if (e.code === 'ArrowLeft') {
+        e.preventDefault();
+        setTimelineTime(Math.max(minTime, timelineTime - (maxTime - minTime) / 100));
+      } else if (e.code === 'ArrowRight') {
+        e.preventDefault();
+        setTimelineTime(Math.min(maxTime, timelineTime + (maxTime - minTime) / 100));
+      }
+    };
+
+    const handleKeyUp = (e) => {
+      if (e.code === 'Space') {
+        e.preventDefault();
+        setSpacePressed(false);
+        setIsPanning(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+    };
+  }, [spacePressed, minTime, maxTime, timelineTime]);
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (isResizing) {
+        const newWidth = window.innerWidth - e.clientX;
+        setDetailsWidth(Math.max(300, Math.min(800, newWidth)));
+      }
+    };
+
+    const handleMouseUp = () => {
+      if (isResizing) {
+        setIsResizing(false);
+      }
+    };
+
+    if (isResizing) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+      return () => {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+      };
+    }
+  }, [isResizing]);
+
+  // Validate a parsed tweet + categorization pair and, if it checks out,
+  // push it into state. Returns true on success.
+  const applyData = (tweets, categorization) => {
+    setError('');
+
+    // Validate tweet data structure
+    if (!tweets || !tweets.tweets) {
+      setError('Tweet data missing "tweets" array');
+      return false;
+    }
+    if (!Array.isArray(tweets.tweets)) {
+      setError('Tweet data "tweets" must be an array');
+      return false;
+    }
+    if (tweets.tweets.length === 0) {
+      setError('Tweet data "tweets" array is empty');
+      return false;
+    }
+    if (!tweets.pfps) {
+      setError('Tweet data missing "pfps" object');
+      return false;
+    }
+
+    // Validate first tweet has required fields
+    const firstTweet = tweets.tweets[0];
+    if (!firstTweet.id) {
+      setError('Tweets missing "id" field');
+      return false;
+    }
+    if (!firstTweet.timestamp) {
+      setError('Tweets missing "timestamp" field');
+      return false;
+    }
+    if (!firstTweet.author) {
+      setError('Tweets missing "author" field');
+      return false;
+    }
+
+    // Validate categorization data structure
+    if (!categorization || !categorization.axes) {
+      setError('Categorization data missing "axes" array');
+      return false;
+    }
+    if (!Array.isArray(categorization.axes)) {
+      setError('Categorization data "axes" must be an array');
+      return false;
+    }
+    if (categorization.axes.length === 0) {
+      setError('Categorization data "axes" array is empty');
+      return false;
+    }
+    if (!categorization.categories) {
+      setError('Categorization data missing "categories" array');
+      return false;
+    }
+    if (!Array.isArray(categorization.categories)) {
+      setError('Categorization data "categories" must be an array');
+      return false;
+    }
+    if (!categorization.data) {
+      setError('Categorization data missing "data" object');
+      return false;
+    }
+
+    // Validate axes structure
+    const firstAxis = categorization.axes[0];
+    if (!firstAxis.positive || !firstAxis.negative) {
+      setError('Axes missing "positive" or "negative" labels');
+      return false;
+    }
+
+    // Validate categories structure
+    if (categorization.categories.length > 0) {
+      const firstCat = categorization.categories[0];
+      if (!firstCat.id) {
+        setError('Categories missing "id" field');
+        return false;
+      }
+      if (!firstCat.coords || !Array.isArray(firstCat.coords)) {
+        setError('Categories missing "coords" array');
+        return false;
+      }
+    }
+
+    // Validate that tweet data has coordinates
+    let coordCount = 0;
+    for (const tweet of tweets.tweets) {
+      if (categorization.data[tweet.id]?.coords) {
+        coordCount++;
+      }
+    }
+
+    if (coordCount === 0) {
+      setError('No tweets have coordinate data in categorization.data');
+      return false;
+    }
+
+    // Validate coordinate dimensions match axes
+    const firstTweetWithCoords = tweets.tweets.find(t => categorization.data[t.id]?.coords);
+    if (firstTweetWithCoords) {
+      const coords = categorization.data[firstTweetWithCoords.id].coords;
+      if (coords.length < categorization.axes.length) {
+        setError(`Coordinate dimensions (${coords.length}) less than number of axes (${categorization.axes.length})`);
+        return false;
+      }
+    }
+
+    setTweetData(tweets);
+    setCategorizationData(categorization);
+
+    const timestamps = tweets.tweets.map(t => new Date(t.timestamp).getTime());
+    const min = Math.min(...timestamps);
+    const max = Math.max(...timestamps);
+    setMinTime(min);
+    setMaxTime(max);
+    setTimelineTime(max);
+    setSelectedAxes({ x: 0, y: Math.min(1, categorization.axes.length - 1) });
+    setAxisDirections({ x: 1, y: 1 });
+    setSelectedTweets(new Set());
+    setZoom(1);
+    setPanOffset({ x: 0, y: 0 });
+    setShowReplyEdges(false);
+    setError('');
+    return true;
+  };
+
+  const parseJSON = () => {
+    try {
+      setError('');
+      const tweets = JSON.parse(tweetInput);
+      const categorization = JSON.parse(categorizationInput);
+      applyData(tweets, categorization);
+    } catch (e) {
+      setError('Error parsing JSON: ' + e.message + '\n\nStack: ' + e.stack);
+    }
+  };
+
+  // Split a single combined object into the tweet + categorization pair the
+  // visualizer expects. Accepts either a flat object with all five keys
+  // ({ pfps, tweets, axes, categories, data }) or a nested object
+  // ({ tweetData, categorizationData }).
+  const splitCombined = (obj) => {
+    if (obj && obj.tweetData && obj.categorizationData) {
+      return [obj.tweetData, obj.categorizationData];
+    }
+    return [
+      { pfps: obj.pfps || {}, tweets: obj.tweets || [] },
+      {
+        axes: obj.axes || [],
+        categories: obj.categories || [],
+        data: obj.data || {},
+      },
+    ];
+  };
+
+  // On mount, pick up data embedded in the page or fetched via ?load=<url>.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const loadUrl = params.get('load');
+
+    if (loadUrl) {
+      fetch(loadUrl)
+        .then(r => r.json())
+        .then(obj => {
+          const [t, c] = splitCombined(obj);
+          applyData(t, c);
+        })
+        .catch(e => setError('Failed to load ' + loadUrl + ': ' + e.message));
+      return;
+    }
+
+    const embedded = window.__EMBEDDED_DATA__;
+    if (embedded && typeof embedded === 'object') {
+      const [t, c] = splitCombined(embedded);
+      applyData(t, c);
+    }
+  }, []);
+
+  const handleAxisClick = (side) => {
+    setShowAxisPicker(side);
+  };
+
+  const selectAxis = (side, axisIndex) => {
+    if (side === 'left' || side === 'right') {
+      setSelectedAxes(prev => ({ ...prev, x: axisIndex }));
+      setAxisDirections(prev => ({ ...prev, x: side === 'left' ? -1 : 1 }));
+    } else {
+      setSelectedAxes(prev => ({ ...prev, y: axisIndex }));
+      setAxisDirections(prev => ({ ...prev, y: side === 'top' ? 1 : -1 }));
+    }
+    setShowAxisPicker(null);
+  };
+
+  const getCategoryColor = (categoryId) => {
+    const index = categorizationData.categories.findIndex(c => c.id === categoryId);
+    return CATEGORY_COLORS[index % CATEGORY_COLORS.length];
+  };
+
+  const getTweetColors = (tweetId) => {
+    if (!categorizationData.data[tweetId]) return ['#999999'];
+    const categories = categorizationData.data[tweetId].categories || [];
+    if (categories.length === 0) return ['#999999'];
+    return categories.map(catId => getCategoryColor(catId));
+  };
+
+  // Deterministic jitter based on tweet ID
+  const getJitter = (tweetId, coordKey) => {
+    // Use tweet ID to generate consistent random offset
+    let hash = 0;
+    const str = tweetId + coordKey;
+    for (let i = 0; i < str.length; i++) {
+      hash = ((hash << 5) - hash) + str.charCodeAt(i);
+      hash = hash & hash;
+    }
+    // Convert to a value between -1 and 1
+    return (Math.abs(hash) % 1000) / 500 - 1;
+  };
+
+  const [jitterAmount, setJitterAmount] = useState(40);
+
+  const coordsToPixels = (coords, width, height, tweetId = null) => {
+    const xValue = coords[selectedAxes.x] * axisDirections.x;
+    const yValue = coords[selectedAxes.y] * axisDirections.y;
+
+    const padding = 80;
+    const plotWidth = width - 2 * padding;
+    const plotHeight = height - 2 * padding;
+
+    const allCoords = [];
+    tweetData.tweets.forEach(tweet => {
+      if (categorizationData.data[tweet.id]?.coords) {
+        allCoords.push(categorizationData.data[tweet.id].coords);
+      }
+    });
+    categorizationData.categories.forEach(cat => {
+      allCoords.push(cat.coords);
+    });
+
+    if (allCoords.length === 0) return [0, 0];
+
+    const allX = allCoords.map(c => c[selectedAxes.x] * axisDirections.x);
+    const allY = allCoords.map(c => c[selectedAxes.y] * axisDirections.y);
+    const minX = Math.min(...allX);
+    const maxX = Math.max(...allX);
+    const minY = Math.min(...allY);
+    const maxY = Math.max(...allY);
+
+    const rangeX = maxX - minX || 1;
+    const rangeY = maxY - minY || 1;
+
+    const margin = 0.1;
+    const expandedRangeX = rangeX * (1 + 2 * margin);
+    const expandedRangeY = rangeY * (1 + 2 * margin);
+
+    const normalizedX = (xValue - minX + rangeX * margin) / expandedRangeX;
+    const normalizedY = (yValue - minY + rangeY * margin) / expandedRangeY;
+
+    let pixelX = (normalizedX - 0.5) * plotWidth;
+    let pixelY = (0.5 - normalizedY) * plotHeight;
+
+    // Always apply jitter to tweets
+    if (tweetId) {
+      const jitterX = getJitter(tweetId, 'x') * jitterAmount;
+      const jitterY = getJitter(tweetId, 'y') * jitterAmount;
+      pixelX += jitterX;
+      pixelY += jitterY;
+    }
+
+    return [pixelX, pixelY];
+  };
+
+  const isTweetVisible = (tweet) => {
+    return new Date(tweet.timestamp).getTime() <= timelineTime;
+  };
+
+  const convexHull = (points) => {
+    if (points.length < 3) return points;
+
+    // Safety check: limit number of points to prevent crashes
+    if (points.length > 10000) {
+      console.warn('Too many points for convex hull, sampling...');
+      const step = Math.ceil(points.length / 1000);
+      points = points.filter((_, i) => i % step === 0);
+    }
+
+    const hull = [];
+    let leftmost = 0;
+    for (let i = 1; i < points.length; i++) {
+      if (points[i][0] < points[leftmost][0]) leftmost = i;
+    }
+
+    let current = leftmost;
+    let iterations = 0;
+    const maxIterations = points.length * 2; // Safety limit
+
+    do {
+      hull.push(points[current]);
+      let next = (current + 1) % points.length;
+
+      for (let i = 0; i < points.length; i++) {
+        const cross = (points[next][0] - points[current][0]) * (points[i][1] - points[current][1]) -
+                     (points[next][1] - points[current][1]) * (points[i][0] - points[current][0]);
+        if (cross < 0) next = i;
+      }
+
+      current = next;
+      iterations++;
+
+      // Safety check to prevent infinite loops
+      if (iterations > maxIterations) {
+        console.error('Convex hull exceeded max iterations');
+        break;
+      }
+    } while (current !== leftmost && iterations < maxIterations);
+
+    return hull;
+  };
+
+  const getCategoryBlob = (categoryId, width, height) => {
+    try {
+      const tweetsInCategory = tweetData.tweets.filter(tweet => {
+        if (!isTweetVisible(tweet)) return false;
+        const data = categorizationData.data[tweet.id];
+        return data?.categories?.includes(categoryId);
+      });
+
+      if (tweetsInCategory.length === 0) return null;
+
+      let points = tweetsInCategory.map(tweet => {
+        const coords = categorizationData.data[tweet.id].coords;
+        return coordsToPixels(coords, width, height, tweet.id);
+      });
+
+      console.log(`Category ${categoryId}: ${points.length} points`, points);
+
+      if (points.length === 1) {
+        const x = points[0][0];
+        const y = points[0][1];
+        const numSegments = 32;
+        const radius = 40;
+        let path = `M ${x + radius} ${y}`;
+        for (let i = 1; i <= numSegments; i++) {
+          const angle = (i / numSegments) * 2 * Math.PI;
+          const px = x + radius * Math.cos(angle);
+          const py = y + radius * Math.sin(angle);
+          path += ` L ${px} ${py}`;
+        }
+        return path + ' Z';
+      }
+
+      // Add padding points around each original point to ensure minimum size
+      const paddedPoints = [];
+      const minPadding = 30; // Minimum padding around each point
+
+      points.forEach(point => {
+        // Add the original point
+        paddedPoints.push(point);
+
+        // Add 8 surrounding points for minimum area
+        const angles = [0, Math.PI/4, Math.PI/2, 3*Math.PI/4, Math.PI, 5*Math.PI/4, 3*Math.PI/2, 7*Math.PI/4];
+        angles.forEach(angle => {
+          paddedPoints.push([
+            point[0] + minPadding * Math.cos(angle),
+            point[1] + minPadding * Math.sin(angle)
+          ]);
+        });
+      });
+
+      const hull = convexHull(paddedPoints);
+
+      if (!hull || hull.length < 3) return null;
+
+      const centroid = hull.reduce((acc, p) => [acc[0] + p[0], acc[1] + p[1]], [0, 0]);
+      centroid[0] /= hull.length;
+      centroid[1] /= hull.length;
+
+      const expandedHull = hull.map((point) => {
+        const x = point[0];
+        const y = point[1];
+        const dx = x - centroid[0];
+        const dy = y - centroid[1];
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const expandDist = 30; // Reduced from 60
+        return [x + (dx / dist) * expandDist, y + (dy / dist) * expandDist];
+      });
+
+      if (expandedHull.length < 3) return null;
+
+      // Limit smoothing points for performance
+      const pointsPerSegment = Math.min(32, Math.floor(500 / expandedHull.length));
+
+      // First, add interpolated points between hull vertices
+      const smoothedPoints = [];
+
+      for (let i = 0; i < expandedHull.length; i++) {
+        const curr = expandedHull[i];
+        const next = expandedHull[(i + 1) % expandedHull.length];
+
+        for (let j = 0; j < pointsPerSegment; j++) {
+          const t = j / pointsPerSegment;
+          const smoothT = t * t * t * (t * (t * 6 - 15) + 10);
+          const px = curr[0] + (next[0] - curr[0]) * smoothT;
+          const py = curr[1] + (next[1] - curr[1]) * smoothT;
+          smoothedPoints.push([px, py]);
+        }
+      }
+
+      // Safety check
+      if (smoothedPoints.length > 5000) {
+        console.warn('Too many smoothed points, reducing...');
+        const step = Math.ceil(smoothedPoints.length / 1000);
+        const reduced = [];
+        for (let i = 0; i < smoothedPoints.length; i += step) {
+          reduced.push(smoothedPoints[i]);
+        }
+        return `M ${reduced[0][0]} ${reduced[0][1]} ` +
+               reduced.slice(1).map(p => `L ${p[0]} ${p[1]}`).join(' ') + ' Z';
+      }
+
+      // Second pass: subdivide vertices to further smooth corners
+      const subdividedPoints = [];
+      for (let i = 0; i < smoothedPoints.length; i++) {
+        const prev = smoothedPoints[(i - 1 + smoothedPoints.length) % smoothedPoints.length];
+        const curr = smoothedPoints[i];
+        const next = smoothedPoints[(i + 1) % smoothedPoints.length];
+
+        const t1 = 0.15;
+
+        const p1x = curr[0] + (prev[0] - curr[0]) * t1;
+        const p1y = curr[1] + (prev[1] - curr[1]) * t1;
+
+        const p2x = curr[0] + (next[0] - curr[0]) * t1;
+        const p2y = curr[1] + (next[1] - curr[1]) * t1;
+
+        subdividedPoints.push([p1x, p1y]);
+        subdividedPoints.push([p2x, p2y]);
+      }
+
+      let path = `M ${subdividedPoints[0][0]} ${subdividedPoints[0][1]}`;
+      for (let i = 1; i < subdividedPoints.length; i++) {
+        path += ` L ${subdividedPoints[i][0]} ${subdividedPoints[i][1]}`;
+      }
+
+      return path + ' Z';
+    } catch (e) {
+      console.error('Error generating category blob:', e);
+      return null;
+    }
+  };
+
+  const handleTweetClick = (e, tweetId) => {
+    if (spacePressed || isPanning) {
+      e.stopPropagation();
+      return;
+    }
+
+    e.stopPropagation();
+    const newSelection = new Set(selectedTweets);
+
+    if (e.metaKey || e.ctrlKey) {
+      if (newSelection.has(tweetId)) {
+        newSelection.delete(tweetId);
+      } else {
+        newSelection.add(tweetId);
+      }
+    } else if (e.shiftKey) {
+      newSelection.delete(tweetId);
+    } else {
+      if (newSelection.has(tweetId) && newSelection.size === 1) {
+        newSelection.clear();
+      } else {
+        newSelection.clear();
+        newSelection.add(tweetId);
+      }
+    }
+
+    setSelectedTweets(newSelection);
+  };
+
+  const handleCategoryClick = (e, categoryId) => {
+    if (spacePressed || isPanning) {
+      e.stopPropagation();
+      return;
+    }
+
+    e.stopPropagation();
+    const tweetsInCategory = tweetData.tweets
+      .filter(tweet => categorizationData.data[tweet.id]?.categories?.includes(categoryId))
+      .map(t => t.id);
+
+    const newSelection = new Set(selectedTweets);
+
+    // Check if all tweets in category are already selected
+    const allSelected = tweetsInCategory.every(id => newSelection.has(id));
+
+    if (e.metaKey || e.ctrlKey) {
+      if (allSelected) {
+        // All are selected, so toggle them off
+        tweetsInCategory.forEach(id => newSelection.delete(id));
+      } else {
+        // Not all selected, so select all
+        tweetsInCategory.forEach(id => newSelection.add(id));
+      }
+    } else if (e.shiftKey) {
+      tweetsInCategory.forEach(id => newSelection.delete(id));
+    } else {
+      newSelection.clear();
+      tweetsInCategory.forEach(id => newSelection.add(id));
+    }
+
+    setSelectedTweets(newSelection);
+  };
+
+  const handleSvgMouseDown = (e) => {
+    if (spacePressed) {
+      e.preventDefault();
+      setIsPanning(true);
+      setPanStart({ x: e.clientX - panOffset.x, y: e.clientY - panOffset.y });
+      return;
+    }
+
+    if (!svgRef.current) return;
+    const rect = svgRef.current.getBoundingClientRect();
+    const svgX = (e.clientX - rect.left - width/2 - panOffset.x) / zoom;
+    const svgY = (e.clientY - rect.top - height/2 - panOffset.y) / zoom;
+    setIsSelecting(true);
+    setSelectionStart({ x: svgX, y: svgY });
+    setSelectionEnd({ x: svgX, y: svgY });
+    if (!e.metaKey && !e.ctrlKey) {
+      setSelectedTweets(new Set());
+    }
+  };
+
+  const handleSvgMouseMove = (e) => {
+    if (isPanning) {
+      e.preventDefault();
+      setPanOffset({
+        x: e.clientX - panStart.x,
+        y: e.clientY - panStart.y
+      });
+      return;
+    }
+
+    if (!isSelecting || !svgRef.current) return;
+    const rect = svgRef.current.getBoundingClientRect();
+    const svgX = (e.clientX - rect.left - width/2 - panOffset.x) / zoom;
+    const svgY = (e.clientY - rect.top - height/2 - panOffset.y) / zoom;
+    setSelectionEnd({ x: svgX, y: svgY });
+  };
+
+  const handleSvgMouseUp = (e) => {
+    if (isPanning) {
+      setIsPanning(false);
+      return;
+    }
+
+    if (!isSelecting) return;
+
+    const minX = Math.min(selectionStart.x, selectionEnd.x);
+    const maxX = Math.max(selectionStart.x, selectionEnd.x);
+    const minY = Math.min(selectionStart.y, selectionEnd.y);
+    const maxY = Math.max(selectionStart.y, selectionEnd.y);
+
+    const newSelection = new Set(selectedTweets);
+
+    tweetData.tweets.forEach(tweet => {
+      if (!categorizationData.data[tweet.id]) return;
+      const coordPair = coordsToPixels(categorizationData.data[tweet.id].coords, 1200, 900);
+      const x = coordPair[0];
+      const y = coordPair[1];
+      if (x >= minX && x <= maxX && y >= minY && y <= maxY) {
+        if (e.shiftKey) newSelection.delete(tweet.id);
+        else newSelection.add(tweet.id);
+      }
+    });
+
+    setSelectedTweets(newSelection);
+    setIsSelecting(false);
+    setSelectionStart(null);
+    setSelectionEnd(null);
+  };
+
+  const handleWheel = (e) => {
+    e.preventDefault();
+    const delta = e.deltaY * -0.01;
+    const newZoom = Math.min(Math.max(0.5, zoom + delta * zoom * 0.5), 5);
+
+    if (svgRef.current) {
+      const rect = svgRef.current.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+
+      const zoomRatio = newZoom / zoom;
+
+      setPanOffset({
+        x: mouseX - (mouseX - panOffset.x) * zoomRatio,
+        y: mouseY - (mouseY - panOffset.y) * zoomRatio
+      });
+    }
+
+    setZoom(newZoom);
+  };
+
+  const isCategorySelected = (categoryId) => {
+    const tweetsInCategory = tweetData.tweets
+      .filter(tweet => categorizationData.data[tweet.id]?.categories?.includes(categoryId))
+      .map(t => t.id);
+
+    if (tweetsInCategory.length === 0) return false;
+    return tweetsInCategory.every(id => selectedTweets.has(id));
+  };
+
+  const getSelectedCategories = () => {
+    return categories.filter(cat => isCategorySelected(cat.id)).map(cat => cat.id);
+  };
+
+  const getTweetOpacity = (tweetId) => {
+    if (hoveredTweet) {
+      return tweetId === hoveredTweet ? 1 : 0.1;
+    }
+    if (selectedTweets.size > 0) {
+      return selectedTweets.has(tweetId) ? 1 : 0.1;
+    }
+    if (hoveredCategory) {
+      const data = categorizationData.data[tweetId];
+      return data?.categories?.includes(hoveredCategory) ? 1 : 0.1;
+    }
+    return 1;
+  };
+
+  const handleResizeMouseDown = (e) => {
+    e.preventDefault();
+    setIsResizing(true);
+  };
+
+  if (!tweetData || !categorizationData) {
+    return (
+      <div className="w-full h-screen flex items-center justify-center bg-gray-50 p-8">
+        <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg p-6">
+          <h1 className="text-2xl font-bold mb-4">Tweet Plot Visualizer</h1>
+
+          <div className="mb-4">
+            <label className="block text-sm font-semibold mb-2">Tweet Data JSON:</label>
+            <textarea
+              className="w-full h-48 p-4 border border-gray-300 rounded font-mono text-sm"
+              placeholder='{"pfps": {...}, "tweets": [...]}'
+              value={tweetInput}
+              onChange={(e) => setTweetInput(e.target.value)}
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-sm font-semibold mb-2">Categorization Data JSON:</label>
+            <textarea
+              className="w-full h-48 p-4 border border-gray-300 rounded font-mono text-sm"
+              placeholder='{"axes": [...], "categories": [...], "data": {...}}'
+              value={categorizationInput}
+              onChange={(e) => setCategorizationInput(e.target.value)}
+            />
+          </div>
+
+          {error && <div className="mt-2 text-red-600 text-sm whitespace-pre-wrap font-mono max-h-48 overflow-y-auto bg-red-50 p-3 rounded">{error}</div>}
+
+          <button
+            className="mt-4 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            onClick={parseJSON}
+          >
+            Generate Plot
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const width = 1200;
+  const height = 900;
+  const axes = categorizationData.axes;
+  const categories = categorizationData.categories;
+  const tweets = tweetData.tweets;
+  const pfps = tweetData.pfps;
+
+  const xAxis = axes[selectedAxes.x];
+  const yAxis = axes[selectedAxes.y];
+  const xLabel = axisDirections.x === 1 ? xAxis.positive : xAxis.negative;
+  const xLabelNeg = axisDirections.x === 1 ? xAxis.negative : xAxis.positive;
+  const yLabel = axisDirections.y === 1 ? yAxis.positive : yAxis.negative;
+  const yLabelNeg = axisDirections.y === 1 ? yAxis.negative : yAxis.positive;
+
+  const visibleTweets = tweets.filter(isTweetVisible);
+
+  const displayTweets = hoveredTweet
+    ? [tweets.find(t => t.id === hoveredTweet)]
+    : hoveredCategory
+    ? visibleTweets.filter(t => categorizationData.data[t.id]?.categories?.includes(hoveredCategory))
+    : selectedTweets.size > 0
+    ? visibleTweets.filter(t => selectedTweets.has(t.id))
+    : visibleTweets;
+
+  const selectedCategories = getSelectedCategories();
+
+  return (
+    <div className="w-full h-screen flex flex-col bg-gray-50">
+      <div className="p-4 bg-white border-b flex-shrink-0">
+        <div className="flex items-center gap-4 max-w-6xl mx-auto">
+          <button
+            className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+            onClick={() => setTimelineTime(Math.max(minTime, timelineTime - (maxTime - minTime) / 100))}
+          >
+            ←
+          </button>
+          <div className="flex-1">
+            <div className="text-sm mb-1">{new Date(timelineTime).toLocaleString()}</div>
+            <input
+              type="range"
+              min={minTime}
+              max={maxTime}
+              value={timelineTime}
+              onChange={(e) => setTimelineTime(parseInt(e.target.value))}
+              className="w-full"
+            />
+          </div>
+          <button
+            className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+            onClick={() => setTimelineTime(Math.min(maxTime, timelineTime + (maxTime - minTime) / 100))}
+          >
+            →
+          </button>
+          <div className="flex items-center gap-2">
+            <button
+              className="px-3 py-1 bg-gray-600 text-white rounded hover:bg-gray-700"
+              onClick={() => setZoom(Math.max(0.5, zoom - 0.2))}
+            >
+              −
+            </button>
+            <span className="text-sm w-16 text-center">{Math.round(zoom * 100)}%</span>
+            <button
+              className="px-3 py-1 bg-gray-600 text-white rounded hover:bg-gray-700"
+              onClick={() => setZoom(Math.min(5, zoom + 0.2))}
+            >
+              +
+            </button>
+            <button
+              className="px-3 py-1 bg-gray-600 text-white rounded hover:bg-gray-700"
+              onClick={() => { setZoom(1); setPanOffset({ x: 0, y: 0 }); }}
+            >
+              Reset
+            </button>
+          </div>
+          <div className="flex items-center gap-2">
+            <label className="text-sm">Jitter:</label>
+            <button
+              className="px-2 py-1 bg-gray-600 text-white rounded hover:bg-gray-700"
+              onClick={() => setJitterAmount(Math.max(0, jitterAmount - 10))}
+            >
+              −
+            </button>
+            <span className="text-sm w-12 text-center">{jitterAmount}</span>
+            <button
+              className="px-2 py-1 bg-gray-600 text-white rounded hover:bg-gray-700"
+              onClick={() => setJitterAmount(Math.min(100, jitterAmount + 10))}
+            >
+              +
+            </button>
+          </div>
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={showReplyEdges}
+              onChange={(e) => setShowReplyEdges(e.target.checked)}
+              className="w-4 h-4"
+            />
+            <span className="text-sm">Show Reply Edges</span>
+          </label>
+          <button
+            className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
+            onClick={() => {
+              setTweetData(null);
+              setCategorizationData(null);
+            }}
+          >
+            Load New Data
+          </button>
+        </div>
+      </div>
+
+      <div className="flex-1 flex overflow-hidden">
+        <div
+          className="flex-1 flex items-center justify-center relative overflow-hidden"
+          style={{ cursor: spacePressed ? (isPanning ? 'grabbing' : 'grab') : 'default' }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+              overflow: 'hidden',
+              background: 'white'
+            }}
+          >
+          <svg
+            ref={svgRef}
+            width="100%"
+            height="100%"
+            className="bg-white"
+            onMouseDown={handleSvgMouseDown}
+            onMouseMove={handleSvgMouseMove}
+            onMouseUp={handleSvgMouseUp}
+            onWheel={handleWheel}
+            style={{
+              position: 'absolute',
+              left: 0,
+              top: 0
+            }}
+          >
+            <g transform={`translate(${width/2 + panOffset.x}, ${height/2 + panOffset.y}) scale(${zoom})`}>
+              <line x1={-width/2 + 80} y1="0" x2={width/2 - 80} y2="0" stroke="#666" strokeWidth={2/zoom} />
+              <line x1="0" y1={-height/2 + 80} x2="0" y2={height/2 - 80} stroke="#666" strokeWidth={2/zoom} />
+
+              <text
+                x="0"
+                y={-height/2 + 30}
+                textAnchor="middle"
+                className="text-sm font-semibold cursor-pointer hover:text-blue-600"
+                fontSize={14/zoom}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleAxisClick('top');
+                }}
+              >
+                {yLabel}
+              </text>
+              <text
+                x="0"
+                y={height/2 - 20}
+                textAnchor="middle"
+                className="text-sm font-semibold cursor-pointer hover:text-blue-600"
+                fontSize={14/zoom}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleAxisClick('bottom');
+                }}
+              >
+                {yLabelNeg}
+              </text>
+              <text
+                x={-width/2 + 20}
+                y="-10"
+                textAnchor="start"
+                className="text-sm font-semibold cursor-pointer hover:text-blue-600"
+                fontSize={14/zoom}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleAxisClick('left');
+                }}
+              >
+                {xLabelNeg}
+              </text>
+              <text
+                x={width/2 - 20}
+                y="-10"
+                textAnchor="end"
+                className="text-sm font-semibold cursor-pointer hover:text-blue-600"
+                fontSize={14/zoom}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleAxisClick('right');
+                }}
+              >
+                {xLabel}
+              </text>
+
+              <g id="category-blobs">
+                {categories.map(category => {
+                  const blobPath = getCategoryBlob(category.id, width, height);
+                  if (!blobPath) return null;
+                  const isHovered = hoveredCategory === category.id;
+                  const isSelected = selectedCategories.includes(category.id);
+                  const shouldFill = isHovered || isSelected;
+
+                  let strokeOpacity = 0.7;
+                  if (hoveredCategory && hoveredCategory !== category.id) {
+                    strokeOpacity = 0.2;
+                  }
+
+                  return (
+                    <path
+                      key={category.id}
+                      d={blobPath}
+                      fill={shouldFill ? getCategoryColor(category.id) : 'none'}
+                      fillOpacity={shouldFill ? 0.25 : 0}
+                      stroke={getCategoryColor(category.id)}
+                      strokeWidth={3/zoom}
+                      strokeOpacity={strokeOpacity}
+                      style={{
+                        cursor: 'pointer',
+                        pointerEvents: 'all'
+                      }}
+                      onMouseEnter={(e) => {
+                        setHoveredCategory(category.id);
+                        const rect = svgRef.current.getBoundingClientRect();
+                        setCategoryTooltipPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+                      }}
+                      onMouseMove={(e) => {
+                        const rect = svgRef.current.getBoundingClientRect();
+                        setCategoryTooltipPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+                      }}
+                      onMouseLeave={() => {
+                        setHoveredCategory(null);
+                        setCategoryTooltipPos(null);
+                      }}
+                      onClick={(e) => handleCategoryClick(e, category.id)}
+                    />
+                  );
+                })}
+              </g>
+
+              {showReplyEdges && (
+                <g id="reply-edges">
+                  {tweets.map(tweet => {
+                    if (!isTweetVisible(tweet) || !categorizationData.data[tweet.id]) return null;
+                    if (!tweet.reply_to) return null;
+
+                    const replyToTweet = tweets.find(t => t.id === tweet.reply_to);
+                    if (!replyToTweet || !isTweetVisible(replyToTweet) || !categorizationData.data[replyToTweet.id]) return null;
+
+                    const fromCoords = coordsToPixels(categorizationData.data[tweet.id].coords, width, height);
+                    const toCoords = coordsToPixels(categorizationData.data[replyToTweet.id].coords, width, height);
+
+                    return (
+                      <line
+                        key={`edge-${tweet.id}`}
+                        x1={fromCoords[0]}
+                        y1={fromCoords[1]}
+                        x2={toCoords[0]}
+                        y2={toCoords[1]}
+                        stroke="#999"
+                        strokeWidth={1/zoom}
+                        strokeOpacity={0.3}
+                        pointerEvents="none"
+                      />
+                    );
+                  })}
+                </g>
+              )}
+
+              <g id="tweets">
+                {tweets
+                  .map((tweet, origIndex) => ({ tweet, origIndex }))
+                  .sort((a, b) => {
+                    const aSelected = selectedTweets.has(a.tweet.id);
+                    const bSelected = selectedTweets.has(b.tweet.id);
+                    const aHovered = hoveredTweet === a.tweet.id;
+                    const bHovered = hoveredTweet === b.tweet.id;
+
+                    if (aHovered && !bHovered) return 1;
+                    if (bHovered && !aHovered) return -1;
+
+                    if (aSelected && !bSelected) return 1;
+                    if (bSelected && !aSelected) return -1;
+
+                    return a.origIndex - b.origIndex;
+                  })
+                  .map(({ tweet }) => {
+                  if (!isTweetVisible(tweet) || !categorizationData.data[tweet.id]) return null;
+
+                  const coords = categorizationData.data[tweet.id].coords;
+                  const baseCoords = coordsToPixels(coords, width, height, tweet.id);
+                  const x = baseCoords[0];
+                  const y = baseCoords[1];
+                  const colors = getTweetColors(tweet.id);
+                  const isSelected = selectedTweets.has(tweet.id);
+
+                  const baseRadius = 20;
+                  const minRadius = 4;
+                  const maxRadius = 32;
+                  const radius = Math.max(minRadius, Math.min(maxRadius, baseRadius * Math.pow(zoom, 0.5))) / zoom;
+                  const ringWidth = 3 / zoom;
+
+                  return (
+                    <g
+                      key={tweet.id}
+                      onMouseEnter={() => setHoveredTweet(tweet.id)}
+                      onMouseLeave={() => setHoveredTweet(null)}
+                      onClick={(e) => handleTweetClick(e, tweet.id)}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      {colors.length === 1 ? (
+                        <circle
+                          cx={x}
+                          cy={y}
+                          r={radius + ringWidth / 2}
+                          fill="none"
+                          stroke={colors[0]}
+                          strokeWidth={ringWidth}
+                          opacity={getTweetOpacity(tweet.id)}
+                        />
+                      ) : (
+                        colors.map((color, idx) => {
+                          const numColors = colors.length;
+                          const segmentAngle = (2 * Math.PI) / numColors;
+                          const startAngle = idx * segmentAngle - Math.PI / 2;
+                          const endAngle = (idx + 1) * segmentAngle - Math.PI / 2;
+
+                          const innerRadius = radius;
+                          const outerRadius = radius + ringWidth;
+
+                          const x1Inner = x + innerRadius * Math.cos(startAngle);
+                          const y1Inner = y + innerRadius * Math.sin(startAngle);
+                          const x1Outer = x + outerRadius * Math.cos(startAngle);
+                          const y1Outer = y + outerRadius * Math.sin(startAngle);
+
+                          const x2Inner = x + innerRadius * Math.cos(endAngle);
+                          const y2Inner = y + innerRadius * Math.sin(endAngle);
+                          const x2Outer = x + outerRadius * Math.cos(endAngle);
+                          const y2Outer = y + outerRadius * Math.sin(endAngle);
+
+                          const largeArc = segmentAngle > Math.PI ? 1 : 0;
+
+                          const pathData = [
+                            `M ${x1Inner} ${y1Inner}`,
+                            `L ${x1Outer} ${y1Outer}`,
+                            `A ${outerRadius} ${outerRadius} 0 ${largeArc} 1 ${x2Outer} ${y2Outer}`,
+                            `L ${x2Inner} ${y2Inner}`,
+                            `A ${innerRadius} ${innerRadius} 0 ${largeArc} 0 ${x1Inner} ${y1Inner}`,
+                            `Z`
+                          ].join(' ');
+
+                          return (
+                            <path
+                              key={idx}
+                              d={pathData}
+                              fill={color}
+                              opacity={getTweetOpacity(tweet.id)}
+                            />
+                          );
+                        })
+                      )}
+
+                      <g opacity={getTweetOpacity(tweet.id)}>
+                        {pfps[tweet.author] && (
+                          <image
+                            href={pfps[tweet.author]}
+                            x={x - radius}
+                            y={y - radius}
+                            width={radius * 2}
+                            height={radius * 2}
+                            clipPath={`circle(${radius}px at ${radius}px ${radius}px)`}
+                          />
+                        )}
+                      </g>
+                    </g>
+                  );
+                })}
+              </g>
+
+              {isSelecting && selectionStart && selectionEnd && (
+                <rect
+                  x={Math.min(selectionStart.x, selectionEnd.x)}
+                  y={Math.min(selectionStart.y, selectionEnd.y)}
+                  width={Math.abs(selectionEnd.x - selectionStart.x)}
+                  height={Math.abs(selectionEnd.y - selectionStart.y)}
+                  fill="rgba(59, 130, 246, 0.2)"
+                  stroke="#3B82F6"
+                  strokeWidth={2 / zoom}
+                  strokeDasharray="5,5"
+                />
+              )}
+            </g>
+          </svg>
+
+          {hoveredCategory && categoryTooltipPos && (
+            <div
+              className="absolute bg-gray-900 text-white px-3 py-1 rounded text-sm pointer-events-none shadow-lg"
+              style={{
+                left: categoryTooltipPos.x + 15,
+                top: categoryTooltipPos.y - 10,
+                zIndex: 1000
+              }}
+            >
+              {categories.find(c => c.id === hoveredCategory)?.label}
+            </div>
+          )}
+          </div>
+
+          {showAxisPicker && (
+            <div
+              className="absolute bg-white border-2 border-blue-600 rounded-lg shadow-xl p-3 z-50"
+              style={{
+                left: showAxisPicker === 'left' ? '100px' : showAxisPicker === 'right' ? 'auto' : '50%',
+                right: showAxisPicker === 'right' ? '100px' : 'auto',
+                top: showAxisPicker === 'top' ? '120px' : showAxisPicker === 'bottom' ? 'auto' : '50%',
+                bottom: showAxisPicker === 'bottom' ? '120px' : 'auto',
+                transform: (showAxisPicker === 'top' || showAxisPicker === 'bottom') ? 'translateX(-50%)' : 'translateY(-50%)'
+              }}
+            >
+              <div className="text-xs font-semibold text-gray-700 mb-2">Select Axis:</div>
+              <div className="space-y-1">
+                {axes.map((axis, idx) => (
+                  <button
+                    key={idx}
+                    className="block w-full text-left px-3 py-2 text-sm hover:bg-blue-50 rounded"
+                    onClick={() => selectAxis(showAxisPicker, idx)}
+                  >
+                    <div className="font-semibold">{axis.label}</div>
+                    <div className="text-xs text-gray-600">
+                      {showAxisPicker === 'left' || showAxisPicker === 'bottom' ? axis.negative : axis.positive}
+                    </div>
+                  </button>
+                ))}
+              </div>
+              <button
+                className="mt-2 w-full text-xs text-gray-500 hover:text-gray-700"
+                onClick={() => setShowAxisPicker(null)}
+              >
+                Cancel
+              </button>
+            </div>
+          )}
+
+          <div className="absolute bottom-4 left-4 bg-white/90 rounded px-3 py-2 text-xs text-gray-600">
+            Hold SPACE and drag to pan • Scroll to zoom • Arrow keys for timeline • Shift to deselect
+          </div>
+        </div>
+
+        <div
+          className="bg-gray-400 hover:bg-blue-500 cursor-ew-resize flex-shrink-0"
+          style={{ width: '6px' }}
+          onMouseDown={handleResizeMouseDown}
+        />
+
+        <div className="bg-white shadow-lg flex flex-col" style={{ width: `${detailsWidth}px` }}>
+          <div className="p-4 border-b flex-shrink-0">
+            <h2 className="font-bold">Details</h2>
+          </div>
+          <div className="flex-1 overflow-y-auto p-4">
+            {displayTweets.length === 0 ? (
+              <p className="text-gray-500 italic">Hover or click tweets to view</p>
+            ) : (
+              <div className="space-y-4">
+                {displayTweets.map(tweet => {
+                  if (!tweet) return null;
+                  const tweetMeta = categorizationData.data[tweet.id];
+                  return (
+                    <div key={tweet.id} className="border-b pb-4 last:border-b-0">
+                      <div className="flex items-start gap-2 mb-2">
+                        <div className="flex items-center gap-2 flex-1">
+                          {pfps[tweet.author] && (
+                            <img src={pfps[tweet.author]} className="w-8 h-8 rounded-full flex-shrink-0" alt="" />
+                          )}
+                          <div className="flex-1 min-w-0">
+                            <div className="font-bold truncate">@{tweet.author}</div>
+                            <div className="text-xs text-gray-500">
+                              {new Date(tweet.timestamp).toLocaleString()}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2 flex-shrink-0">
+                          {tweetMeta?.categories && (
+                            <div className="flex gap-1">
+                              {tweetMeta.categories.map(catId => (
+                                <div
+                                  key={catId}
+                                  className="w-3 h-3 rounded-full"
+                                  style={{ backgroundColor: getCategoryColor(catId) }}
+                                  title={categories.find(c => c.id === catId)?.label}
+                                />
+                              ))}
+                            </div>
+                          )}
+                          <div className="text-xs text-gray-600">❤️ {tweet.likes}</div>
+                        </div>
+                      </div>
+                      <p className="text-sm mb-2">{tweet.text}</p>
+                      {tweetMeta?.explanation && (
+                        <p className="text-xs italic text-gray-600 bg-gray-50 p-2 rounded">
+                          {tweetMeta.explanation}
+                        </p>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div className="p-4 bg-white border-t flex-shrink-0">
+        <div className="flex flex-wrap gap-4 justify-center">
+          {categories.map(cat => (
+            <div
+              key={cat.id}
+              className="flex items-center gap-2 cursor-pointer hover:opacity-70"
+              onClick={(e) => handleCategoryClick(e, cat.id)}
+              onMouseEnter={() => setHoveredCategory(cat.id)}
+              onMouseLeave={() => setHoveredCategory(null)}
+            >
+              <div className="w-4 h-4 rounded" style={{ backgroundColor: getCategoryColor(cat.id) }} />
+              <span className="text-sm">{cat.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<TweetPlotVisualizer />);
+    </script>
+  </body>
+</html>

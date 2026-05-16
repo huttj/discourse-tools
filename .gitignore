@@ -1,0 +1,13 @@
+# Local OS cruft
+.DS_Store
+
+# gh-pages worktree (created by scripts/setup.sh)
+/.site
+
+# Inputs & outputs live on the gh-pages branch, not main.
+# Locally these are symlinks into .site/ — see scripts/setup.sh.
+/threads
+/output
+
+# Thread JSON dropped at the repo root — move it into threads/ instead.
+/*.json
