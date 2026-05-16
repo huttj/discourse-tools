@@ -12,16 +12,34 @@
   li{margin:.45rem 0}
   a{color:#1d4ed8;text-decoration:none}
   a:hover{text-decoration:underline}
-  .empty{color:#888}
+  .msg{color:#888}
 </style>
 </head>
 <body>
 <h1>discourse-tools</h1>
 <p class="sub">Interactive visualizations of X/Twitter threads.</p>
-<ul>
-  <li><a href="output/ctb-self-defense-thread.html">ctb-self-defense-thread.html</a></li>
-  <li><a href="output/dark_matter-graph.html">dark_matter-graph.html</a></li>
-  <li><a href="output/dark-matter-thread.html">dark-matter-thread.html</a></li>
-</ul>
+<ul id="list"><li class="msg">Loading…</li></ul>
+<script>
+// Lists output/*.html live via the GitHub API — nothing to regenerate when
+// a new output is published. Owner/repo are derived from the Pages URL, so
+// this page works unchanged in any fork.
+(async () => {
+  const list = document.getElementById('list');
+  const owner = location.hostname.split('.')[0];
+  const repo = location.pathname.split('/').filter(Boolean)[0] || (owner + '.github.io');
+  try {
+    const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/output?ref=gh-pages`);
+    if (!res.ok) throw new Error(res.status);
+    const files = (await res.json())
+      .filter(f => f.type === 'file' && f.name.endsWith('.html'))
+      .sort((a, b) => a.name.localeCompare(b.name));
+    list.innerHTML = files.length
+      ? files.map(f => `<li><a href="output/${encodeURIComponent(f.name)}">${f.name}</a></li>`).join('')
+      : '<li class="msg">No outputs published yet.</li>';
+  } catch (e) {
+    list.innerHTML = '<li class="msg">Could not load the output list. Browse <code>output/</code> directly.</li>';
+  }
+})();
+</script>
 </body>
 </html>
