@@ -1,0 +1,1333 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tweet Plot Visualizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
+    <!--
+      To produce a finished plot:
+        1. Duplicate this file (e.g. cp chart-template.html my-thread.html).
+        2. On the data line below, replace the placeholder string
+           __CHART_DATA_PLACEHOLDER__ — surrounding quotes included — with the
+           combined JSON object for your thread. The result should read:
+               window.__EMBEDDED_DATA__ = { "pfps": { ... }, ... };
+           The combined object carries both the scraped tweets and the
+           categorization, with these five keys:
+               { pfps, tweets, axes, categories, data }
+           (A nested form, { tweetData: {...}, categorizationData: {...} },
+           is also accepted.)
+        3. Open the file in a browser.
+
+      Without embedded data the page falls back to a paste-in form. You can
+      also append ?load=<url> to fetch a JSON file at runtime instead of
+      embedding it.
+    -->
+    <script>window.__EMBEDDED_DATA__ = "{\"tweetData\": {\"captured_at\": \"2026-05-17T17:03:09.835Z\", \"tweet_count\": 73, \"queue_count\": 61, \"pfp_base64\": false, \"queued\": [{\"id\": \"2055746723515945172\", \"url\": \"https://x.com/AdamSiegel17/status/2055746723515945172\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055698573589680637\", \"url\": \"https://x.com/Local12/status/2055698573589680637\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055744259949518911\", \"url\": \"https://x.com/cookedasociety/status/2055744259949518911\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055746739210944676\", \"url\": \"https://x.com/yuceeluv/status/2055746739210944676\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055811775715549197\", \"url\": \"https://x.com/Rebourn/status/2055811775715549197\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055766409398083622\", \"url\": \"https://x.com/indexred/status/2055766409398083622\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055737794144698484\", \"url\": \"https://x.com/MrRedHook135/status/2055737794144698484\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055766008435011766\", \"url\": \"https://x.com/Solus_BTC/status/2055766008435011766\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055796121088532955\", \"url\": \"https://x.com/fairy_queen1996/status/2055796121088532955\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055766654668403163\", \"url\": \"https://x.com/JonCaguama/status/2055766654668403163\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055833716631429426\", \"url\": \"https://x.com/TonyFitness8/status/2055833716631429426\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055750733467717989\", \"url\": \"https://x.com/poophispants/status/2055750733467717989\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055758226851852584\", \"url\": \"https://x.com/Madnox01/status/2055758226851852584\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055841438290563133\", \"url\": \"https://x.com/obi_1987/status/2055841438290563133\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055805751327617373\", \"url\": \"https://x.com/ZoieNolan4/status/2055805751327617373\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055767424360722890\", \"url\": \"https://x.com/ZeroBarkThirty2/status/2055767424360722890\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055757943300083975\", \"url\": \"https://x.com/Giantkillerjr/status/2055757943300083975\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055767636789588332\", \"url\": \"https://x.com/theoilgod/status/2055767636789588332\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055755392790270089\", \"url\": \"https://x.com/StrokinAway/status/2055755392790270089\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055803452601549305\", \"url\": \"https://x.com/premXpandya/status/2055803452601549305\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055841457903112628\", \"url\": \"https://x.com/dougnoose/status/2055841457903112628\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055750784697176404\", \"url\": \"https://x.com/Christhewarpoet/status/2055750784697176404\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055714009626673422\", \"url\": \"https://x.com/varruechexo/status/2055714009626673422\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055753150812852293\", \"url\": \"https://x.com/DixZucker85/status/2055753150812852293\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055754055947899084\", \"url\": \"https://x.com/whitehouse927/status/2055754055947899084\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055740752760832029\", \"url\": \"https://x.com/hewillcounteru/status/2055740752760832029\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055841301673734461\", \"url\": \"https://x.com/obi_1987/status/2055841301673734461\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055734617806630927\", \"url\": \"https://x.com/BabyBellagio/status/2055734617806630927\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055753294731985194\", \"url\": \"https://x.com/ShadowlandBlog/status/2055753294731985194\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055793831157653863\", \"url\": \"https://x.com/Rocketstorn/status/2055793831157653863\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055758214927462701\", \"url\": \"https://x.com/LegendaryWuuu/status/2055758214927462701\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055804386472071210\", \"url\": \"https://x.com/kinocopter/status/2055804386472071210\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055817662987698456\", \"url\": \"https://x.com/ashebabes/status/2055817662987698456\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055763434172555487\", \"url\": \"https://x.com/CarlosAlFaiz/status/2055763434172555487\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055831224120222050\", \"url\": \"https://x.com/JustSteebin/status/2055831224120222050\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055755977882771801\", \"url\": \"https://x.com/SpaceWax90/status/2055755977882771801\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055762967543627992\", \"url\": \"https://x.com/_BMVN_/status/2055762967543627992\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055957294475526155\", \"url\": \"https://x.com/ju_st_w/status/2055957294475526155\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2056029708949594467\", \"url\": \"https://x.com/r9_freddy/status/2056029708949594467\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2056039865993625999\", \"url\": \"https://x.com/Simpsonsgetit/status/2056039865993625999\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2056047053235712118\", \"url\": \"https://x.com/MrMajidLV/status/2056047053235712118\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055998451259679160\", \"url\": \"https://x.com/M_S_J/status/2055998451259679160\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055745625681977609\", \"url\": \"https://x.com/FiendishMaven/status/2055745625681977609\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055775949099081923\", \"url\": \"https://x.com/Best_Mark_Ever/status/2055775949099081923\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055771296483402049\", \"url\": \"https://x.com/paisteplayer2/status/2055771296483402049\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055919160497193094\", \"url\": \"https://x.com/PromiseToDJ/status/2055919160497193094\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055710314570691028\", \"url\": \"https://x.com/bigcuddyy/status/2055710314570691028\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055776933393113218\", \"url\": \"https://x.com/_dumbledore1_/status/2055776933393113218\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055729749759070451\", \"url\": \"https://x.com/bigyo7414/status/2055729749759070451\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055740607478304835\", \"url\": \"https://x.com/polo81920/status/2055740607478304835\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055739155339166068\", \"url\": \"https://x.com/Jon3by/status/2055739155339166068\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055739823344718180\", \"url\": \"https://x.com/NavXODrakePuffy/status/2055739823344718180\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055749422852583684\", \"url\": \"https://x.com/ufound10ski/status/2055749422852583684\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055714681805824367\", \"url\": \"https://x.com/Neno_unique2/status/2055714681805824367\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055743124001939648\", \"url\": \"https://x.com/_Cooldex_/status/2055743124001939648\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2056019852804997267\", \"url\": \"https://x.com/zzGodSpeed/status/2056019852804997267\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055870043775213657\", \"url\": \"https://x.com/MichaelYuri100/status/2055870043775213657\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055848082844393642\", \"url\": \"https://x.com/BobKnoblaw/status/2055848082844393642\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055864633542803476\", \"url\": \"https://x.com/AmoxCentur14900/status/2055864633542803476\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055764623635165460\", \"url\": \"https://x.com/blkamerican40/status/2055764623635165460\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055706947307909354\", \"url\": \"https://x.com/i/status/2055706947307909354\", \"discovered_from\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}], \"tweets\": [{\"id\": \"2055707547940655517\", \"created_at\": \"2026-05-16T17:50:47.000Z\", \"text\": \"Comedian Kelly Collette was assaulted in broad daylight by a man on a bicycle in Cincinnati. He smacked her cheeks and then rode off quickly. Police are now searching for the suspect. \\ud83d\\udc40\\ud83d\\ude33\", \"screen_name\": \"Raindropsmedia1\", \"name\": \"Rain Drops Media\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/1802587733023424512/0PRe2jhH_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [{\"type\": \"photo\", \"url\": \"https://pbs.twimg.com/profile_images/1942268891503235072/Cby0Xdyz_normal.jpg\"}, {\"type\": \"video\", \"url\": null, \"poster\": \"https://pbs.twimg.com/amplify_video_thumb/2055706889904611328/img/eotfto-GLTEh242G.jpg\"}], \"reply_count\": 1006, \"retweet_count\": 754, \"favorite_count\": 10730, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055710314570691028\", \"created_at\": \"Sat May 16 18:01:46 +0000 2026\", \"text\": \"@Raindropsmedia1 The suspect\\u2019s name is Joe Burrow. He is a danger to society. Lock him up immediately!\", \"screen_name\": \"bigcuddyy\", \"name\": \"Wedgie Miller\", \"pfp_url\": \"\", \"user_id\": \"1565093322158444545\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [], \"reply_count\": 1, \"retweet_count\": 7, \"favorite_count\": 374, \"lang\": \"en\", \"_source\": \"graphql\"}, {\"id\": \"2055714009626673422\", \"created_at\": \"2026-05-16T18:16:27.000Z\", \"text\": \"Would\\u2019ve made me so mad so I get her\", \"screen_name\": \"varruechexo\", \"name\": \"MISS VIRGO\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/2048475262741041152/CnZk1NFX_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [], \"reply_count\": 0, \"retweet_count\": 1, \"favorite_count\": 1, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055714681805824367\", \"created_at\": \"Sat May 16 18:19:08 +0000 2026\", \"text\": \"@Raindropsmedia1 I wanna laugh but I remember I have sisters &amp; nieces. Lock this MF up!\", \"screen_name\": \"Neno_unique2\", \"name\": \"Neno_unique\", \"pfp_url\": \"\", \"user_id\": \"1716205519499599872\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [], \"reply_count\": 1, \"retweet_count\": 1, \"favorite_count\": 243, \"lang\": \"en\", \"_source\": \"graphql\"}, {\"id\": \"2055728477609849243\", \"created_at\": \"Sat May 16 19:13:57 +0000 2026\", \"text\": \"@Raindropsmedia1 He probably get ten years for this but if she was fucking little Tommy in school she get no jail time\", \"screen_name\": \"_MrDog76\", \"name\": \"Mr Dog\", \"pfp_url\": \"\", \"user_id\": \"1984329527363821568\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [], \"reply_count\": 0, \"retweet_count\": 1, \"favorite_count\": 9, \"lang\": \"en\", \"_source\": \"graphql\"}, {\"id\": \"2055729749759070451\", \"created_at\": \"Sat May 16 19:19:00 +0000 2026\", \"text\": \"@Raindropsmedia1 Yea that\\u2019s predator behavior &amp; he\\u2019s ass needs to b castrated\", \"screen_name\": \"bigyo7414\", \"name\": \"Mario Scott\", \"pfp_url\": \"\", \"user_id\": \"1986070484472172544\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [], \"reply_count\": 3, \"retweet_count\": 0, \"favorite_count\": 13, \"lang\": \"en\", \"_source\": \"graphql\"}, {\"id\": \"2055734617806630927\", \"created_at\": \"2026-05-16T19:38:21.000Z\", \"text\": \"Lmao freaky ass dude whacked her lil ass, it\\u2019s funny but he wrong\", \"screen_name\": \"BabyBellagio\", \"name\": \"Bellagio Baby \\ud83c\\uddf9\\ud83c\\uddf9\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/2053660283239817216/smnlLZLA_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [], \"reply_count\": 38, \"retweet_count\": 9, \"favorite_count\": 884, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055736698718265416\", \"created_at\": \"Sat May 16 19:46:37 +0000 2026\", \"text\": \"@Raindropsmedia1 a drive by clapping is crazyyyy \\ud83e\\udd79\", \"screen_name\": \"niccavely\", \"name\": \"NiccaVely\", \"pfp_url\": \"\", \"user_id\": \"1465407255529066508\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 8, \"lang\": \"en\", \"_source\": \"graphql\"}, {\"id\": \"2055737794144698484\", \"created_at\": \"2026-05-16T19:50:58.000Z\", \"text\": \"Lmfaooo #LetsBeClearInReal I Did Dis To My Homegurl One Day\\ud83d\\ude1cAnd She Tried To Chase Me And I Dipped On Her\\ud83d\\ude02But I Got Caught Later\\ud83d\\ude11#LetsStayWokeInFocused\\ud83d\\udcaf\", \"screen_name\": \"MrRedHook135\", \"name\": \"MrRedHook135\\u264c\\ufe0f\\ud83d\\udcaf\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/2045518400739287041/EFlFmzAk_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [{\"type\": \"video\", \"url\": null, \"poster\": \"https://pbs.twimg.com/amplify_video_thumb/2055737739002204160/img/hzfQ5bvrDGKuAjAF.jpg\"}], \"reply_count\": 3, \"retweet_count\": 1, \"favorite_count\": 25, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055739155339166068\", \"created_at\": \"Sat May 16 19:56:23 +0000 2026\", \"text\": \"@Raindropsmedia1 This is a hate crime Feds should get involved\", \"screen_name\": \"Jon3by\", \"name\": \"Jon\", \"pfp_url\": \"\", \"user_id\": \"1977203425877409796\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [], \"reply_count\": 2, \"retweet_count\": 0, \"favorite_count\": 2, \"lang\": \"en\", \"_source\": \"graphql\"}, {\"id\": \"2055739823344718180\", \"created_at\": \"Sat May 16 19:59:02 +0000 2026\", \"text\": \"@Raindropsmedia1 I thought she was a comedian? She can't take a joke?\", \"screen_name\": \"NavXODrakePuffy\", \"name\": \"Wastemans\", \"pfp_url\": \"\", \"user_id\": \"525421444\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [], \"reply_count\": 1, \"retweet_count\": 0, \"favorite_count\": 11, \"lang\": \"en\", \"_source\": \"graphql\"}, {\"id\": \"2055740607478304835\", \"created_at\": \"Sat May 16 20:02:09 +0000 2026\", \"text\": \"@Raindropsmedia1 It was a smack not a grab, relax lady.\", \"screen_name\": \"polo81920\", \"name\": \"CarolinaRaider\", \"pfp_url\": \"\", \"user_id\": \"292738136\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [], \"reply_count\": 1, \"retweet_count\": 0, \"favorite_count\": 6, \"lang\": \"en\", \"_source\": \"graphql\"}, {\"id\": \"2055740752760832029\", \"created_at\": \"2026-05-16T20:02:43.000Z\", \"text\": \"Checked her out on IG, she\\u2019s not funny and neither is this incident\", \"screen_name\": \"hewillcounteru\", \"name\": \"GoQuanGo\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/2002848854098808832/2YBMfeiz_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [], \"reply_count\": 1, \"retweet_count\": 0, \"favorite_count\": 2, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055743124001939648\", \"created_at\": \"Sat May 16 20:12:09 +0000 2026\", \"text\": \"@Raindropsmedia1 A comedian getting their ass smacked I feel like this a skit\", \"screen_name\": \"_Cooldex_\", \"name\": \"Dex\", \"pfp_url\": \"\", \"user_id\": \"341391378\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [], \"reply_count\": 1, \"retweet_count\": 0, \"favorite_count\": 5, \"lang\": \"en\", \"_source\": \"graphql\"}, {\"id\": \"2055744259949518911\", \"created_at\": \"2026-05-16T20:16:40.000Z\", \"text\": \"Anybody that thinks this is funny is a weirdo\", \"screen_name\": \"cookedasociety\", \"name\": \"Cooked Society\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/2039488318585589760/b-Zt7f-D_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [], \"reply_count\": 76, \"retweet_count\": 1, \"favorite_count\": 844, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055745625681977609\", \"created_at\": \"2026-05-16T20:22:05.000Z\", \"text\": \"Definitely wrong on the guy\\u2019s part, but it\\u2019s also comparable to a scene from some raunchy comedy flick. \\n\\nEven her delivery of \\u201cFUCK YOU, YA PIECE OF SHIT\\u201d is comedically angry.\", \"screen_name\": \"FiendishMaven\", \"name\": \"Brian Maddox\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/2055354712409440256/XP0utpK6_400x400.jpg\", \"user_id\": \"3003383279\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [{\"type\": \"photo\", \"url\": \"https://pbs.twimg.com/tweet_video_thumb/HId5vyoXcAA8bK8.jpg\"}, {\"type\": \"video\", \"url\": \"https://video.twimg.com/tweet_video/HId5vyoXcAA8bK8.mp4\", \"poster\": \"https://pbs.twimg.com/tweet_video_thumb/HId5vyoXcAA8bK8.jpg\"}], \"reply_count\": 1, \"retweet_count\": 0, \"favorite_count\": 9, \"lang\": \"en\", \"_source\": \"dom\", \"in_reply_to_screen_names\": [], \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\", \"inferred_in_reply_to_id\": \"2055707547940655517\"}, {\"id\": \"2055746723515945172\", \"created_at\": \"2026-05-16T20:26:27.000Z\", \"text\": \"Suspect was caught!\", \"screen_name\": \"AdamSiegel17\", \"name\": \"Adam Siegel\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/1581433170041397248/653oKbhO_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [{\"type\": \"photo\", \"url\": \"https://pbs.twimg.com/media/HIdO8S3XUAAgUZo?format=jpg&name=small\"}], \"reply_count\": 62, \"retweet_count\": 21, \"favorite_count\": 859, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055746739210944676\", \"created_at\": \"2026-05-16T20:26:31.000Z\", \"text\": \"Some of these men make it so hard for others.\\n\\nSome are working hard to erase the stereotype, and others are h3llbent on engraving it permanently. \\nSmh!\", \"screen_name\": \"yuceeluv\", \"name\": \"\\ud83d\\udcab\\ud83d\\udc9fRefined diamond!\\ud83d\\udc8e\\ud83d\\udc9f\\ud83d\\udcab \\ud83d\\udcb0\\ud83d\\udcb0\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/2014082494165831680/mqRsXp-4_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [], \"reply_count\": 9, \"retweet_count\": 0, \"favorite_count\": 91, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055748895238459829\", \"created_at\": \"Sat May 16 20:35:05 +0000 2026\", \"text\": \"@Raindropsmedia1 She's so disconnected from racial realities she actually ran to pursue him. To do what? Get raped? Get beat up? Get stabbed? No acknowledgment of dealing with a violent, low IQ African.\", \"screen_name\": \"HPWorthington\", \"name\": \"Harrison P. Worthington\", \"pfp_url\": \"\", \"user_id\": \"2031517364521676801\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 11, \"lang\": \"en\", \"_source\": \"graphql\"}, {\"id\": \"2055749422852583684\", \"created_at\": \"Sat May 16 20:37:11 +0000 2026\", \"text\": \"@Raindropsmedia1 Trump would invite him to the white house to talk about his smacking skills\", \"screen_name\": \"ufound10ski\", \"name\": \"10\", \"pfp_url\": \"\", \"user_id\": \"1813630333109301250\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [], \"reply_count\": 1, \"retweet_count\": 0, \"favorite_count\": 4, \"lang\": \"en\", \"_source\": \"graphql\"}, {\"id\": \"2055750733467717989\", \"created_at\": \"2026-05-16T20:42:23.000Z\", \"text\": \"hes a pathetic loser. how do people still not realize there are cameras everywhere. low IQ slime ball deserves to spend 10 years minimum.\", \"screen_name\": \"poophispants\", \"name\": \"poop\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/2050588318287462400/0LaIu39y_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [], \"reply_count\": 7, \"retweet_count\": 1, \"favorite_count\": 19, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055750784697176404\", \"created_at\": \"2026-05-16T20:42:35.000Z\", \"text\": \"She a comedian cause she\\u2019s in the social media news cycle ? Sorta like when a YN dies in gang violence and all of a sudden he\\u2019s a rapper who died\", \"screen_name\": \"Christhewarpoet\", \"name\": \"Rocky Money Rudolph Jr\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/2044307518483255296/-RSyJ75E_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 1, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055753150812852293\", \"created_at\": \"2026-05-16T20:51:59.000Z\", \"text\": \"The world gets a little more racist every day simply because we just them by the content of their character\", \"screen_name\": \"DixZucker85\", \"name\": \"Dix Zucker\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/2055276513868623872/ylyRPdEy_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [], \"reply_count\": 2, \"retweet_count\": 1, \"favorite_count\": 17, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055753294731985194\", \"created_at\": \"2026-05-16T20:52:34.000Z\", \"text\": \"I guess he'll be doing this Dave Matthews dance in jail.\", \"screen_name\": \"ShadowlandBlog\", \"name\": \"Shadowland - News/Culture/Spirit\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/1942586865070026752/D1V2q5Dy_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [{\"type\": \"photo\", \"url\": \"https://pbs.twimg.com/tweet_video_thumb/HIeAuTOWEAAf8wc.jpg\"}, {\"type\": \"video\", \"url\": \"https://video.twimg.com/tweet_video/HIeAuTOWEAAf8wc.mp4\", \"poster\": \"https://pbs.twimg.com/tweet_video_thumb/HIeAuTOWEAAf8wc.jpg\"}], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 2, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055754055947899084\", \"created_at\": \"2026-05-16T20:55:35.000Z\", \"text\": \"Keep your fucking hands to yourself.   It's very apparent that the person had no home  training.  Daddy didn't whip their ass to teach them to keep their paws off of other women's asses.\", \"screen_name\": \"whitehouse927\", \"name\": \"House of Cards \\ud83c\\uddfa\\ud83c\\uddf8\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/2013636069258911746/pb67p82T_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 1, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055754191226953891\", \"created_at\": \"Sat May 16 20:56:07 +0000 2026\", \"text\": \"@Raindropsmedia1 He\\u2019s not on roller blades so it\\u2019s not @luisjgomez\", \"screen_name\": \"BreastFedATX\", \"name\": \"Turd Ferguson\", \"pfp_url\": \"\", \"user_id\": \"411752017\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 1, \"lang\": \"en\", \"_source\": \"graphql\"}, {\"id\": \"2055755392790270089\", \"created_at\": \"2026-05-16T21:00:54.000Z\", \"text\": \"Dude a menace! Out on a bike like Lil Chris\", \"screen_name\": \"StrokinAway\", \"name\": \"Dixon Stroke\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/1686699595517304832/HAGsDetS_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [{\"type\": \"video\", \"url\": null, \"poster\": \"https://pbs.twimg.com/amplify_video_thumb/2055755311152349185/img/cmGozedKHaPhHx-g.jpg\"}], \"reply_count\": 3, \"retweet_count\": 12, \"favorite_count\": 432, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055755977882771801\", \"created_at\": \"2026-05-16T21:03:13.000Z\", \"text\": \"It\\u2019s wrong but when I got jumped the cops did nothing. So I don\\u2019t see them doing anything in this situation.\", \"screen_name\": \"SpaceWax90\", \"name\": \"space.wax90\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/1482708747730444291/VsCk0xt9_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 1, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055757879324410168\", \"created_at\": \"Sat May 16 21:10:47 +0000 2026\", \"text\": \"@Raindropsmedia1 This not funny, but that caption got me crying \\ud83d\\ude2d\\ud83d\\ude02\", \"screen_name\": \"BeyUncanny\", \"name\": \"VNCNY.GOLD\", \"pfp_url\": \"\", \"user_id\": \"631636278\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 1, \"lang\": \"en\", \"_source\": \"graphql\"}, {\"id\": \"2055757943300083975\", \"created_at\": \"2026-05-16T21:11:02.000Z\", \"text\": \"She is didn\\u2019t go to the default moniker.  Good for you and I hope they put that MF under the jail. Had that been my wife I\\u2019d want him prosecuted to the fullest extent of the law.\", \"screen_name\": \"Giantkillerjr\", \"name\": \"GiantkillerJR\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/1991180558546698240/GOnT2H0h_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 1, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055758214927462701\", \"created_at\": \"2026-05-16T21:12:07.000Z\", \"text\": \"These immigrants are really out here doing stupid sht like this so disrespectful\", \"screen_name\": \"LegendaryWuuu\", \"name\": \"Jay Wuuu\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/2053486488709427204/KnulL0HN_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 0, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055758226851852584\", \"created_at\": \"2026-05-16T21:12:10.000Z\", \"text\": \"Next time, bring a gun. Shoot him, say you feared for your life. Thanks, you will be doing the world a favor.\", \"screen_name\": \"Madnox01\", \"name\": \"Madnox\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/2032812901283901440/iXp53DmG_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [], \"reply_count\": 3, \"retweet_count\": 0, \"favorite_count\": 2, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055759233648365824\", \"created_at\": \"Sat May 16 21:16:10 +0000 2026\", \"text\": \"@Raindropsmedia1 Ngl this is objectively funny not saying it\\u2019s right at all he should face punishment.\", \"screen_name\": \"Ye24_noJews\", \"name\": \"Ye24\", \"pfp_url\": \"\", \"user_id\": \"1603959014445948928\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 3, \"lang\": \"en\", \"_source\": \"graphql\"}, {\"id\": \"2055760275270140204\", \"created_at\": \"Sat May 16 21:20:18 +0000 2026\", \"text\": \"@Raindropsmedia1 They found him. Posted his mugshot on Facebook.\", \"screen_name\": \"mccalejk\", \"name\": \"Joey M\", \"pfp_url\": \"\", \"user_id\": \"48177461\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 1, \"lang\": \"en\", \"_source\": \"graphql\"}, {\"id\": \"2055762967543627992\", \"created_at\": \"2026-05-16T21:31:00.000Z\", \"text\": \"What\\u2019s crazy is that this was normal behavior in the 70s, 80s, and 90s.\", \"screen_name\": \"_BMVN_\", \"name\": \"br.\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/2055452217600102400/pNnlAG2h_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 5, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055763434172555487\", \"created_at\": \"2026-05-16T21:32:51.000Z\", \"text\": \"Why did he do this? Zero self control \\ud83d\\ude29\\ud83d\\ude29\\ud83d\\ude29\", \"screen_name\": \"CarlosAlFaiz\", \"name\": \"Carlos Al Faiz\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/1772113079217610753/QtTShAZN_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 2, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055763864432546014\", \"created_at\": \"Sat May 16 21:34:34 +0000 2026\", \"text\": \"@Raindropsmedia1 Bro out here doing drive-by cheek slaps, wild af\", \"screen_name\": \"MIDNIIITE\", \"name\": \"drMIDNIITE\", \"pfp_url\": \"\", \"user_id\": \"120147244\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 1, \"lang\": \"en\", \"_source\": \"graphql\"}, {\"id\": \"2055764623635165460\", \"created_at\": \"2026-05-16T21:37:35.000Z\", \"text\": \"@Raindropsmedia1 https://t.co/CnS7vm6lfe\", \"screen_name\": \"blkamerican40\", \"name\": \"BlkAmericanInsight \\ud83c\\uddfa\\ud83c\\uddf2\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/2052971903887851526/tE2Wf2MW_400x400.jpg\", \"user_id\": \"2020988522681827328\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [{\"type\": \"photo\", \"url\": \"https://pbs.twimg.com/tweet_video_thumb/HIeLBy_WQAA29ZO.jpg\"}, {\"type\": \"video\", \"url\": \"https://video.twimg.com/tweet_video/HIeLBy_WQAA29ZO.mp4\", \"poster\": \"https://pbs.twimg.com/tweet_video_thumb/HIeLBy_WQAA29ZO.jpg\"}], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 16, \"lang\": \"qme\", \"_source\": \"dom\", \"in_reply_to_screen_names\": [], \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\", \"inferred_in_reply_to_id\": \"2055707547940655517\"}, {\"id\": \"2055765383756562566\", \"created_at\": \"Sat May 16 21:40:36 +0000 2026\", \"text\": \"@Raindropsmedia1 People have done that to me, I giggled and thanked them. \\ud83d\\ude07\", \"screen_name\": \"rariremy\", \"name\": \"\\u042fR\", \"pfp_url\": \"\", \"user_id\": \"1106990029883084800\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 1, \"lang\": \"en\", \"_source\": \"graphql\"}, {\"id\": \"2055766008435011766\", \"created_at\": \"2026-05-16T21:43:05.000Z\", \"text\": \"this random bike-riding creep smacking a woman\\u2019s ass in broad daylight on camera should be national news, but it won\\u2019t be  cities keep normalizing this feral street shit while the media only cares when it fits their script  women paying the real price for \\u201cequity\\u201d experiments nobody voted for. lock him up and stop the excuses.\", \"screen_name\": \"Solus_BTC\", \"name\": \"Solus\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/2052853176907235330/OFGRG7zN_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [], \"reply_count\": 5, \"retweet_count\": 0, \"favorite_count\": 8, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055766409398083622\", \"created_at\": \"2026-05-16T21:44:40.000Z\", \"text\": \"there is not one part of Cincinnati where anyone with natural survival instincts would feel safe at any time of the day\\n\\nI haven't been there in 12 years but that's what it was like back then.\", \"screen_name\": \"indexred\", \"name\": \"Index Red\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/1912151049994940416/cj59hYvh_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [], \"reply_count\": 2, \"retweet_count\": 0, \"favorite_count\": 8, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055766654668403163\", \"created_at\": \"2026-05-16T21:45:39.000Z\", \"text\": \"This happened to my ex walking home on the boardwalk on Memorial Day one year.  She laughed, I shrugged and we just went on with our lives.\", \"screen_name\": \"JonCaguama\", \"name\": \"Dr. Caguama\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/2050373002232242177/hvHIUQ_n_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [], \"reply_count\": 16, \"retweet_count\": 0, \"favorite_count\": 13, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055767424360722890\", \"created_at\": \"2026-05-16T21:48:42.000Z\", \"text\": \"That\\u2019s so messed up. Dude just casually rolls up and does that like it\\u2019s nothing. Hope they catch him quick, Kelly. Stay safe out there\", \"screen_name\": \"ZeroBarkThirty2\", \"name\": \"ZeroBarkThirty(2)\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/2055076299786334208/24bH-T7a_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 0, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055767636789588332\", \"created_at\": \"2026-05-16T21:49:33.000Z\", \"text\": \"What do you get out of doing this? A little adrenaline rush? A semi Johnny? Enjoy the charges, you horn dog.\", \"screen_name\": \"theoilgod\", \"name\": \"The Oil God | Trader\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/1866198157505241088/dq6FKaIY_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 0, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055771296483402049\", \"created_at\": \"2026-05-16T22:04:06.000Z\", \"text\": \"Judge will set him free and apologize for any inconvenience to him.\", \"screen_name\": \"paisteplayer2\", \"name\": \"PRSplayer \\ud83c\\uddfa\\ud83c\\uddf8\\ud83c\\udfb8\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/1851355605128126464/SHqzDYT8_400x400.jpg\", \"user_id\": \"1524486032057675781\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [], \"reply_count\": 3, \"retweet_count\": 2, \"favorite_count\": 176, \"lang\": \"en\", \"_source\": \"dom\", \"in_reply_to_screen_names\": [], \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\", \"inferred_in_reply_to_id\": \"2055707547940655517\"}, {\"id\": \"2055774767567745322\", \"created_at\": \"Sat May 16 22:17:53 +0000 2026\", \"text\": \"@Raindropsmedia1 It's ok, it's a black man. How dare she yell and try to chase him down\", \"screen_name\": \"Sam73616329\", \"name\": \"End Feminism\", \"pfp_url\": \"\", \"user_id\": \"1518758351722663937\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 2, \"lang\": \"en\", \"_source\": \"graphql\"}, {\"id\": \"2055774981192044579\", \"created_at\": \"Sat May 16 22:18:44 +0000 2026\", \"text\": \"@Raindropsmedia1 This was such a serious offense that she went to the shop right away to get the security footage. Man hunt under way.\", \"screen_name\": \"Sam73616329\", \"name\": \"End Feminism\", \"pfp_url\": \"\", \"user_id\": \"1518758351722663937\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 1, \"lang\": \"en\", \"_source\": \"graphql\"}, {\"id\": \"2055775949099081923\", \"created_at\": \"2026-05-16T22:22:35.000Z\", \"text\": \"I think I might be a bad person... This made me literally lol! The OP said \\u201csmacked her cheeks\\u201d so I was expecting a slug, and then he smacks her ass! \\ud83d\\ude1d\", \"screen_name\": \"Best_Mark_Ever\", \"name\": \"Mark\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/1349807110016610304/-XWboHR7_400x400.jpg\", \"user_id\": \"825894766890061824\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [{\"type\": \"photo\", \"url\": \"https://pbs.twimg.com/tweet_video_thumb/HIeVU_yWAAA2_wN.jpg\"}, {\"type\": \"video\", \"url\": \"https://video.twimg.com/tweet_video/HIeVU_yWAAA2_wN.mp4\", \"poster\": \"https://pbs.twimg.com/tweet_video_thumb/HIeVU_yWAAA2_wN.jpg\"}], \"reply_count\": 2, \"retweet_count\": 0, \"favorite_count\": 21, \"lang\": \"en\", \"_source\": \"dom\", \"in_reply_to_screen_names\": [], \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\", \"inferred_in_reply_to_id\": \"2055707547940655517\"}, {\"id\": \"2055776933393113218\", \"created_at\": \"Sat May 16 22:26:30 +0000 2026\", \"text\": \"@Raindropsmedia1 After he slapped her ass https://t.co/8LqGaCE0AP\", \"screen_name\": \"_dumbledore1_\", \"name\": \"CJ\", \"pfp_url\": \"\", \"user_id\": \"1554043171033726976\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [{\"type\": \"video\", \"url\": \"https://pbs.twimg.com/ext_tw_video_thumb/2055776888014999553/pu/img/1Vtegdy1z2qOW1Lb.jpg\", \"video_url\": \"https://video.twimg.com/ext_tw_video/2055776888014999553/pu/vid/avc1/720x538/Fq8bj4G6iOT6gU4R.mp4?tag=12\"}], \"reply_count\": 3, \"retweet_count\": 10, \"favorite_count\": 178, \"lang\": \"en\", \"_source\": \"graphql\"}, {\"id\": \"2055793831157653863\", \"created_at\": \"2026-05-16T23:33:38.000Z\", \"text\": \"Woke way of says ass is cheeks\", \"screen_name\": \"Rocketstorn\", \"name\": \"Non-Immigrant\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/1121759093708877824/14BkhC4Z_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 0, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055796121088532955\", \"created_at\": \"2026-05-16T23:42:44.000Z\", \"text\": \"And it\\u2019s that serious. I hope they find him and put him under the jail. It\\u2019s not funny it\\u2019s sick. And if he\\u2019s this comfortable to do this in day light on a busy road imagine what he does at night when no ones looking.\", \"screen_name\": \"fairy_queen1996\", \"name\": \"FairyQueen1996\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/1777440563819880451/tDRDGkWq_400x400.png\", \"in_reply_to_screen_names\": [], \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 2, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055797527165775901\", \"created_at\": \"Sat May 16 23:48:20 +0000 2026\", \"text\": \"@Raindropsmedia1 The most cucked thing about it is that she will probably do self-deprecating anti-white comedy about it afterwards\", \"screen_name\": \"DanielE80777744\", \"name\": \"My lil chuddie\", \"pfp_url\": \"\", \"user_id\": \"2006585268833603584\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 4, \"lang\": \"en\", \"_source\": \"graphql\"}, {\"id\": \"2055803452601549305\", \"created_at\": \"2026-05-17T00:11:52.000Z\", \"text\": \"He wrong BUT I laughed so hard at this \\ud83d\\ude02\\ud83d\\ude02\\ud83d\\ude02\\ud83d\\ude02\\ud83d\\ude02\\ud83d\\ude02\\ud83d\\ude02\\ud83d\\ude02\\ud83d\\ude02\\ud83d\\ude02\", \"screen_name\": \"premXpandya\", \"name\": \"Prem\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/1954285415315263488/MpwV_yRP_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [], \"reply_count\": 1, \"retweet_count\": 0, \"favorite_count\": 16, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055804386472071210\", \"created_at\": \"2026-05-17T00:15:35.000Z\", \"text\": \"Trump curse bitch @KellyCollette\", \"screen_name\": \"kinocopter\", \"name\": \"Kinoblade Chronicles X\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/2010282844057452544/ZoJQQKAD_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [{\"type\": \"photo\", \"url\": \"https://pbs.twimg.com/media/HIevLWUaUAA__-u?format=png&name=small\"}], \"reply_count\": 2, \"retweet_count\": 0, \"favorite_count\": 18, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055805751327617373\", \"created_at\": \"2026-05-17T00:21:00.000Z\", \"text\": \"If he was doing that in broad daylight, imagine what he does behind closed doors to women... they need to catch him ASAP.\", \"screen_name\": \"ZoieNolan4\", \"name\": \"Bingo\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/2009855653594984448/MFE4Yrxe_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 4, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055811775715549197\", \"created_at\": \"2026-05-17T00:44:57.000Z\", \"text\": \"She's a radical leftist lunatic. She voted for the anarcho-tyranny in leftist cities.\\n\\nShe fumbles taking off her shoes and trying to run after him, as if she would catch and scold him. He'd have raped and killed her and been out the next day. The AWFUL has no survival instict.\", \"screen_name\": \"Rebourn\", \"name\": \"Rebourn\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/1715592323726262272/h-tzRdeU_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [], \"reply_count\": 2, \"retweet_count\": 0, \"favorite_count\": 8, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055817662987698456\", \"created_at\": \"2026-05-17T01:08:20.000Z\", \"text\": \"Drive by\\nWow\", \"screen_name\": \"ashebabes\", \"name\": \"AsheBTC\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/1348229732777611264/W6qfh6bL_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 0, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055831224120222050\", \"created_at\": \"2026-05-17T02:02:13.000Z\", \"text\": \"\", \"screen_name\": \"JustSteebin\", \"name\": \"Just Steebin (Void shouter)\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/1950964026382360578/VuFv051M_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [{\"type\": \"video\", \"url\": \"https://video.twimg.com/tweet_video/HIfHmXgWIAAqHGd.mp4\", \"poster\": \"https://pbs.twimg.com/tweet_video_thumb/HIfHmXgWIAAqHGd.jpg\"}], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 1, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055833716631429426\", \"created_at\": \"2026-05-17T02:12:08.000Z\", \"text\": \"She was about to whoop dudes ass she took them shoes off quick!!! \\ud83d\\ude2e\\ud83d\\ude2c\", \"screen_name\": \"TonyFitness8\", \"name\": \"Tony\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/1511642454855933956/adhd8DEb_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [], \"reply_count\": 2, \"retweet_count\": 0, \"favorite_count\": 7, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055841301673734461\", \"created_at\": \"2026-05-17T02:42:16.000Z\", \"text\": \"Hope she safe\\ud83e\\udd37\", \"screen_name\": \"obi_1987\", \"name\": \"Obi\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/2034153073078374404/xT01IwYc_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 0, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\", \"inferred_in_reply_to_id\": \"2055841438290563133\"}, {\"id\": \"2055841438290563133\", \"created_at\": \"2026-05-17T02:42:49.000Z\", \"text\": \"Someone cannot have peace taking a walk \\ud83e\\udd79\", \"screen_name\": \"obi_1987\", \"name\": \"Obi\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/2034153073078374404/xT01IwYc_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 0, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055841457903112628\", \"created_at\": \"2026-05-17T02:42:53.000Z\", \"text\": \"FOH!  This is a deep fake \\ud83e\\udd23\\ud83e\\udd23\\ud83e\\udd23\\ud83e\\udd23\", \"screen_name\": \"dougnoose\", \"name\": \"D.Andross \\ud83c\\uddfa\\ud83c\\uddf8\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/1663421801764990977/pwVM1-2x_400x400.jpg\", \"in_reply_to_screen_names\": [], \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 0, \"_source\": \"dom\", \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\"}, {\"id\": \"2055848082844393642\", \"created_at\": \"2026-05-17T03:09:13.000Z\", \"text\": \"I wonder if Dollar Store Amy Schumer will include invaders in her future routines?\", \"screen_name\": \"BobKnoblaw\", \"name\": \"Bob Knoblaw\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/1919125635982852096/G4UjDv2D_400x400.jpg\", \"user_id\": \"1919115180883218432\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 2, \"lang\": \"en\", \"_source\": \"dom\", \"in_reply_to_screen_names\": [], \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\", \"inferred_in_reply_to_id\": \"2055707547940655517\"}, {\"id\": \"2055864633542803476\", \"created_at\": \"2026-05-17T04:14:59.000Z\", \"text\": \"There's something comedic about this, can't put my finger on it.\", \"screen_name\": \"AmoxCentur14900\", \"name\": \"NYX\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/2054332298036957184/hQ3ukhcY_400x400.jpg\", \"user_id\": \"2013903538234269696\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 8, \"lang\": \"en\", \"_source\": \"dom\", \"in_reply_to_screen_names\": [], \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\", \"inferred_in_reply_to_id\": \"2055707547940655517\"}, {\"id\": \"2055870043775213657\", \"created_at\": \"2026-05-17T04:36:29.000Z\", \"text\": \"Yeah it\\u2019s bad, could have been worse!\\nWell at least he didn\\u2019t punch her in the head. \\n\\nA lot of the times that\\u2019s what they do!\\ud83d\\udcaf\\ud83d\\udc4e\", \"screen_name\": \"MichaelYuri100\", \"name\": \"Michael \\ud83c\\udf39\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/1977577119153639424/MGcFYl4q_400x400.jpg\", \"user_id\": \"1666677413722431488\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 2, \"lang\": \"en\", \"_source\": \"dom\", \"in_reply_to_screen_names\": [], \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\", \"inferred_in_reply_to_id\": \"2055707547940655517\"}, {\"id\": \"2055876186228539412\", \"created_at\": \"Sun May 17 05:00:53 +0000 2026\", \"text\": \"@Raindropsmedia1 Its racist that she reported the \\u201ccrime\\u201d\", \"screen_name\": \"capital_punx\", \"name\": \"C\", \"pfp_url\": \"\", \"user_id\": \"1642039626008350720\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 0, \"lang\": \"en\", \"_source\": \"graphql\"}, {\"id\": \"2055919160497193094\", \"created_at\": \"Sun May 17 07:51:39 +0000 2026\", \"text\": \"@Raindropsmedia1 All the dumb Euro demons in the comments he\\u2019s an immigrant you know the millions yall let in.\", \"screen_name\": \"PromiseToDJ\", \"name\": \"OG\", \"pfp_url\": \"\", \"user_id\": \"24486948\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [], \"reply_count\": 5, \"retweet_count\": 2, \"favorite_count\": 9, \"lang\": \"en\", \"_source\": \"graphql\"}, {\"id\": \"2055957294475526155\", \"created_at\": \"2026-05-17T10:23:11.000Z\", \"text\": \"Was she trying to chase him?\", \"screen_name\": \"ju_st_w\", \"name\": \"Trends\\ud83e\\udec2\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/2029884272564211712/6ZmLh21S_400x400.jpg\", \"user_id\": \"1659453864314011648\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [{\"type\": \"photo\", \"url\": \"https://pbs.twimg.com/media/HIg6QfRWoAAMTWU?format=jpg&name=small\"}], \"reply_count\": 1, \"retweet_count\": 0, \"favorite_count\": 10, \"lang\": \"en\", \"_source\": \"dom\", \"in_reply_to_screen_names\": [], \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\", \"inferred_in_reply_to_id\": \"2055707547940655517\"}, {\"id\": \"2055998451259679160\", \"created_at\": \"2026-05-17T13:06:44.000Z\", \"text\": \"I'm pretty sure theres a latina joke there with how fast you got that first chancla off @KellyCollette\", \"screen_name\": \"M_S_J\", \"name\": \"MSJ\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/1372825168356200448/2_nPPGAI_400x400.jpg\", \"user_id\": \"45599938\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 1, \"lang\": \"en\", \"_source\": \"dom\", \"in_reply_to_screen_names\": [], \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\", \"inferred_in_reply_to_id\": \"2055707547940655517\"}, {\"id\": \"2056019852804997267\", \"created_at\": \"2026-05-17T14:31:46.000Z\", \"text\": \"She had the appropriate reaction tbh cus wtf is wrong with this mf\", \"screen_name\": \"zzGodSpeed\", \"name\": \"Dolph\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/2008772780834074624/2e7MzmoV_400x400.jpg\", \"user_id\": \"64895347\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 1, \"lang\": \"en\", \"_source\": \"dom\", \"in_reply_to_screen_names\": [], \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\", \"inferred_in_reply_to_id\": \"2055707547940655517\"}, {\"id\": \"2056029708949594467\", \"created_at\": \"2026-05-17T15:10:56.000Z\", \"text\": \"It gladdens my heart that the suspect was caught\", \"screen_name\": \"r9_freddy\", \"name\": \"freddyR9\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/2038389098663337984/y04Mxe0x_400x400.jpg\", \"user_id\": \"1245404661319962625\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [], \"reply_count\": 1, \"retweet_count\": 0, \"favorite_count\": 1, \"lang\": \"en\", \"_source\": \"dom\", \"in_reply_to_screen_names\": [], \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\", \"inferred_in_reply_to_id\": \"2055707547940655517\"}, {\"id\": \"2056039865993625999\", \"created_at\": \"2026-05-17T15:51:18.000Z\", \"text\": \"Wow that\\u2019s so insulting. Calling her an actual comedian\", \"screen_name\": \"Simpsonsgetit\", \"name\": \"BarelyLegalHC\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/2008387546380652544/6mgxVd4v_400x400.jpg\", \"user_id\": \"1808642916736512001\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 3, \"lang\": \"en\", \"_source\": \"dom\", \"in_reply_to_screen_names\": [], \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\", \"inferred_in_reply_to_id\": \"2055707547940655517\"}, {\"id\": \"2056047053235712118\", \"created_at\": \"2026-05-17T16:19:51.000Z\", \"text\": \"Complete loser. He'll get karma one way or the other.\", \"screen_name\": \"MrMajidLV\", \"name\": \"MrMajid\", \"pfp_url\": \"https://pbs.twimg.com/profile_images/1939806829057372160/yUiuWWlx_400x400.jpg\", \"user_id\": \"1640197895751360515\", \"in_reply_to_status_id\": \"2055707547940655517\", \"in_reply_to_user_id\": \"1802584284470915072\", \"in_reply_to_screen_name\": \"Raindropsmedia1\", \"conversation_id\": \"2055707547940655517\", \"quoted_status_id\": null, \"media\": [], \"reply_count\": 0, \"retweet_count\": 0, \"favorite_count\": 1, \"lang\": \"en\", \"_source\": \"dom\", \"in_reply_to_screen_names\": [], \"_scraped_on\": \"https://x.com/Raindropsmedia1/status/2055707547940655517\", \"inferred_in_reply_to_id\": \"2055707547940655517\"}]}, \"categorizationData\": {\"axes\": [{\"label\": \"Crime vs. Joke\", \"positive\": \"A real assault to take seriously\", \"negative\": \"A harmless joke, overblown\"}, {\"label\": \"Punitive Intensity\", \"positive\": \"Demands harsh punishment or vigilante justice\", \"negative\": \"Wants it shrugged off, no consequences\"}, {\"label\": \"Culture-War Framing\", \"positive\": \"Filtered through race, immigration, politics\", \"negative\": \"Stays apolitical, just the incident\"}, {\"label\": \"Stance Toward Kelly\", \"positive\": \"Protective and sympathetic to her\", \"negative\": \"Mocks, blames, or diminishes her\"}], \"categories\": [{\"id\": \"outrage_punitive\", \"label\": \"Lock Him Up\", \"coords\": [57, 62, 12, 36]}, {\"id\": \"amused\", \"label\": \"It's Funny Though\", \"coords\": [-36, -4, 1, -12]}, {\"id\": \"culture_war\", \"label\": \"Race & Immigration Angle\", \"coords\": [15, 13, 80, -30]}, {\"id\": \"anti_woke_victim_blame\", \"label\": \"Anti-Woke & Victim-Blaming\", \"coords\": [-21, -11, 54, -64]}, {\"id\": \"victim_sympathy\", \"label\": \"Stay Safe, Kelly\", \"coords\": [44, 21, 0, 57]}, {\"id\": \"doubt_cynicism\", \"label\": \"Doubt & Cynicism\", \"coords\": [-12, 4, 19, -21]}, {\"id\": \"gender_solidarity\", \"label\": \"Men Behaving Badly\", \"coords\": [48, 48, 18, 45]}, {\"id\": \"memes_social\", \"label\": \"Memes & Social Noise\", \"coords\": [-11, 9, 11, -3]}], \"data\": {\"2055707547940655517\": {\"coords\": [70, 30, 0, 60], \"categories\": [\"victim_sympathy\"], \"explanation\": \"The OP frames the incident soberly as an assault with police searching for a suspect.\"}, \"2055710314570691028\": {\"coords\": [-40, 20, 0, 0], \"categories\": [\"memes_social\"], \"explanation\": \"A joke pinning the crime on Bengals QB Joe Burrow \\u2014 pure local-team meme.\"}, \"2055714009626673422\": {\"coords\": [40, 20, 0, 55], \"categories\": [\"victim_sympathy\"], \"explanation\": \"Identifies with Kelly's anger and feels protective of her.\"}, \"2055714681805824367\": {\"coords\": [50, 75, 0, 60], \"categories\": [\"gender_solidarity\"], \"explanation\": \"Resists laughing because he has sisters and nieces, then demands jail.\"}, \"2055728477609849243\": {\"coords\": [30, 50, 30, 0], \"categories\": [\"outrage_punitive\"], \"explanation\": \"Wants him punished but pivots to a grievance about lenient sentencing for female offenders.\"}, \"2055729749759070451\": {\"coords\": [70, 95, 0, 40], \"categories\": [\"outrage_punitive\"], \"explanation\": \"Calls it predator behavior and demands castration \\u2014 maximal punitive escalation.\"}, \"2055734617806630927\": {\"coords\": [-30, 10, 0, -10], \"categories\": [\"amused\"], \"explanation\": \"Openly laughs while tacking on a token 'he wrong'.\"}, \"2055736698718265416\": {\"coords\": [-40, 0, 0, -10], \"categories\": [\"amused\"], \"explanation\": \"Reduces the assault to a punchline \\u2014 'a drive by clapping is crazy'.\"}, \"2055737794144698484\": {\"coords\": [-55, -20, 0, -25], \"categories\": [\"amused\"], \"explanation\": \"Brags about doing the same thing himself as a hashtag-laden inside joke.\"}, \"2055739155339166068\": {\"coords\": [60, 85, 40, 40], \"categories\": [\"outrage_punitive\"], \"explanation\": \"Escalates to 'hate crime' and wants federal involvement.\"}, \"2055739823344718180\": {\"coords\": [-50, -40, 10, -70], \"categories\": [\"anti_woke_victim_blame\"], \"explanation\": \"Mocks Kelly for not being able to 'take a joke' because she is a comedian.\"}, \"2055740607478304835\": {\"coords\": [-65, -55, 0, -65], \"categories\": [\"anti_woke_victim_blame\"], \"explanation\": \"Minimizes it as 'a smack not a grab' and tells her to relax.\"}, \"2055740752760832029\": {\"coords\": [-30, -20, 0, -60], \"categories\": [\"anti_woke_victim_blame\"], \"explanation\": \"Researched her Instagram just to declare she and the incident aren't funny.\"}, \"2055743124001939648\": {\"coords\": [-45, -10, 0, -30], \"categories\": [\"doubt_cynicism\"], \"explanation\": \"Suspects the whole thing is a staged comedy skit.\"}, \"2055744259949518911\": {\"coords\": [60, 20, 0, 50], \"categories\": [\"outrage_punitive\"], \"explanation\": \"Scolds everyone treating the assault as funny.\"}, \"2055745625681977609\": {\"coords\": [-25, 10, 0, -15], \"categories\": [\"amused\"], \"explanation\": \"Concedes it's wrong but dwells on how comedically the scene played out.\"}, \"2055746723515945172\": {\"coords\": [10, 20, 0, 10], \"categories\": [\"memes_social\"], \"explanation\": \"A bare procedural update that the suspect was caught.\"}, \"2055746739210944676\": {\"coords\": [45, 20, 35, 30], \"categories\": [\"gender_solidarity\"], \"explanation\": \"Frames it as men reinforcing a bad stereotype for everyone else.\"}, \"2055748895238459829\": {\"coords\": [20, 30, 95, -85], \"categories\": [\"culture_war\", \"anti_woke_victim_blame\"], \"explanation\": \"Blames Kelly for chasing him while slurring the suspect in explicitly racist terms.\"}, \"2055749422852583684\": {\"coords\": [-30, 0, 70, 0], \"categories\": [\"memes_social\"], \"explanation\": \"An anti-Trump political punchline rather than a take on the incident.\"}, \"2055750733467717989\": {\"coords\": [55, 80, 15, 30], \"categories\": [\"outrage_punitive\"], \"explanation\": \"Calls him a loser and demands a ten-year minimum sentence.\"}, \"2055750784697176404\": {\"coords\": [-20, 0, 25, -55], \"categories\": [\"doubt_cynicism\"], \"explanation\": \"Doubts she's a real comedian, comparing it to posthumous 'rapper' labels.\"}, \"2055753150812852293\": {\"coords\": [0, 0, 75, -10], \"categories\": [\"culture_war\"], \"explanation\": \"A sarcastic MLK-flavored jab turning the thread into a race-discourse meta-comment.\"}, \"2055753294731985194\": {\"coords\": [-25, 20, 0, 0], \"categories\": [\"memes_social\"], \"explanation\": \"A Dave Matthews dance joke about him doing time in jail.\"}, \"2055754055947899084\": {\"coords\": [65, 45, 10, 45], \"categories\": [\"outrage_punitive\"], \"explanation\": \"Sincere condemnation centered on 'keep your hands to yourself' and bad upbringing.\"}, \"2055754191226953891\": {\"coords\": [-30, 0, 0, 0], \"categories\": [\"memes_social\"], \"explanation\": \"An inside joke at-mentioning someone because the suspect wasn't on roller blades.\"}, \"2055755392790270089\": {\"coords\": [-15, 15, 0, 0], \"categories\": [\"memes_social\"], \"explanation\": \"Light 'Lil Chris on a bike' cultural reference rather than a real take.\"}, \"2055755977882771801\": {\"coords\": [20, -10, 20, 10], \"categories\": [\"doubt_cynicism\"], \"explanation\": \"Cynical that police will act, based on his own experience being jumped.\"}, \"2055757879324410168\": {\"coords\": [-10, 0, 0, 0], \"categories\": [\"amused\"], \"explanation\": \"Says it isn't funny but admits the OP's caption made him cry laughing.\"}, \"2055757943300083975\": {\"coords\": [65, 85, 25, 55], \"categories\": [\"outrage_punitive\"], \"explanation\": \"Wants him 'under the jail' and imagines wanting full prosecution for his own wife.\"}, \"2055758214927462701\": {\"coords\": [30, 25, 85, 20], \"categories\": [\"culture_war\"], \"explanation\": \"Blames immigrants generally for disrespectful behavior like this.\"}, \"2055758226851852584\": {\"coords\": [50, 100, 30, 25], \"categories\": [\"outrage_punitive\"], \"explanation\": \"Advocates shooting him and claiming self-defense \\u2014 vigilante extreme.\"}, \"2055759233648365824\": {\"coords\": [-20, 30, 0, -10], \"categories\": [\"amused\"], \"explanation\": \"Calls it objectively funny while granting he should be punished.\"}, \"2055760275270140204\": {\"coords\": [10, 20, 0, 10], \"categories\": [\"memes_social\"], \"explanation\": \"A procedural note that his mugshot was posted to Facebook.\"}, \"2055762967543627992\": {\"coords\": [0, -10, 30, -10], \"categories\": [\"culture_war\"], \"explanation\": \"Normalizes the act as ordinary behavior in past decades.\"}, \"2055763434172555487\": {\"coords\": [40, 20, 0, 30], \"categories\": [\"outrage_punitive\"], \"explanation\": \"Mild condemnation of his total lack of self-control.\"}, \"2055763864432546014\": {\"coords\": [-35, 0, 0, -5], \"categories\": [\"amused\"], \"explanation\": \"Treats 'drive-by cheek slaps' as a wild bit of comedy.\"}, \"2055764623635165460\": {\"coords\": [0, 0, 0, 0], \"categories\": [\"memes_social\"], \"explanation\": \"A bare link reply with no stated position.\"}, \"2055765383756562566\": {\"coords\": [-55, -45, 0, -30], \"categories\": [\"amused\"], \"explanation\": \"Minimizes it by claiming she giggled and thanked people who did it to her.\"}, \"2055766008435011766\": {\"coords\": [70, 50, 90, 35], \"categories\": [\"culture_war\"], \"explanation\": \"Reframes it as media bias and 'equity experiments' failing women in cities.\"}, \"2055766409398083622\": {\"coords\": [30, 0, 65, 0], \"categories\": [\"culture_war\"], \"explanation\": \"Uses the incident to declare all of Cincinnati unsafe.\"}, \"2055766654668403163\": {\"coords\": [-50, -50, 0, -25], \"categories\": [\"amused\"], \"explanation\": \"Minimizes via an anecdote where his ex laughed it off and they moved on.\"}, \"2055767424360722890\": {\"coords\": [55, 30, 0, 75], \"categories\": [\"victim_sympathy\"], \"explanation\": \"Sincere distress and a direct 'stay safe' message to Kelly.\"}, \"2055767636789588332\": {\"coords\": [45, 50, 0, 30], \"categories\": [\"outrage_punitive\"], \"explanation\": \"Mocks his motive and tells him to enjoy the charges.\"}, \"2055771296483402049\": {\"coords\": [20, 40, 50, 20], \"categories\": [\"doubt_cynicism\"], \"explanation\": \"Cynical that a soft-on-crime judge will simply free him.\"}, \"2055774767567745322\": {\"coords\": [20, 20, 85, -40], \"categories\": [\"culture_war\"], \"explanation\": \"Sarcastically blames Kelly for daring to chase a black suspect.\"}, \"2055774981192044579\": {\"coords\": [-55, -40, 20, -55], \"categories\": [\"anti_woke_victim_blame\"], \"explanation\": \"Sarcastically mocks Kelly for treating it seriously and getting the footage.\"}, \"2055775949099081923\": {\"coords\": [-45, 0, 0, -15], \"categories\": [\"amused\"], \"explanation\": \"Admits laughing out loud once it turned out to be an ass-smack, not a punch.\"}, \"2055776933393113218\": {\"coords\": [0, 0, 0, 0], \"categories\": [\"memes_social\"], \"explanation\": \"A reaction-image reply with no real position.\"}, \"2055793831157653863\": {\"coords\": [-20, 0, 60, -25], \"categories\": [\"anti_woke_victim_blame\"], \"explanation\": \"Mocks the OP's wording as a 'woke' euphemism for 'ass'.\"}, \"2055796121088532955\": {\"coords\": [80, 80, 0, 55], \"categories\": [\"outrage_punitive\"], \"explanation\": \"Insists it's serious and sick, and imagines worse offenses after dark.\"}, \"2055797527165775901\": {\"coords\": [-10, 0, 90, -65], \"categories\": [\"culture_war\", \"anti_woke_victim_blame\"], \"explanation\": \"Predicts she'll do 'anti-white' comedy about it \\u2014 a culture-war jab at the victim.\"}, \"2055803452601549305\": {\"coords\": [-40, 5, 0, -10], \"categories\": [\"amused\"], \"explanation\": \"Says he's wrong but admits laughing extremely hard.\"}, \"2055804386472071210\": {\"coords\": [-10, 0, 70, -55], \"categories\": [\"memes_social\"], \"explanation\": \"A low-content political insult at-mentioning Kelly.\"}, \"2055805751327617373\": {\"coords\": [70, 65, 0, 45], \"categories\": [\"outrage_punitive\"], \"explanation\": \"Treats it as serious and urges a fast arrest, imagining worse behind closed doors.\"}, \"2055811775715549197\": {\"coords\": [25, 20, 95, -90], \"categories\": [\"anti_woke_victim_blame\", \"culture_war\"], \"explanation\": \"Brands Kelly a 'radical leftist' and ridicules her survival instincts at length.\"}, \"2055817662987698456\": {\"coords\": [-15, 0, 0, 0], \"categories\": [\"memes_social\"], \"explanation\": \"A near-empty 'Drive by Wow' reaction.\"}, \"2055831224120222050\": {\"coords\": [0, 0, 0, 0], \"categories\": [\"memes_social\"], \"explanation\": \"An empty reply with no text.\"}, \"2055833716631429426\": {\"coords\": [-25, 0, 0, 5], \"categories\": [\"amused\"], \"explanation\": \"Amused at how fast she yanked her shoes off to chase him.\"}, \"2055841301673734461\": {\"coords\": [25, 0, 0, 55], \"categories\": [\"victim_sympathy\"], \"explanation\": \"A short, sincere hope that she's safe.\"}, \"2055841438290563133\": {\"coords\": [35, 0, 0, 50], \"categories\": [\"victim_sympathy\"], \"explanation\": \"Laments that someone can't even take a walk in peace.\"}, \"2055841457903112628\": {\"coords\": [-45, 0, 0, -25], \"categories\": [\"doubt_cynicism\"], \"explanation\": \"Dismisses the footage as a deepfake.\"}, \"2055848082844393642\": {\"coords\": [-15, 0, 80, -65], \"categories\": [\"culture_war\", \"anti_woke_victim_blame\"], \"explanation\": \"Insults Kelly as 'Dollar Store Amy Schumer' and references 'invaders'.\"}, \"2055864633542803476\": {\"coords\": [-35, 0, 0, -10], \"categories\": [\"amused\"], \"explanation\": \"Vaguely insists there's something comedic about it.\"}, \"2055870043775213657\": {\"coords\": [0, 10, 35, -10], \"categories\": [\"doubt_cynicism\"], \"explanation\": \"Minimizes it as 'could have been worse' with a loaded 'that's what they do'.\"}, \"2055876186228539412\": {\"coords\": [-10, 0, 85, -55], \"categories\": [\"culture_war\", \"anti_woke_victim_blame\"], \"explanation\": \"Sarcastically calls it racist that she even reported the crime.\"}, \"2055919160497193094\": {\"coords\": [20, 20, 90, 10], \"categories\": [\"culture_war\"], \"explanation\": \"Attacks other commenters and pins the suspect on immigration policy.\"}, \"2055957294475526155\": {\"coords\": [0, 0, 0, 0], \"categories\": [\"memes_social\"], \"explanation\": \"A neutral question asking whether she was chasing him.\"}, \"2055998451259679160\": {\"coords\": [-35, 0, 20, -10], \"categories\": [\"amused\"], \"explanation\": \"Turns her quick reaction into a 'chancla' joke aimed at her.\"}, \"2056019852804997267\": {\"coords\": [45, 20, 0, 65], \"categories\": [\"victim_sympathy\"], \"explanation\": \"Validates her reaction as appropriate given the assault.\"}, \"2056029708949594467\": {\"coords\": [35, 50, 0, 40], \"categories\": [\"victim_sympathy\"], \"explanation\": \"Expresses genuine relief that the suspect was caught.\"}, \"2056039865993625999\": {\"coords\": [-15, 0, 0, -60], \"categories\": [\"doubt_cynicism\"], \"explanation\": \"Mocks the very idea of calling her a real comedian.\"}, \"2056047053235712118\": {\"coords\": [45, 30, 0, 25], \"categories\": [\"outrage_punitive\"], \"explanation\": \"Calls him a complete loser who will get karma.\"}}}}";</script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel" data-presets="react,typescript">
+const { useState, useRef, useEffect } = React;
+
+const TweetPlotVisualizer = () => {
+  const [tweetInput, setTweetInput] = useState('');
+  const [categorizationInput, setCategorizationInput] = useState('');
+  const [tweetData, setTweetData] = useState(null);
+  const [categorizationData, setCategorizationData] = useState(null);
+  const [hoveredTweet, setHoveredTweet] = useState(null);
+  const [hoveredCategory, setHoveredCategory] = useState(null);
+  const [categoryTooltipPos, setCategoryTooltipPos] = useState(null);
+  const [selectedTweets, setSelectedTweets] = useState(new Set());
+  const [error, setError] = useState('');
+  const [timelineTime, setTimelineTime] = useState(0);
+  const [minTime, setMinTime] = useState(0);
+  const [maxTime, setMaxTime] = useState(0);
+  const [selectedAxes, setSelectedAxes] = useState({ x: 0, y: 1 });
+  const [axisDirections, setAxisDirections] = useState({ x: 1, y: 1 });
+  const [showAxisPicker, setShowAxisPicker] = useState(null);
+  const [isSelecting, setIsSelecting] = useState(false);
+  const [selectionStart, setSelectionStart] = useState(null);
+  const [selectionEnd, setSelectionEnd] = useState(null);
+  const [detailsWidth, setDetailsWidth] = useState(384);
+  const [isResizing, setIsResizing] = useState(false);
+  const [zoom, setZoom] = useState(1);
+  const [panOffset, setPanOffset] = useState({ x: 0, y: 0 });
+  const [isPanning, setIsPanning] = useState(false);
+  const [panStart, setPanStart] = useState(null);
+  const [spacePressed, setSpacePressed] = useState(false);
+  const [showReplyEdges, setShowReplyEdges] = useState(false);
+  const svgRef = useRef(null);
+
+  const CATEGORY_COLORS = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E2', '#F8B739', '#52B788'];
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.code === 'Space' && !spacePressed) {
+        e.preventDefault();
+        setSpacePressed(true);
+      } else if (e.code === 'ArrowLeft') {
+        e.preventDefault();
+        setTimelineTime(Math.max(minTime, timelineTime - (maxTime - minTime) / 100));
+      } else if (e.code === 'ArrowRight') {
+        e.preventDefault();
+        setTimelineTime(Math.min(maxTime, timelineTime + (maxTime - minTime) / 100));
+      }
+    };
+
+    const handleKeyUp = (e) => {
+      if (e.code === 'Space') {
+        e.preventDefault();
+        setSpacePressed(false);
+        setIsPanning(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+    };
+  }, [spacePressed, minTime, maxTime, timelineTime]);
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (isResizing) {
+        const newWidth = window.innerWidth - e.clientX;
+        setDetailsWidth(Math.max(300, Math.min(800, newWidth)));
+      }
+    };
+
+    const handleMouseUp = () => {
+      if (isResizing) {
+        setIsResizing(false);
+      }
+    };
+
+    if (isResizing) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+      return () => {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+      };
+    }
+  }, [isResizing]);
+
+  // Validate a parsed tweet + categorization pair and, if it checks out,
+  // push it into state. Returns true on success.
+  const applyData = (tweets, categorization) => {
+    setError('');
+
+    // Validate tweet data structure
+    if (!tweets || !tweets.tweets) {
+      setError('Tweet data missing "tweets" array');
+      return false;
+    }
+    if (!Array.isArray(tweets.tweets)) {
+      setError('Tweet data "tweets" must be an array');
+      return false;
+    }
+    if (tweets.tweets.length === 0) {
+      setError('Tweet data "tweets" array is empty');
+      return false;
+    }
+    if (!tweets.pfps) {
+      setError('Tweet data missing "pfps" object');
+      return false;
+    }
+
+    // Validate first tweet has required fields
+    const firstTweet = tweets.tweets[0];
+    if (!firstTweet.id) {
+      setError('Tweets missing "id" field');
+      return false;
+    }
+    if (!firstTweet.timestamp) {
+      setError('Tweets missing "timestamp" field');
+      return false;
+    }
+    if (!firstTweet.author) {
+      setError('Tweets missing "author" field');
+      return false;
+    }
+
+    // Validate categorization data structure
+    if (!categorization || !categorization.axes) {
+      setError('Categorization data missing "axes" array');
+      return false;
+    }
+    if (!Array.isArray(categorization.axes)) {
+      setError('Categorization data "axes" must be an array');
+      return false;
+    }
+    if (categorization.axes.length === 0) {
+      setError('Categorization data "axes" array is empty');
+      return false;
+    }
+    if (!categorization.categories) {
+      setError('Categorization data missing "categories" array');
+      return false;
+    }
+    if (!Array.isArray(categorization.categories)) {
+      setError('Categorization data "categories" must be an array');
+      return false;
+    }
+    if (!categorization.data) {
+      setError('Categorization data missing "data" object');
+      return false;
+    }
+
+    // Validate axes structure
+    const firstAxis = categorization.axes[0];
+    if (!firstAxis.positive || !firstAxis.negative) {
+      setError('Axes missing "positive" or "negative" labels');
+      return false;
+    }
+
+    // Validate categories structure
+    if (categorization.categories.length > 0) {
+      const firstCat = categorization.categories[0];
+      if (!firstCat.id) {
+        setError('Categories missing "id" field');
+        return false;
+      }
+      if (!firstCat.coords || !Array.isArray(firstCat.coords)) {
+        setError('Categories missing "coords" array');
+        return false;
+      }
+    }
+
+    // Validate that tweet data has coordinates
+    let coordCount = 0;
+    for (const tweet of tweets.tweets) {
+      if (categorization.data[tweet.id]?.coords) {
+        coordCount++;
+      }
+    }
+
+    if (coordCount === 0) {
+      setError('No tweets have coordinate data in categorization.data');
+      return false;
+    }
+
+    // Validate coordinate dimensions match axes
+    const firstTweetWithCoords = tweets.tweets.find(t => categorization.data[t.id]?.coords);
+    if (firstTweetWithCoords) {
+      const coords = categorization.data[firstTweetWithCoords.id].coords;
+      if (coords.length < categorization.axes.length) {
+        setError(`Coordinate dimensions (${coords.length}) less than number of axes (${categorization.axes.length})`);
+        return false;
+      }
+    }
+
+    setTweetData(tweets);
+    setCategorizationData(categorization);
+
+    const timestamps = tweets.tweets.map(t => new Date(t.timestamp).getTime());
+    const min = Math.min(...timestamps);
+    const max = Math.max(...timestamps);
+    setMinTime(min);
+    setMaxTime(max);
+    setTimelineTime(max);
+    setSelectedAxes({ x: 0, y: Math.min(1, categorization.axes.length - 1) });
+    setAxisDirections({ x: 1, y: 1 });
+    setSelectedTweets(new Set());
+    setZoom(1);
+    setPanOffset({ x: 0, y: 0 });
+    setShowReplyEdges(false);
+    setError('');
+    return true;
+  };
+
+  const parseJSON = () => {
+    try {
+      setError('');
+      const tweets = JSON.parse(tweetInput);
+      const categorization = JSON.parse(categorizationInput);
+      applyData(tweets, categorization);
+    } catch (e) {
+      setError('Error parsing JSON: ' + e.message + '\n\nStack: ' + e.stack);
+    }
+  };
+
+  // Split a single combined object into the tweet + categorization pair the
+  // visualizer expects. Accepts either a flat object with all five keys
+  // ({ pfps, tweets, axes, categories, data }) or a nested object
+  // ({ tweetData, categorizationData }).
+  const splitCombined = (obj) => {
+    if (obj && obj.tweetData && obj.categorizationData) {
+      return [obj.tweetData, obj.categorizationData];
+    }
+    return [
+      { pfps: obj.pfps || {}, tweets: obj.tweets || [] },
+      {
+        axes: obj.axes || [],
+        categories: obj.categories || [],
+        data: obj.data || {},
+      },
+    ];
+  };
+
+  // On mount, pick up data embedded in the page or fetched via ?load=<url>.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const loadUrl = params.get('load');
+
+    if (loadUrl) {
+      fetch(loadUrl)
+        .then(r => r.json())
+        .then(obj => {
+          const [t, c] = splitCombined(obj);
+          applyData(t, c);
+        })
+        .catch(e => setError('Failed to load ' + loadUrl + ': ' + e.message));
+      return;
+    }
+
+    const embedded = window.__EMBEDDED_DATA__;
+    if (embedded && typeof embedded === 'object') {
+      const [t, c] = splitCombined(embedded);
+      applyData(t, c);
+    }
+  }, []);
+
+  const handleAxisClick = (side) => {
+    setShowAxisPicker(side);
+  };
+
+  const selectAxis = (side, axisIndex) => {
+    if (side === 'left' || side === 'right') {
+      setSelectedAxes(prev => ({ ...prev, x: axisIndex }));
+      setAxisDirections(prev => ({ ...prev, x: side === 'left' ? -1 : 1 }));
+    } else {
+      setSelectedAxes(prev => ({ ...prev, y: axisIndex }));
+      setAxisDirections(prev => ({ ...prev, y: side === 'top' ? 1 : -1 }));
+    }
+    setShowAxisPicker(null);
+  };
+
+  const getCategoryColor = (categoryId) => {
+    const index = categorizationData.categories.findIndex(c => c.id === categoryId);
+    return CATEGORY_COLORS[index % CATEGORY_COLORS.length];
+  };
+
+  const getTweetColors = (tweetId) => {
+    if (!categorizationData.data[tweetId]) return ['#999999'];
+    const categories = categorizationData.data[tweetId].categories || [];
+    if (categories.length === 0) return ['#999999'];
+    return categories.map(catId => getCategoryColor(catId));
+  };
+
+  // Deterministic jitter based on tweet ID
+  const getJitter = (tweetId, coordKey) => {
+    // Use tweet ID to generate consistent random offset
+    let hash = 0;
+    const str = tweetId + coordKey;
+    for (let i = 0; i < str.length; i++) {
+      hash = ((hash << 5) - hash) + str.charCodeAt(i);
+      hash = hash & hash;
+    }
+    // Convert to a value between -1 and 1
+    return (Math.abs(hash) % 1000) / 500 - 1;
+  };
+
+  const [jitterAmount, setJitterAmount] = useState(40);
+
+  const coordsToPixels = (coords, width, height, tweetId = null) => {
+    const xValue = coords[selectedAxes.x] * axisDirections.x;
+    const yValue = coords[selectedAxes.y] * axisDirections.y;
+
+    const padding = 80;
+    const plotWidth = width - 2 * padding;
+    const plotHeight = height - 2 * padding;
+
+    const allCoords = [];
+    tweetData.tweets.forEach(tweet => {
+      if (categorizationData.data[tweet.id]?.coords) {
+        allCoords.push(categorizationData.data[tweet.id].coords);
+      }
+    });
+    categorizationData.categories.forEach(cat => {
+      allCoords.push(cat.coords);
+    });
+
+    if (allCoords.length === 0) return [0, 0];
+
+    const allX = allCoords.map(c => c[selectedAxes.x] * axisDirections.x);
+    const allY = allCoords.map(c => c[selectedAxes.y] * axisDirections.y);
+    const minX = Math.min(...allX);
+    const maxX = Math.max(...allX);
+    const minY = Math.min(...allY);
+    const maxY = Math.max(...allY);
+
+    const rangeX = maxX - minX || 1;
+    const rangeY = maxY - minY || 1;
+
+    const margin = 0.1;
+    const expandedRangeX = rangeX * (1 + 2 * margin);
+    const expandedRangeY = rangeY * (1 + 2 * margin);
+
+    const normalizedX = (xValue - minX + rangeX * margin) / expandedRangeX;
+    const normalizedY = (yValue - minY + rangeY * margin) / expandedRangeY;
+
+    let pixelX = (normalizedX - 0.5) * plotWidth;
+    let pixelY = (0.5 - normalizedY) * plotHeight;
+
+    // Always apply jitter to tweets
+    if (tweetId) {
+      const jitterX = getJitter(tweetId, 'x') * jitterAmount;
+      const jitterY = getJitter(tweetId, 'y') * jitterAmount;
+      pixelX += jitterX;
+      pixelY += jitterY;
+    }
+
+    return [pixelX, pixelY];
+  };
+
+  const isTweetVisible = (tweet) => {
+    return new Date(tweet.timestamp).getTime() <= timelineTime;
+  };
+
+  const convexHull = (points) => {
+    if (points.length < 3) return points;
+
+    // Safety check: limit number of points to prevent crashes
+    if (points.length > 10000) {
+      console.warn('Too many points for convex hull, sampling...');
+      const step = Math.ceil(points.length / 1000);
+      points = points.filter((_, i) => i % step === 0);
+    }
+
+    const hull = [];
+    let leftmost = 0;
+    for (let i = 1; i < points.length; i++) {
+      if (points[i][0] < points[leftmost][0]) leftmost = i;
+    }
+
+    let current = leftmost;
+    let iterations = 0;
+    const maxIterations = points.length * 2; // Safety limit
+
+    do {
+      hull.push(points[current]);
+      let next = (current + 1) % points.length;
+
+      for (let i = 0; i < points.length; i++) {
+        const cross = (points[next][0] - points[current][0]) * (points[i][1] - points[current][1]) -
+                     (points[next][1] - points[current][1]) * (points[i][0] - points[current][0]);
+        if (cross < 0) next = i;
+      }
+
+      current = next;
+      iterations++;
+
+      // Safety check to prevent infinite loops
+      if (iterations > maxIterations) {
+        console.error('Convex hull exceeded max iterations');
+        break;
+      }
+    } while (current !== leftmost && iterations < maxIterations);
+
+    return hull;
+  };
+
+  const getCategoryBlob = (categoryId, width, height) => {
+    try {
+      const tweetsInCategory = tweetData.tweets.filter(tweet => {
+        if (!isTweetVisible(tweet)) return false;
+        const data = categorizationData.data[tweet.id];
+        return data?.categories?.includes(categoryId);
+      });
+
+      if (tweetsInCategory.length === 0) return null;
+
+      let points = tweetsInCategory.map(tweet => {
+        const coords = categorizationData.data[tweet.id].coords;
+        return coordsToPixels(coords, width, height, tweet.id);
+      });
+
+      console.log(`Category ${categoryId}: ${points.length} points`, points);
+
+      if (points.length === 1) {
+        const x = points[0][0];
+        const y = points[0][1];
+        const numSegments = 32;
+        const radius = 40;
+        let path = `M ${x + radius} ${y}`;
+        for (let i = 1; i <= numSegments; i++) {
+          const angle = (i / numSegments) * 2 * Math.PI;
+          const px = x + radius * Math.cos(angle);
+          const py = y + radius * Math.sin(angle);
+          path += ` L ${px} ${py}`;
+        }
+        return path + ' Z';
+      }
+
+      // Add padding points around each original point to ensure minimum size
+      const paddedPoints = [];
+      const minPadding = 30; // Minimum padding around each point
+
+      points.forEach(point => {
+        // Add the original point
+        paddedPoints.push(point);
+
+        // Add 8 surrounding points for minimum area
+        const angles = [0, Math.PI/4, Math.PI/2, 3*Math.PI/4, Math.PI, 5*Math.PI/4, 3*Math.PI/2, 7*Math.PI/4];
+        angles.forEach(angle => {
+          paddedPoints.push([
+            point[0] + minPadding * Math.cos(angle),
+            point[1] + minPadding * Math.sin(angle)
+          ]);
+        });
+      });
+
+      const hull = convexHull(paddedPoints);
+
+      if (!hull || hull.length < 3) return null;
+
+      const centroid = hull.reduce((acc, p) => [acc[0] + p[0], acc[1] + p[1]], [0, 0]);
+      centroid[0] /= hull.length;
+      centroid[1] /= hull.length;
+
+      const expandedHull = hull.map((point) => {
+        const x = point[0];
+        const y = point[1];
+        const dx = x - centroid[0];
+        const dy = y - centroid[1];
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const expandDist = 30; // Reduced from 60
+        return [x + (dx / dist) * expandDist, y + (dy / dist) * expandDist];
+      });
+
+      if (expandedHull.length < 3) return null;
+
+      // Limit smoothing points for performance
+      const pointsPerSegment = Math.min(32, Math.floor(500 / expandedHull.length));
+
+      // First, add interpolated points between hull vertices
+      const smoothedPoints = [];
+
+      for (let i = 0; i < expandedHull.length; i++) {
+        const curr = expandedHull[i];
+        const next = expandedHull[(i + 1) % expandedHull.length];
+
+        for (let j = 0; j < pointsPerSegment; j++) {
+          const t = j / pointsPerSegment;
+          const smoothT = t * t * t * (t * (t * 6 - 15) + 10);
+          const px = curr[0] + (next[0] - curr[0]) * smoothT;
+          const py = curr[1] + (next[1] - curr[1]) * smoothT;
+          smoothedPoints.push([px, py]);
+        }
+      }
+
+      // Safety check
+      if (smoothedPoints.length > 5000) {
+        console.warn('Too many smoothed points, reducing...');
+        const step = Math.ceil(smoothedPoints.length / 1000);
+        const reduced = [];
+        for (let i = 0; i < smoothedPoints.length; i += step) {
+          reduced.push(smoothedPoints[i]);
+        }
+        return `M ${reduced[0][0]} ${reduced[0][1]} ` +
+               reduced.slice(1).map(p => `L ${p[0]} ${p[1]}`).join(' ') + ' Z';
+      }
+
+      // Second pass: subdivide vertices to further smooth corners
+      const subdividedPoints = [];
+      for (let i = 0; i < smoothedPoints.length; i++) {
+        const prev = smoothedPoints[(i - 1 + smoothedPoints.length) % smoothedPoints.length];
+        const curr = smoothedPoints[i];
+        const next = smoothedPoints[(i + 1) % smoothedPoints.length];
+
+        const t1 = 0.15;
+
+        const p1x = curr[0] + (prev[0] - curr[0]) * t1;
+        const p1y = curr[1] + (prev[1] - curr[1]) * t1;
+
+        const p2x = curr[0] + (next[0] - curr[0]) * t1;
+        const p2y = curr[1] + (next[1] - curr[1]) * t1;
+
+        subdividedPoints.push([p1x, p1y]);
+        subdividedPoints.push([p2x, p2y]);
+      }
+
+      let path = `M ${subdividedPoints[0][0]} ${subdividedPoints[0][1]}`;
+      for (let i = 1; i < subdividedPoints.length; i++) {
+        path += ` L ${subdividedPoints[i][0]} ${subdividedPoints[i][1]}`;
+      }
+
+      return path + ' Z';
+    } catch (e) {
+      console.error('Error generating category blob:', e);
+      return null;
+    }
+  };
+
+  const handleTweetClick = (e, tweetId) => {
+    if (spacePressed || isPanning) {
+      e.stopPropagation();
+      return;
+    }
+
+    e.stopPropagation();
+    const newSelection = new Set(selectedTweets);
+
+    if (e.metaKey || e.ctrlKey) {
+      if (newSelection.has(tweetId)) {
+        newSelection.delete(tweetId);
+      } else {
+        newSelection.add(tweetId);
+      }
+    } else if (e.shiftKey) {
+      newSelection.delete(tweetId);
+    } else {
+      if (newSelection.has(tweetId) && newSelection.size === 1) {
+        newSelection.clear();
+      } else {
+        newSelection.clear();
+        newSelection.add(tweetId);
+      }
+    }
+
+    setSelectedTweets(newSelection);
+  };
+
+  const handleCategoryClick = (e, categoryId) => {
+    if (spacePressed || isPanning) {
+      e.stopPropagation();
+      return;
+    }
+
+    e.stopPropagation();
+    const tweetsInCategory = tweetData.tweets
+      .filter(tweet => categorizationData.data[tweet.id]?.categories?.includes(categoryId))
+      .map(t => t.id);
+
+    const newSelection = new Set(selectedTweets);
+
+    // Check if all tweets in category are already selected
+    const allSelected = tweetsInCategory.every(id => newSelection.has(id));
+
+    if (e.metaKey || e.ctrlKey) {
+      if (allSelected) {
+        // All are selected, so toggle them off
+        tweetsInCategory.forEach(id => newSelection.delete(id));
+      } else {
+        // Not all selected, so select all
+        tweetsInCategory.forEach(id => newSelection.add(id));
+      }
+    } else if (e.shiftKey) {
+      tweetsInCategory.forEach(id => newSelection.delete(id));
+    } else {
+      newSelection.clear();
+      tweetsInCategory.forEach(id => newSelection.add(id));
+    }
+
+    setSelectedTweets(newSelection);
+  };
+
+  const handleSvgMouseDown = (e) => {
+    if (spacePressed) {
+      e.preventDefault();
+      setIsPanning(true);
+      setPanStart({ x: e.clientX - panOffset.x, y: e.clientY - panOffset.y });
+      return;
+    }
+
+    if (!svgRef.current) return;
+    const rect = svgRef.current.getBoundingClientRect();
+    const svgX = (e.clientX - rect.left - width/2 - panOffset.x) / zoom;
+    const svgY = (e.clientY - rect.top - height/2 - panOffset.y) / zoom;
+    setIsSelecting(true);
+    setSelectionStart({ x: svgX, y: svgY });
+    setSelectionEnd({ x: svgX, y: svgY });
+    if (!e.metaKey && !e.ctrlKey) {
+      setSelectedTweets(new Set());
+    }
+  };
+
+  const handleSvgMouseMove = (e) => {
+    if (isPanning) {
+      e.preventDefault();
+      setPanOffset({
+        x: e.clientX - panStart.x,
+        y: e.clientY - panStart.y
+      });
+      return;
+    }
+
+    if (!isSelecting || !svgRef.current) return;
+    const rect = svgRef.current.getBoundingClientRect();
+    const svgX = (e.clientX - rect.left - width/2 - panOffset.x) / zoom;
+    const svgY = (e.clientY - rect.top - height/2 - panOffset.y) / zoom;
+    setSelectionEnd({ x: svgX, y: svgY });
+  };
+
+  const handleSvgMouseUp = (e) => {
+    if (isPanning) {
+      setIsPanning(false);
+      return;
+    }
+
+    if (!isSelecting) return;
+
+    const minX = Math.min(selectionStart.x, selectionEnd.x);
+    const maxX = Math.max(selectionStart.x, selectionEnd.x);
+    const minY = Math.min(selectionStart.y, selectionEnd.y);
+    const maxY = Math.max(selectionStart.y, selectionEnd.y);
+
+    const newSelection = new Set(selectedTweets);
+
+    tweetData.tweets.forEach(tweet => {
+      if (!categorizationData.data[tweet.id]) return;
+      const coordPair = coordsToPixels(categorizationData.data[tweet.id].coords, 1200, 900);
+      const x = coordPair[0];
+      const y = coordPair[1];
+      if (x >= minX && x <= maxX && y >= minY && y <= maxY) {
+        if (e.shiftKey) newSelection.delete(tweet.id);
+        else newSelection.add(tweet.id);
+      }
+    });
+
+    setSelectedTweets(newSelection);
+    setIsSelecting(false);
+    setSelectionStart(null);
+    setSelectionEnd(null);
+  };
+
+  const handleWheel = (e) => {
+    e.preventDefault();
+    const delta = e.deltaY * -0.01;
+    const newZoom = Math.min(Math.max(0.5, zoom + delta * zoom * 0.5), 5);
+
+    if (svgRef.current) {
+      const rect = svgRef.current.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+
+      const zoomRatio = newZoom / zoom;
+
+      setPanOffset({
+        x: mouseX - (mouseX - panOffset.x) * zoomRatio,
+        y: mouseY - (mouseY - panOffset.y) * zoomRatio
+      });
+    }
+
+    setZoom(newZoom);
+  };
+
+  const isCategorySelected = (categoryId) => {
+    const tweetsInCategory = tweetData.tweets
+      .filter(tweet => categorizationData.data[tweet.id]?.categories?.includes(categoryId))
+      .map(t => t.id);
+
+    if (tweetsInCategory.length === 0) return false;
+    return tweetsInCategory.every(id => selectedTweets.has(id));
+  };
+
+  const getSelectedCategories = () => {
+    return categories.filter(cat => isCategorySelected(cat.id)).map(cat => cat.id);
+  };
+
+  const getTweetOpacity = (tweetId) => {
+    if (hoveredTweet) {
+      return tweetId === hoveredTweet ? 1 : 0.1;
+    }
+    if (selectedTweets.size > 0) {
+      return selectedTweets.has(tweetId) ? 1 : 0.1;
+    }
+    if (hoveredCategory) {
+      const data = categorizationData.data[tweetId];
+      return data?.categories?.includes(hoveredCategory) ? 1 : 0.1;
+    }
+    return 1;
+  };
+
+  const handleResizeMouseDown = (e) => {
+    e.preventDefault();
+    setIsResizing(true);
+  };
+
+  if (!tweetData || !categorizationData) {
+    return (
+      <div className="w-full h-screen flex items-center justify-center bg-gray-50 p-8">
+        <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg p-6">
+          <h1 className="text-2xl font-bold mb-4">Tweet Plot Visualizer</h1>
+
+          <div className="mb-4">
+            <label className="block text-sm font-semibold mb-2">Tweet Data JSON:</label>
+            <textarea
+              className="w-full h-48 p-4 border border-gray-300 rounded font-mono text-sm"
+              placeholder='{"pfps": {...}, "tweets": [...]}'
+              value={tweetInput}
+              onChange={(e) => setTweetInput(e.target.value)}
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-sm font-semibold mb-2">Categorization Data JSON:</label>
+            <textarea
+              className="w-full h-48 p-4 border border-gray-300 rounded font-mono text-sm"
+              placeholder='{"axes": [...], "categories": [...], "data": {...}}'
+              value={categorizationInput}
+              onChange={(e) => setCategorizationInput(e.target.value)}
+            />
+          </div>
+
+          {error && <div className="mt-2 text-red-600 text-sm whitespace-pre-wrap font-mono max-h-48 overflow-y-auto bg-red-50 p-3 rounded">{error}</div>}
+
+          <button
+            className="mt-4 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            onClick={parseJSON}
+          >
+            Generate Plot
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const width = 1200;
+  const height = 900;
+  const axes = categorizationData.axes;
+  const categories = categorizationData.categories;
+  const tweets = tweetData.tweets;
+  const pfps = tweetData.pfps;
+
+  const xAxis = axes[selectedAxes.x];
+  const yAxis = axes[selectedAxes.y];
+  const xLabel = axisDirections.x === 1 ? xAxis.positive : xAxis.negative;
+  const xLabelNeg = axisDirections.x === 1 ? xAxis.negative : xAxis.positive;
+  const yLabel = axisDirections.y === 1 ? yAxis.positive : yAxis.negative;
+  const yLabelNeg = axisDirections.y === 1 ? yAxis.negative : yAxis.positive;
+
+  const visibleTweets = tweets.filter(isTweetVisible);
+
+  const displayTweets = hoveredTweet
+    ? [tweets.find(t => t.id === hoveredTweet)]
+    : hoveredCategory
+    ? visibleTweets.filter(t => categorizationData.data[t.id]?.categories?.includes(hoveredCategory))
+    : selectedTweets.size > 0
+    ? visibleTweets.filter(t => selectedTweets.has(t.id))
+    : visibleTweets;
+
+  const selectedCategories = getSelectedCategories();
+
+  return (
+    <div className="w-full h-screen flex flex-col bg-gray-50">
+      <div className="p-4 bg-white border-b flex-shrink-0">
+        <div className="flex items-center gap-4 max-w-6xl mx-auto">
+          <button
+            className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+            onClick={() => setTimelineTime(Math.max(minTime, timelineTime - (maxTime - minTime) / 100))}
+          >
+            ←
+          </button>
+          <div className="flex-1">
+            <div className="text-sm mb-1">{new Date(timelineTime).toLocaleString()}</div>
+            <input
+              type="range"
+              min={minTime}
+              max={maxTime}
+              value={timelineTime}
+              onChange={(e) => setTimelineTime(parseInt(e.target.value))}
+              className="w-full"
+            />
+          </div>
+          <button
+            className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+            onClick={() => setTimelineTime(Math.min(maxTime, timelineTime + (maxTime - minTime) / 100))}
+          >
+            →
+          </button>
+          <div className="flex items-center gap-2">
+            <button
+              className="px-3 py-1 bg-gray-600 text-white rounded hover:bg-gray-700"
+              onClick={() => setZoom(Math.max(0.5, zoom - 0.2))}
+            >
+              −
+            </button>
+            <span className="text-sm w-16 text-center">{Math.round(zoom * 100)}%</span>
+            <button
+              className="px-3 py-1 bg-gray-600 text-white rounded hover:bg-gray-700"
+              onClick={() => setZoom(Math.min(5, zoom + 0.2))}
+            >
+              +
+            </button>
+            <button
+              className="px-3 py-1 bg-gray-600 text-white rounded hover:bg-gray-700"
+              onClick={() => { setZoom(1); setPanOffset({ x: 0, y: 0 }); }}
+            >
+              Reset
+            </button>
+          </div>
+          <div className="flex items-center gap-2">
+            <label className="text-sm">Jitter:</label>
+            <button
+              className="px-2 py-1 bg-gray-600 text-white rounded hover:bg-gray-700"
+              onClick={() => setJitterAmount(Math.max(0, jitterAmount - 10))}
+            >
+              −
+            </button>
+            <span className="text-sm w-12 text-center">{jitterAmount}</span>
+            <button
+              className="px-2 py-1 bg-gray-600 text-white rounded hover:bg-gray-700"
+              onClick={() => setJitterAmount(Math.min(100, jitterAmount + 10))}
+            >
+              +
+            </button>
+          </div>
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={showReplyEdges}
+              onChange={(e) => setShowReplyEdges(e.target.checked)}
+              className="w-4 h-4"
+            />
+            <span className="text-sm">Show Reply Edges</span>
+          </label>
+          <button
+            className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
+            onClick={() => {
+              setTweetData(null);
+              setCategorizationData(null);
+            }}
+          >
+            Load New Data
+          </button>
+        </div>
+      </div>
+
+      <div className="flex-1 flex overflow-hidden">
+        <div
+          className="flex-1 flex items-center justify-center relative overflow-hidden"
+          style={{ cursor: spacePressed ? (isPanning ? 'grabbing' : 'grab') : 'default' }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+              overflow: 'hidden',
+              background: 'white'
+            }}
+          >
+          <svg
+            ref={svgRef}
+            width="100%"
+            height="100%"
+            className="bg-white"
+            onMouseDown={handleSvgMouseDown}
+            onMouseMove={handleSvgMouseMove}
+            onMouseUp={handleSvgMouseUp}
+            onWheel={handleWheel}
+            style={{
+              position: 'absolute',
+              left: 0,
+              top: 0
+            }}
+          >
+            <g transform={`translate(${width/2 + panOffset.x}, ${height/2 + panOffset.y}) scale(${zoom})`}>
+              <line x1={-width/2 + 80} y1="0" x2={width/2 - 80} y2="0" stroke="#666" strokeWidth={2/zoom} />
+              <line x1="0" y1={-height/2 + 80} x2="0" y2={height/2 - 80} stroke="#666" strokeWidth={2/zoom} />
+
+              <text
+                x="0"
+                y={-height/2 + 30}
+                textAnchor="middle"
+                className="text-sm font-semibold cursor-pointer hover:text-blue-600"
+                fontSize={14/zoom}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleAxisClick('top');
+                }}
+              >
+                {yLabel}
+              </text>
+              <text
+                x="0"
+                y={height/2 - 20}
+                textAnchor="middle"
+                className="text-sm font-semibold cursor-pointer hover:text-blue-600"
+                fontSize={14/zoom}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleAxisClick('bottom');
+                }}
+              >
+                {yLabelNeg}
+              </text>
+              <text
+                x={-width/2 + 20}
+                y="-10"
+                textAnchor="start"
+                className="text-sm font-semibold cursor-pointer hover:text-blue-600"
+                fontSize={14/zoom}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleAxisClick('left');
+                }}
+              >
+                {xLabelNeg}
+              </text>
+              <text
+                x={width/2 - 20}
+                y="-10"
+                textAnchor="end"
+                className="text-sm font-semibold cursor-pointer hover:text-blue-600"
+                fontSize={14/zoom}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleAxisClick('right');
+                }}
+              >
+                {xLabel}
+              </text>
+
+              <g id="category-blobs">
+                {categories.map(category => {
+                  const blobPath = getCategoryBlob(category.id, width, height);
+                  if (!blobPath) return null;
+                  const isHovered = hoveredCategory === category.id;
+                  const isSelected = selectedCategories.includes(category.id);
+                  const shouldFill = isHovered || isSelected;
+
+                  let strokeOpacity = 0.7;
+                  if (hoveredCategory && hoveredCategory !== category.id) {
+                    strokeOpacity = 0.2;
+                  }
+
+                  return (
+                    <path
+                      key={category.id}
+                      d={blobPath}
+                      fill={shouldFill ? getCategoryColor(category.id) : 'none'}
+                      fillOpacity={shouldFill ? 0.25 : 0}
+                      stroke={getCategoryColor(category.id)}
+                      strokeWidth={3/zoom}
+                      strokeOpacity={strokeOpacity}
+                      style={{
+                        cursor: 'pointer',
+                        pointerEvents: 'all'
+                      }}
+                      onMouseEnter={(e) => {
+                        setHoveredCategory(category.id);
+                        const rect = svgRef.current.getBoundingClientRect();
+                        setCategoryTooltipPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+                      }}
+                      onMouseMove={(e) => {
+                        const rect = svgRef.current.getBoundingClientRect();
+                        setCategoryTooltipPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+                      }}
+                      onMouseLeave={() => {
+                        setHoveredCategory(null);
+                        setCategoryTooltipPos(null);
+                      }}
+                      onClick={(e) => handleCategoryClick(e, category.id)}
+                    />
+                  );
+                })}
+              </g>
+
+              {showReplyEdges && (
+                <g id="reply-edges">
+                  {tweets.map(tweet => {
+                    if (!isTweetVisible(tweet) || !categorizationData.data[tweet.id]) return null;
+                    if (!tweet.reply_to) return null;
+
+                    const replyToTweet = tweets.find(t => t.id === tweet.reply_to);
+                    if (!replyToTweet || !isTweetVisible(replyToTweet) || !categorizationData.data[replyToTweet.id]) return null;
+
+                    const fromCoords = coordsToPixels(categorizationData.data[tweet.id].coords, width, height);
+                    const toCoords = coordsToPixels(categorizationData.data[replyToTweet.id].coords, width, height);
+
+                    return (
+                      <line
+                        key={`edge-${tweet.id}`}
+                        x1={fromCoords[0]}
+                        y1={fromCoords[1]}
+                        x2={toCoords[0]}
+                        y2={toCoords[1]}
+                        stroke="#999"
+                        strokeWidth={1/zoom}
+                        strokeOpacity={0.3}
+                        pointerEvents="none"
+                      />
+                    );
+                  })}
+                </g>
+              )}
+
+              <g id="tweets">
+                {tweets
+                  .map((tweet, origIndex) => ({ tweet, origIndex }))
+                  .sort((a, b) => {
+                    const aSelected = selectedTweets.has(a.tweet.id);
+                    const bSelected = selectedTweets.has(b.tweet.id);
+                    const aHovered = hoveredTweet === a.tweet.id;
+                    const bHovered = hoveredTweet === b.tweet.id;
+
+                    if (aHovered && !bHovered) return 1;
+                    if (bHovered && !aHovered) return -1;
+
+                    if (aSelected && !bSelected) return 1;
+                    if (bSelected && !aSelected) return -1;
+
+                    return a.origIndex - b.origIndex;
+                  })
+                  .map(({ tweet }) => {
+                  if (!isTweetVisible(tweet) || !categorizationData.data[tweet.id]) return null;
+
+                  const coords = categorizationData.data[tweet.id].coords;
+                  const baseCoords = coordsToPixels(coords, width, height, tweet.id);
+                  const x = baseCoords[0];
+                  const y = baseCoords[1];
+                  const colors = getTweetColors(tweet.id);
+                  const isSelected = selectedTweets.has(tweet.id);
+
+                  const baseRadius = 20;
+                  const minRadius = 4;
+                  const maxRadius = 32;
+                  const radius = Math.max(minRadius, Math.min(maxRadius, baseRadius * Math.pow(zoom, 0.5))) / zoom;
+                  const ringWidth = 3 / zoom;
+
+                  return (
+                    <g
+                      key={tweet.id}
+                      onMouseEnter={() => setHoveredTweet(tweet.id)}
+                      onMouseLeave={() => setHoveredTweet(null)}
+                      onClick={(e) => handleTweetClick(e, tweet.id)}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      {colors.length === 1 ? (
+                        <circle
+                          cx={x}
+                          cy={y}
+                          r={radius + ringWidth / 2}
+                          fill="none"
+                          stroke={colors[0]}
+                          strokeWidth={ringWidth}
+                          opacity={getTweetOpacity(tweet.id)}
+                        />
+                      ) : (
+                        colors.map((color, idx) => {
+                          const numColors = colors.length;
+                          const segmentAngle = (2 * Math.PI) / numColors;
+                          const startAngle = idx * segmentAngle - Math.PI / 2;
+                          const endAngle = (idx + 1) * segmentAngle - Math.PI / 2;
+
+                          const innerRadius = radius;
+                          const outerRadius = radius + ringWidth;
+
+                          const x1Inner = x + innerRadius * Math.cos(startAngle);
+                          const y1Inner = y + innerRadius * Math.sin(startAngle);
+                          const x1Outer = x + outerRadius * Math.cos(startAngle);
+                          const y1Outer = y + outerRadius * Math.sin(startAngle);
+
+                          const x2Inner = x + innerRadius * Math.cos(endAngle);
+                          const y2Inner = y + innerRadius * Math.sin(endAngle);
+                          const x2Outer = x + outerRadius * Math.cos(endAngle);
+                          const y2Outer = y + outerRadius * Math.sin(endAngle);
+
+                          const largeArc = segmentAngle > Math.PI ? 1 : 0;
+
+                          const pathData = [
+                            `M ${x1Inner} ${y1Inner}`,
+                            `L ${x1Outer} ${y1Outer}`,
+                            `A ${outerRadius} ${outerRadius} 0 ${largeArc} 1 ${x2Outer} ${y2Outer}`,
+                            `L ${x2Inner} ${y2Inner}`,
+                            `A ${innerRadius} ${innerRadius} 0 ${largeArc} 0 ${x1Inner} ${y1Inner}`,
+                            `Z`
+                          ].join(' ');
+
+                          return (
+                            <path
+                              key={idx}
+                              d={pathData}
+                              fill={color}
+                              opacity={getTweetOpacity(tweet.id)}
+                            />
+                          );
+                        })
+                      )}
+
+                      <g opacity={getTweetOpacity(tweet.id)}>
+                        {pfps[tweet.author] && (
+                          <image
+                            href={pfps[tweet.author]}
+                            x={x - radius}
+                            y={y - radius}
+                            width={radius * 2}
+                            height={radius * 2}
+                            clipPath={`circle(${radius}px at ${radius}px ${radius}px)`}
+                          />
+                        )}
+                      </g>
+                    </g>
+                  );
+                })}
+              </g>
+
+              {isSelecting && selectionStart && selectionEnd && (
+                <rect
+                  x={Math.min(selectionStart.x, selectionEnd.x)}
+                  y={Math.min(selectionStart.y, selectionEnd.y)}
+                  width={Math.abs(selectionEnd.x - selectionStart.x)}
+                  height={Math.abs(selectionEnd.y - selectionStart.y)}
+                  fill="rgba(59, 130, 246, 0.2)"
+                  stroke="#3B82F6"
+                  strokeWidth={2 / zoom}
+                  strokeDasharray="5,5"
+                />
+              )}
+            </g>
+          </svg>
+
+          {hoveredCategory && categoryTooltipPos && (
+            <div
+              className="absolute bg-gray-900 text-white px-3 py-1 rounded text-sm pointer-events-none shadow-lg"
+              style={{
+                left: categoryTooltipPos.x + 15,
+                top: categoryTooltipPos.y - 10,
+                zIndex: 1000
+              }}
+            >
+              {categories.find(c => c.id === hoveredCategory)?.label}
+            </div>
+          )}
+          </div>
+
+          {showAxisPicker && (
+            <div
+              className="absolute bg-white border-2 border-blue-600 rounded-lg shadow-xl p-3 z-50"
+              style={{
+                left: showAxisPicker === 'left' ? '100px' : showAxisPicker === 'right' ? 'auto' : '50%',
+                right: showAxisPicker === 'right' ? '100px' : 'auto',
+                top: showAxisPicker === 'top' ? '120px' : showAxisPicker === 'bottom' ? 'auto' : '50%',
+                bottom: showAxisPicker === 'bottom' ? '120px' : 'auto',
+                transform: (showAxisPicker === 'top' || showAxisPicker === 'bottom') ? 'translateX(-50%)' : 'translateY(-50%)'
+              }}
+            >
+              <div className="text-xs font-semibold text-gray-700 mb-2">Select Axis:</div>
+              <div className="space-y-1">
+                {axes.map((axis, idx) => (
+                  <button
+                    key={idx}
+                    className="block w-full text-left px-3 py-2 text-sm hover:bg-blue-50 rounded"
+                    onClick={() => selectAxis(showAxisPicker, idx)}
+                  >
+                    <div className="font-semibold">{axis.label}</div>
+                    <div className="text-xs text-gray-600">
+                      {showAxisPicker === 'left' || showAxisPicker === 'bottom' ? axis.negative : axis.positive}
+                    </div>
+                  </button>
+                ))}
+              </div>
+              <button
+                className="mt-2 w-full text-xs text-gray-500 hover:text-gray-700"
+                onClick={() => setShowAxisPicker(null)}
+              >
+                Cancel
+              </button>
+            </div>
+          )}
+
+          <div className="absolute bottom-4 left-4 bg-white/90 rounded px-3 py-2 text-xs text-gray-600">
+            Hold SPACE and drag to pan • Scroll to zoom • Arrow keys for timeline • Shift to deselect
+          </div>
+        </div>
+
+        <div
+          className="bg-gray-400 hover:bg-blue-500 cursor-ew-resize flex-shrink-0"
+          style={{ width: '6px' }}
+          onMouseDown={handleResizeMouseDown}
+        />
+
+        <div className="bg-white shadow-lg flex flex-col" style={{ width: `${detailsWidth}px` }}>
+          <div className="p-4 border-b flex-shrink-0">
+            <h2 className="font-bold">Details</h2>
+          </div>
+          <div className="flex-1 overflow-y-auto p-4">
+            {displayTweets.length === 0 ? (
+              <p className="text-gray-500 italic">Hover or click tweets to view</p>
+            ) : (
+              <div className="space-y-4">
+                {displayTweets.map(tweet => {
+                  if (!tweet) return null;
+                  const tweetMeta = categorizationData.data[tweet.id];
+                  return (
+                    <div key={tweet.id} className="border-b pb-4 last:border-b-0">
+                      <div className="flex items-start gap-2 mb-2">
+                        <div className="flex items-center gap-2 flex-1">
+                          {pfps[tweet.author] && (
+                            <img src={pfps[tweet.author]} className="w-8 h-8 rounded-full flex-shrink-0" alt="" />
+                          )}
+                          <div className="flex-1 min-w-0">
+                            <div className="font-bold truncate">@{tweet.author}</div>
+                            <div className="text-xs text-gray-500">
+                              {new Date(tweet.timestamp).toLocaleString()}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2 flex-shrink-0">
+                          {tweetMeta?.categories && (
+                            <div className="flex gap-1">
+                              {tweetMeta.categories.map(catId => (
+                                <div
+                                  key={catId}
+                                  className="w-3 h-3 rounded-full"
+                                  style={{ backgroundColor: getCategoryColor(catId) }}
+                                  title={categories.find(c => c.id === catId)?.label}
+                                />
+                              ))}
+                            </div>
+                          )}
+                          <div className="text-xs text-gray-600">❤️ {tweet.likes}</div>
+                        </div>
+                      </div>
+                      <p className="text-sm mb-2">{tweet.text}</p>
+                      {tweetMeta?.explanation && (
+                        <p className="text-xs italic text-gray-600 bg-gray-50 p-2 rounded">
+                          {tweetMeta.explanation}
+                        </p>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div className="p-4 bg-white border-t flex-shrink-0">
+        <div className="flex flex-wrap gap-4 justify-center">
+          {categories.map(cat => (
+            <div
+              key={cat.id}
+              className="flex items-center gap-2 cursor-pointer hover:opacity-70"
+              onClick={(e) => handleCategoryClick(e, cat.id)}
+              onMouseEnter={() => setHoveredCategory(cat.id)}
+              onMouseLeave={() => setHoveredCategory(null)}
+            >
+              <div className="w-4 h-4 rounded" style={{ backgroundColor: getCategoryColor(cat.id) }} />
+              <span className="text-sm">{cat.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<TweetPlotVisualizer />);
+    </script>
+  </body>
+</html>

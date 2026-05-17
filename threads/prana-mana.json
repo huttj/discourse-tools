@@ -1,0 +1,1543 @@
+{
+  "captured_at": "2026-05-16T18:27:54.881Z",
+  "tweet_count": 65,
+  "queue_count": 59,
+  "pfp_base64": false,
+  "queued": [
+    {
+      "id": "2047785449834291407",
+      "url": "https://x.com/manamajere/status/2047785449834291407",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055647482038608040",
+      "url": "https://x.com/USSOL_112/status/2055647482038608040",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055682344003002714",
+      "url": "https://x.com/manamajere/status/2055682344003002714",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055681859879588133",
+      "url": "https://x.com/manamajere/status/2055681859879588133",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055554048024039591",
+      "url": "https://x.com/Ruesavatar/status/2055554048024039591",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055349918227628252",
+      "url": "https://x.com/ArtyArtHistory/status/2055349918227628252",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055476870146105608",
+      "url": "https://x.com/manamajere/status/2055476870146105608",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055336739913249040",
+      "url": "https://x.com/michelleakin/status/2055336739913249040",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055478411053695039",
+      "url": "https://x.com/manamajere/status/2055478411053695039",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055461256690008428",
+      "url": "https://x.com/manamajere/status/2055461256690008428",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055458936829231432",
+      "url": "https://x.com/divya_venn/status/2055458936829231432",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055433952320541156",
+      "url": "https://x.com/manamajere/status/2055433952320541156",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055415526642569453",
+      "url": "https://x.com/blublairies/status/2055415526642569453",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055349715030384840",
+      "url": "https://x.com/manamajere/status/2055349715030384840",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055307130521993633",
+      "url": "https://x.com/breaking2morrow/status/2055307130521993633",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055300447909396770",
+      "url": "https://x.com/manamajere/status/2055300447909396770",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055292911433232425",
+      "url": "https://x.com/Lovandfear/status/2055292911433232425",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055294355418620025",
+      "url": "https://x.com/manamajere/status/2055294355418620025",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055279025707249692",
+      "url": "https://x.com/manamajere/status/2055279025707249692",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055110427147694470",
+      "url": "https://x.com/manamajere/status/2055110427147694470",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055090692171677947",
+      "url": "https://x.com/buridansridge/status/2055090692171677947",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055083125164634249",
+      "url": "https://x.com/manamajere/status/2055083125164634249",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055083126477464007",
+      "url": "https://x.com/manamajere/status/2055083126477464007",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055085703797551261",
+      "url": "https://x.com/manamajere/status/2055085703797551261",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055075850643534210",
+      "url": "https://x.com/manamajere/status/2055075850643534210",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055071649020399812",
+      "url": "https://x.com/manamajere/status/2055071649020399812",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055071004917924178",
+      "url": "https://x.com/manamajere/status/2055071004917924178",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055065262643085326",
+      "url": "https://x.com/manamajere/status/2055065262643085326",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055062116567073150",
+      "url": "https://x.com/manamajere/status/2055062116567073150",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2054984796971978759",
+      "url": "https://x.com/manamajere/status/2054984796971978759",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2054982497285369997",
+      "url": "https://x.com/manamajere/status/2054982497285369997",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055060432965230905",
+      "url": "https://x.com/danielbrottman/status/2055060432965230905",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "1902103084387520965",
+      "url": "https://x.com/ManaMoonMama/status/1902103084387520965",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2054678598385361161",
+      "url": "https://x.com/noampomsky/status/2054678598385361161",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2054621925230755854",
+      "url": "https://x.com/noampomsky/status/2054621925230755854",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2054886513075225049",
+      "url": "https://x.com/manamajere/status/2054886513075225049",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2054674978960793648",
+      "url": "https://x.com/manamajere/status/2054674978960793648",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2054603372146143359",
+      "url": "https://x.com/manamajere/status/2054603372146143359",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2054611999250624919",
+      "url": "https://x.com/kramerposts/status/2054611999250624919",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2054182191098155469",
+      "url": "https://x.com/manamajere/status/2054182191098155469",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2054193239926706213",
+      "url": "https://x.com/manamajere/status/2054193239926706213",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055708365788151933",
+      "url": "https://x.com/taijitu_sees/status/2055708365788151933",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055714821426069701",
+      "url": "https://x.com/taijitu_sees/status/2055714821426069701",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055715094856630423",
+      "url": "https://x.com/manamajere/status/2055715094856630423",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055714485894295801",
+      "url": "https://x.com/workflowsauce/status/2055714485894295801",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055714965449760970",
+      "url": "https://x.com/manamajere/status/2055714965449760970",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055712103831314721",
+      "url": "https://x.com/manamajere/status/2055712103831314721",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055712627834212784",
+      "url": "https://x.com/manamajere/status/2055712627834212784",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055705661691085083",
+      "url": "https://x.com/workflowsauce/status/2055705661691085083",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055706313196261835",
+      "url": "https://x.com/manamajere/status/2055706313196261835",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055687985404969116",
+      "url": "https://x.com/appleMechanic/status/2055687985404969116",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055689225857609882",
+      "url": "https://x.com/manamajere/status/2055689225857609882",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055676660326765005",
+      "url": "https://x.com/lynneT816/status/2055676660326765005",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055678698079076791",
+      "url": "https://x.com/manamajere/status/2055678698079076791",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055629180511937017",
+      "url": "https://x.com/gene_jelly/status/2055629180511937017",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055640880841683029",
+      "url": "https://x.com/manamajere/status/2055640880841683029",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055639418539581676",
+      "url": "https://x.com/manamajere/status/2055639418539581676",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055626390599270715",
+      "url": "https://x.com/manamajere/status/2055626390599270715",
+      "discovered_from": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055626900366660091",
+      "url": "https://x.com/manamajere/status/2055626900366660091",
+      "discovered_from": "https://x.com/manamajere"
+    }
+  ],
+  "tweets": [
+    {
+      "id": "1902103084387520965",
+      "created_at": "Tue Mar 18 21:01:29 +0000 2025",
+      "text": "Secretly shipping moots.",
+      "screen_name": "ManaMoonMama",
+      "name": "prana Mana",
+      "pfp_url": "",
+      "user_id": "1570307734859354114",
+      "in_reply_to_status_id": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_screen_name": null,
+      "conversation_id": "1902103084387520965",
+      "quoted_status_id": null,
+      "media": [],
+      "reply_count": 4,
+      "retweet_count": 0,
+      "favorite_count": 25,
+      "lang": "en",
+      "_source": "graphql"
+    },
+    {
+      "id": "2047785449834291407",
+      "created_at": "2026-04-24T21:11:11.000Z",
+      "text": "ADVENTURE TIME! Life's about to change for me in a big way. So, I am probably taking a break from here again soon. All of my love to you dears! 💞",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 2,
+      "retweet_count": 0,
+      "favorite_count": 14,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere",
+      "user_id": "1906371798234800129",
+      "in_reply_to_status_id": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_screen_name": null,
+      "conversation_id": "2047785449834291407",
+      "quoted_status_id": null,
+      "lang": "en"
+    },
+    {
+      "id": "2054182191098155469",
+      "created_at": "Tue May 12 12:49:33 +0000 2026",
+      "text": "Yellow is my color, and if I were a flower, I'm certain that I would be a dandelion. 💛",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "",
+      "user_id": "1906371798234800129",
+      "in_reply_to_status_id": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_screen_name": null,
+      "conversation_id": "2054182191098155469",
+      "quoted_status_id": null,
+      "media": [],
+      "reply_count": 2,
+      "retweet_count": 0,
+      "favorite_count": 13,
+      "lang": "en",
+      "_source": "graphql"
+    },
+    {
+      "id": "2054193239926706213",
+      "created_at": "Tue May 12 13:33:28 +0000 2026",
+      "text": "https://t.co/QJtorXbdJX",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "",
+      "user_id": "1906371798234800129",
+      "in_reply_to_status_id": "2054182191098155469",
+      "in_reply_to_user_id": "1906371798234800129",
+      "in_reply_to_screen_name": "manamajere",
+      "conversation_id": "2054182191098155469",
+      "quoted_status_id": null,
+      "media": [],
+      "reply_count": 2,
+      "retweet_count": 0,
+      "favorite_count": 2,
+      "lang": "zxx",
+      "_source": "graphql"
+    },
+    {
+      "id": "2054312575614001265",
+      "created_at": "Tue May 12 21:27:39 +0000 2026",
+      "text": "https://t.co/K75trCDpym",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "",
+      "user_id": "1906371798234800129",
+      "in_reply_to_status_id": "2054193239926706213",
+      "in_reply_to_user_id": "1906371798234800129",
+      "in_reply_to_screen_name": "manamajere",
+      "conversation_id": "2054182191098155469",
+      "quoted_status_id": null,
+      "media": [
+        {
+          "type": "photo",
+          "url": "https://pbs.twimg.com/media/HIJiZpdW0AAzRWW.jpg"
+        }
+      ],
+      "reply_count": 0,
+      "retweet_count": 1,
+      "favorite_count": 10,
+      "lang": "zxx",
+      "_source": "graphql"
+    },
+    {
+      "id": "2054603372146143359",
+      "created_at": "Wed May 13 16:43:11 +0000 2026",
+      "text": "I just unfriended my father who abandoned me on Facebook. \n\nI'm feeling pretty good about this. :)",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "",
+      "user_id": "1906371798234800129",
+      "in_reply_to_status_id": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_screen_name": null,
+      "conversation_id": "2054603372146143359",
+      "quoted_status_id": null,
+      "media": [],
+      "reply_count": 7,
+      "retweet_count": 0,
+      "favorite_count": 49,
+      "lang": "en",
+      "_source": "graphql"
+    },
+    {
+      "id": "2054605256709853187",
+      "created_at": "Wed May 13 16:50:40 +0000 2026",
+      "text": "Now I'm crying over likes and comments. 🥹\n\nThank you, guys. 💗🫂",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "",
+      "user_id": "1906371798234800129",
+      "in_reply_to_status_id": "2054603372146143359",
+      "in_reply_to_user_id": "1906371798234800129",
+      "in_reply_to_screen_name": "manamajere",
+      "conversation_id": "2054603372146143359",
+      "quoted_status_id": null,
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 6,
+      "lang": "en",
+      "_source": "graphql"
+    },
+    {
+      "id": "2054611999250624919",
+      "created_at": "Wed May 13 17:17:28 +0000 2026",
+      "text": "Oh, you felt humiliated during your humiliation ritual? Well that must be because you’re a uniquely bad and unlovable person",
+      "screen_name": "kramerposts",
+      "name": "Matt Kramer 🔪",
+      "pfp_url": "",
+      "user_id": "1432401746861592577",
+      "in_reply_to_status_id": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_screen_name": null,
+      "conversation_id": "2054611999250624919",
+      "quoted_status_id": null,
+      "media": [],
+      "reply_count": 2,
+      "retweet_count": 1,
+      "favorite_count": 27,
+      "lang": "en",
+      "_source": "graphql"
+    },
+    {
+      "id": "2054617753684734233",
+      "created_at": "Wed May 13 17:40:20 +0000 2026",
+      "text": "RT @kramerposts: Oh, you felt humiliated during your humiliation ritual? Well that must be because you’re a uniquely bad and unlovable pers…",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "",
+      "user_id": "1906371798234800129",
+      "in_reply_to_status_id": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_screen_name": null,
+      "conversation_id": "2054617753684734233",
+      "quoted_status_id": null,
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 1,
+      "favorite_count": 0,
+      "lang": "en",
+      "_source": "graphql"
+    },
+    {
+      "id": "2054621925230755854",
+      "created_at": "Wed May 13 17:56:54 +0000 2026",
+      "text": "everyone should read codependent no more",
+      "screen_name": "noampomsky",
+      "name": "Ava",
+      "pfp_url": "",
+      "user_id": "3127370223",
+      "in_reply_to_status_id": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_screen_name": null,
+      "conversation_id": "2054621925230755854",
+      "quoted_status_id": null,
+      "media": [],
+      "reply_count": 4,
+      "retweet_count": 0,
+      "favorite_count": 91,
+      "lang": "en",
+      "_source": "graphql"
+    },
+    {
+      "id": "2054674978960793648",
+      "created_at": "Wed May 13 21:27:43 +0000 2026",
+      "text": "In a bit of cosmic irony, this is the 18th anniversary of my real father's (step dad) death date.\n\nThe symbolism here is pointed.",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "",
+      "user_id": "1906371798234800129",
+      "in_reply_to_status_id": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_screen_name": null,
+      "conversation_id": "2054674978960793648",
+      "quoted_status_id": "2054603372146143359",
+      "media": [],
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 12,
+      "lang": "en",
+      "_source": "graphql"
+    },
+    {
+      "id": "2054678598385361161",
+      "created_at": "Wed May 13 21:42:06 +0000 2026",
+      "text": "Some context: my friend raved about this book a couple of years ago but I just skimmed it since I've never identified as codependent and a lot of the stories in the book are about the spouses of alcoholics, which isn't personally relevant. But I read it again recently and realized that the book is actually about letting go of the need for control. Many of us try to help our friends and family, without realizing that the frame of \"they need my care/support\" is actually a form of establishing control. We believe that people need us, that they'll go down the wrong path without us and make the wrong choices in work/relationships/life, but what happens is that while you're trying to control the other person through supporting them you become controlled by their behavior. \n\nIf you've ever had the experience of being extremely frustrated at a friend, partner or family member because they asked for your advice and you gave it, only for them to ignore it, this book is relevant to you. (From what I can tell, that's a pretty universal experience.) In it, Melody Beattie writes, \"The surest way to make ourselves crazy is to get involved in other people’s business, and the quickest way to become sane and happy is to tend to our own affairs.\" Despite our best efforts, we have extremely limited ability to influence other people's choices. People are free to neglect their bodies, engage in destructive behavior, get in or stay in toxic relationships, abuse substances, etc. This might feel unbearable if you love them, but if you get overly attached to the idea that *they need you in order to stop,*  you've trapped yourself in a situation where you have no real leverage. As in: no matter what you try, how hard you try, how pragmatic, useful, wise, supportive you are, *it's not ultimately your life.* Most of us are better served by, well, actually living our lives, instead of trying to solve someone else's. \n\nThrough extreme effort we may able to be able to temporarily modify someone's behavior, but the change will not last because real change only comes when someone grapples with the consequences of their situation and makes the decision to live differently. You cannot force someone to have a revelation, not matter how badly you might want to. Though people might tell us they want or need our advice or support, this generally just gets us trapped in the drama triangle. \n\nThere is a difference between *actually helping someone*, and *assuming the role of the rescuer because we believe it's what's required of us.\" Caretaking is often just a form of enabling. Another great quote from the book: \"At the time we rescue or caretake, we may experience one or more of the following feelings: discomfort and awkwardness about the other person’s dilemma; urgency to do something; pity; guilt; saintliness; anxiety; extreme responsibility for that person or problem; fear; a sense of being forced or compelled to do something; mild or severe reluctance to do anything; more competency than the person we are “helping”; or occasional resentment at being put in this position. We also think the person we are taking care of is helpless and unable to do what we are doing for them. We feel needed temporarily. \n\nI am not referring to acts of love, kindness, compassion, and true helping—situations where our assistance is legitimately wanted and needed and we want to give that assistance. These acts are the good stuff of life. Rescuing and caretaking aren’t.\"\n\nThe tl;dr of it all is that in order to actually change, people generally need to reckon with their sense of autonomy and responsibility. When we shield people from consequences, they never learn how to make better choices.",
+      "screen_name": "noampomsky",
+      "name": "Ava",
+      "pfp_url": "",
+      "user_id": "3127370223",
+      "in_reply_to_status_id": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_screen_name": null,
+      "conversation_id": "2054678598385361161",
+      "quoted_status_id": "2054621925230755854",
+      "media": [],
+      "reply_count": 13,
+      "retweet_count": 69,
+      "favorite_count": 905,
+      "lang": "en",
+      "_source": "graphql"
+    },
+    {
+      "id": "2054684089043583037",
+      "created_at": "Wed May 13 22:03:55 +0000 2026",
+      "text": "In Search of the Miraculous is .69 on Kindle right now. https://t.co/O5Vp0L5eWt",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "",
+      "user_id": "1906371798234800129",
+      "in_reply_to_status_id": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_screen_name": null,
+      "conversation_id": "2054684089043583037",
+      "quoted_status_id": null,
+      "media": [
+        {
+          "type": "photo",
+          "url": "https://pbs.twimg.com/media/HIO0Sk6W4AAxy5w.jpg",
+          "alt": "A screenshot of In Search of the Miraculous by P.D. Ouspensky on Amazon Kindle with a price of 69 cents. "
+        }
+      ],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 2,
+      "lang": "en",
+      "_source": "graphql"
+    },
+    {
+      "id": "2054886513075225049",
+      "created_at": "Thu May 14 11:28:17 +0000 2026",
+      "text": "https://t.co/a9RaDtElVi",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "",
+      "user_id": "1906371798234800129",
+      "in_reply_to_status_id": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_screen_name": null,
+      "conversation_id": "2054886513075225049",
+      "quoted_status_id": null,
+      "media": [],
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "lang": "zxx",
+      "_source": "graphql"
+    },
+    {
+      "id": "2054888472838607104",
+      "created_at": "Thu May 14 11:36:04 +0000 2026",
+      "text": "https://t.co/GPqHjYAWHB",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "",
+      "user_id": "1906371798234800129",
+      "in_reply_to_status_id": "2054886513075225049",
+      "in_reply_to_user_id": "1906371798234800129",
+      "in_reply_to_screen_name": "manamajere",
+      "conversation_id": "2054886513075225049",
+      "quoted_status_id": null,
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "lang": "zxx",
+      "_source": "graphql"
+    },
+    {
+      "id": "2054910547318001892",
+      "created_at": "Thu May 14 13:03:47 +0000 2026",
+      "text": "RT @noampomsky: Some context: my friend raved about this book a couple of years ago but I just skimmed it since I've never identified as co…",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "",
+      "user_id": "1906371798234800129",
+      "in_reply_to_status_id": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_screen_name": null,
+      "conversation_id": "2054910547318001892",
+      "quoted_status_id": "2054621925230755854",
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 69,
+      "favorite_count": 0,
+      "lang": "en",
+      "_source": "graphql"
+    },
+    {
+      "id": "2054979506570428437",
+      "created_at": "Thu May 14 17:37:48 +0000 2026",
+      "text": "Hand on my heart pep talks.\n\nI can do this. I can do this. 🙂‍↕️",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "",
+      "user_id": "1906371798234800129",
+      "in_reply_to_status_id": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_screen_name": null,
+      "conversation_id": "2054979506570428437",
+      "quoted_status_id": null,
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 15,
+      "lang": "en",
+      "_source": "graphql"
+    },
+    {
+      "id": "2054982497285369997",
+      "created_at": "2026-05-14T17:49:41.000Z",
+      "text": "Lately I'm really diving into doing things that scare me.\n\nHowever, I am limited by the way that my actions affect those nearest me, so I tread a middle path.",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "user_id": "1906371798234800129",
+      "in_reply_to_status_id": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_screen_name": null,
+      "conversation_id": "2054982497285369997",
+      "quoted_status_id": null,
+      "media": [],
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 11,
+      "lang": "en",
+      "_source": "dom",
+      "in_reply_to_screen_names": [],
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2054984796971978759"
+    },
+    {
+      "id": "2054983907641004092",
+      "created_at": "Thu May 14 17:55:17 +0000 2026",
+      "text": "Duty above desire. \n\nIdeally, extinguish desire (someday).\n\nBut reach for the shape that I am made for.",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "",
+      "user_id": "1906371798234800129",
+      "in_reply_to_status_id": "2054982497285369997",
+      "in_reply_to_user_id": "1906371798234800129",
+      "in_reply_to_screen_name": "manamajere",
+      "conversation_id": "2054982497285369997",
+      "quoted_status_id": null,
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "lang": "en",
+      "_source": "graphql"
+    },
+    {
+      "id": "2054984796971978759",
+      "created_at": "2026-05-14T17:58:50.000Z",
+      "text": "I've been living as a requiem. \n\nLet me live now as liturgy. 🙏✨🤍",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "user_id": "1906371798234800129",
+      "in_reply_to_status_id": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_screen_name": null,
+      "conversation_id": "2054984796971978759",
+      "quoted_status_id": null,
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 9,
+      "lang": "en",
+      "_source": "dom",
+      "in_reply_to_screen_names": [],
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2055062116567073150"
+    },
+    {
+      "id": "2055060432965230905",
+      "created_at": "Thu May 14 22:59:23 +0000 2026",
+      "text": "@QiaochuYuan claudism\nclaudhicitta\nthe noble claudefold path\nthe seven factors of enclaudenment\n\ni can go on all day",
+      "screen_name": "danielbrottman",
+      "name": "daniel brottman 🪷",
+      "pfp_url": "",
+      "user_id": "1038586640",
+      "in_reply_to_status_id": "2055059577193013451",
+      "in_reply_to_user_id": "1016470827775086592",
+      "in_reply_to_screen_name": "QiaochuYuan",
+      "conversation_id": "2055059577193013451",
+      "quoted_status_id": null,
+      "media": [],
+      "reply_count": 3,
+      "retweet_count": 1,
+      "favorite_count": 43,
+      "lang": "en",
+      "_source": "graphql"
+    },
+    {
+      "id": "2055062116567073150",
+      "created_at": "2026-05-14T23:06:04.000Z",
+      "text": "I remember bath time as a child. My mother would tell me stories or sing songs to me. \n\nPerhaps one of the best things she did was show me how to blow bubbles with my hands, though. \n\nI felt so magical. ✨",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "user_id": "1906371798234800129",
+      "in_reply_to_status_id": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_screen_name": null,
+      "conversation_id": "2055062116567073150",
+      "quoted_status_id": null,
+      "media": [],
+      "reply_count": 2,
+      "retweet_count": 0,
+      "favorite_count": 9,
+      "lang": "en",
+      "_source": "dom",
+      "in_reply_to_screen_names": [],
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2055065262643085326"
+    },
+    {
+      "id": "2055065262643085326",
+      "created_at": "2026-05-14T23:18:34.000Z",
+      "text": "God. I love empowered whimsically nice girls on Twitter. They're so much fun to post with!",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "user_id": "1906371798234800129",
+      "in_reply_to_status_id": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_screen_name": null,
+      "conversation_id": "2055065262643085326",
+      "quoted_status_id": null,
+      "media": [],
+      "reply_count": 2,
+      "retweet_count": 0,
+      "favorite_count": 15,
+      "lang": "en",
+      "_source": "dom",
+      "in_reply_to_screen_names": [],
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2055071004917924178"
+    },
+    {
+      "id": "2055071004917924178",
+      "created_at": "2026-05-14T23:41:23.000Z",
+      "text": "It's that time again.",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "user_id": "1906371798234800129",
+      "in_reply_to_status_id": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_screen_name": null,
+      "conversation_id": "2055071004917924178",
+      "quoted_status_id": "1902103084387520965",
+      "media": [],
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 2,
+      "lang": "en",
+      "_source": "dom",
+      "in_reply_to_screen_names": [],
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2055071649020399812"
+    },
+    {
+      "id": "2055071649020399812",
+      "created_at": "2026-05-14T23:43:57.000Z",
+      "text": "https://t.co/T6TWAE6RoO",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "user_id": "1906371798234800129",
+      "in_reply_to_status_id": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_screen_name": null,
+      "conversation_id": "2055071649020399812",
+      "quoted_status_id": null,
+      "media": [
+        {
+          "type": "photo",
+          "url": "https://pbs.twimg.com/media/HIUUxlaWMAAjHV7?format=jpg&name=small"
+        }
+      ],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 14,
+      "lang": "zxx",
+      "_source": "dom",
+      "in_reply_to_screen_names": [],
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2055075850643534210"
+    },
+    {
+      "id": "2055075850643534210",
+      "created_at": "2026-05-15T00:00:38.000Z",
+      "text": "Incredible.",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "user_id": "1906371798234800129",
+      "in_reply_to_status_id": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_screen_name": null,
+      "conversation_id": "2055075850643534210",
+      "quoted_status_id": "2055060432965230905",
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 2,
+      "lang": "en",
+      "_source": "dom",
+      "in_reply_to_screen_names": [],
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2055085703797551261"
+    },
+    {
+      "id": "2055083125164634249",
+      "created_at": "2026-05-15T00:29:33.000Z",
+      "text": "Me, confronting fears, holding my boyfriend's fish sandwich, and praying that the Lord stand with me as face this. \n\n\"Man, Jesus would have already fed like 200 people with that sandwich, or however many people he fed, with fish.\" He says to me.\n\nHysterical laughter. \n\nDone. 😤",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "user_id": "1906371798234800129",
+      "in_reply_to_status_id": null,
+      "in_reply_to_user_id": null,
+      "in_reply_to_screen_name": null,
+      "conversation_id": "2055083125164634249",
+      "quoted_status_id": null,
+      "media": [],
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 15,
+      "lang": "en",
+      "_source": "dom",
+      "in_reply_to_screen_names": [],
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2055110427147694470"
+    },
+    {
+      "id": "2055083126477464007",
+      "created_at": "2026-05-15T00:29:33.000Z",
+      "text": "Like, I'm sure my posts make it seem like I'm climbing mountains at the moment, and yeah. Sometimes. \n\nBut mostly, it's just a new and general approach to life to not defeat myself in advance. Y'know?\n\nI can appreciate the small silly wins too. :D",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 1,
+      "retweet_count": 1,
+      "favorite_count": 8,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2055083125164634249"
+    },
+    {
+      "id": "2055085703797551261",
+      "created_at": "2026-05-15T00:39:48.000Z",
+      "text": "\"Man. I'm really proud of myself for taking a bite of that fish sandwich.\"\n\n\"😏 It was a bite, babe. Get over it.\"\n\nNo! 💪",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 6,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2055083126477464007"
+    },
+    {
+      "id": "2055090692171677947",
+      "created_at": "2026-05-15T00:59:37.000Z",
+      "text": "The individuals we meet and admire amplify qualities that already exist within us, waiting to be noticed, to be invested in - for the ability to perceive and recognise such signatures often indicates a degree of inherent resonance. Through meaningful connection, which acts almost",
+      "screen_name": "buridansridge",
+      "name": "Lauren",
+      "pfp_url": "https://pbs.twimg.com/profile_images/1935303154393927681/xJeQXcED_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 5,
+      "retweet_count": 23,
+      "favorite_count": 140,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055110427147694470",
+      "created_at": "2026-05-15T02:18:02.000Z",
+      "text": "I bet the fear of death is easier to deal with when you stop having a fear of life. 🤔",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 3,
+      "retweet_count": 1,
+      "favorite_count": 19,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2055279025707249692"
+    },
+    {
+      "id": "2055279025707249692",
+      "created_at": "2026-05-15T13:27:59.000Z",
+      "text": "A personality dysmorphia detached from reason or status.",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2055294355418620025"
+    },
+    {
+      "id": "2055294355418620025",
+      "created_at": "2026-05-15T14:28:54.000Z",
+      "text": "💚💚💚 https://youtu.be/Xjl2fSwz-Ck?si=12mz9U0xBcILd13g…",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [
+        {
+          "type": "photo",
+          "url": "https://pbs.twimg.com/media/HIXfUp1WAAAIXsh?format=jpg&name=small"
+        }
+      ],
+      "reply_count": 0,
+      "retweet_count": 2,
+      "favorite_count": 8,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2055300447909396770"
+    },
+    {
+      "id": "2055300447909396770",
+      "created_at": "2026-05-15T14:53:07.000Z",
+      "text": "Even better are the names that you can no longer say because they've become a term of endearment to you, and you know that intimacy will be revealed if you said it even once.",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [
+        {
+          "type": "photo",
+          "url": "https://pbs.twimg.com/media/HIXeAdVbUAADNJu?format=jpg&name=small"
+        }
+      ],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 10,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2055349715030384840"
+    },
+    {
+      "id": "2055307130521993633",
+      "created_at": "2026-05-15T15:19:40.000Z",
+      "text": "Got no hill to die on? \nWe can solve that.\nGo get a shovel lad, we diggin' moats.\nYa didna think these hills all made themselves didja?",
+      "screen_name": "breaking2morrow",
+      "name": "Brother Sanchez",
+      "pfp_url": "https://pbs.twimg.com/profile_images/1637865953772937217/Ds2i-DCI_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 1,
+      "retweet_count": 1,
+      "favorite_count": 8,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055349715030384840",
+      "created_at": "2026-05-15T18:08:53.000Z",
+      "text": "My mind loses the words quickly, but the emotional mapping is stored in my body forever.",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 2,
+      "retweet_count": 0,
+      "favorite_count": 11,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2055433952320541156"
+    },
+    {
+      "id": "2055349918227628252",
+      "created_at": "2026-05-15T18:09:41.000Z",
+      "text": "Birth of the Human Soul - Otto Runge, 1806",
+      "screen_name": "ArtyArtHistory",
+      "name": "Arty the Art Historian",
+      "pfp_url": "https://pbs.twimg.com/profile_images/1520258725793173505/9dSAnrp1_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [
+        {
+          "type": "photo",
+          "url": "https://pbs.twimg.com/media/HIYR24BWgAAoZux?format=jpg&name=small"
+        }
+      ],
+      "reply_count": 2,
+      "retweet_count": 135,
+      "favorite_count": 748,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055415526642569453",
+      "created_at": "2026-05-15T22:30:23.000Z",
+      "text": "Is it a toxic trait that my brain does often suggest like “could beat [criminal of large scale and influence] in a physical fight of pure agility and grit like tai master shit, legoooo!!!” 😂",
+      "screen_name": "blublairies",
+      "name": "⸜(｡˃ ᵕ ˂ )⸝♡",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2053949576961568768/xlfchNQC_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 2,
+      "retweet_count": 1,
+      "favorite_count": 6,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055433952320541156",
+      "created_at": "2026-05-15T23:43:37.000Z",
+      "text": "I know everything is 'necessary' to the ecosystem, but if I could wink something out of existence... \n\nTicks. \n\nHandsdown. \n\nThey stop me from spending time in the forest. I'm tired of worrying about alpha gal. 😤",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 2,
+      "retweet_count": 0,
+      "favorite_count": 9,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2055461256690008428"
+    },
+    {
+      "id": "2055458936829231432",
+      "created_at": "2026-05-16T01:22:53.000Z",
+      "text": "why is it being painted as a virtue to not search for new love? If I died I would truly want my husband to find someone else, the sooner the better. Grief and new love can and do coexist. It would not be an insult to my memory, but rather an acknowledgement that marriage and love",
+      "screen_name": "divya_venn",
+      "name": "divya venn",
+      "pfp_url": "https://pbs.twimg.com/profile_images/1893333894658727936/rkyIVN4i_400x400.jpg",
+      "in_reply_to_screen_names": [
+        "lizisamused"
+      ],
+      "media": [],
+      "reply_count": 1,
+      "retweet_count": 2,
+      "favorite_count": 48,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055461256690008428",
+      "created_at": "2026-05-16T01:32:06.000Z",
+      "text": "",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [
+        {
+          "type": "photo",
+          "url": "https://pbs.twimg.com/media/HIZ3HvnWYAAjRJn?format=jpg&name=small"
+        }
+      ],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2055478411053695039"
+    },
+    {
+      "id": "2055476870146105608",
+      "created_at": "2026-05-16T02:34:09.000Z",
+      "text": "Weeping.",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [
+        {
+          "type": "photo",
+          "url": "https://pbs.twimg.com/media/HIYFt9lWsAAw_B-?format=jpg&name=small"
+        }
+      ],
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 8,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2055681859879588133"
+    },
+    {
+      "id": "2055478411053695039",
+      "created_at": "2026-05-16T02:40:16.000Z",
+      "text": "Sent to my partner with the caption, \"This could be our life.\"\n\nHe will not eat turkey burgers and refuses to cook vegetarian burgers on principle, he said. Lmao",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2055476870146105608"
+    },
+    {
+      "id": "2055554048024039591",
+      "created_at": "2026-05-16T07:40:50.000Z",
+      "text": "The fairies were here, wildflowers always spring up beneath their dancing feet. This is a true fact, ask your grandmother.",
+      "screen_name": "Ruesavatar",
+      "name": "rue🌿",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2039044595196268544/OzL9L6Q4_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [
+        {
+          "type": "photo",
+          "url": "https://pbs.twimg.com/media/HIbLV4xW0AEoKyz?format=jpg&name=360x360"
+        },
+        {
+          "type": "photo",
+          "url": "https://pbs.twimg.com/media/HIbLV4zWMAAqSEf?format=jpg&name=360x360"
+        },
+        {
+          "type": "photo",
+          "url": "https://pbs.twimg.com/media/HIbLV4zX0AAyLfT?format=jpg&name=360x360"
+        },
+        {
+          "type": "photo",
+          "url": "https://pbs.twimg.com/media/HIbLV4zXEAAS0j_?format=jpg&name=360x360"
+        }
+      ],
+      "reply_count": 9,
+      "retweet_count": 8,
+      "favorite_count": 103,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055626390599270715",
+      "created_at": "2026-05-16T12:28:17.000Z",
+      "text": "😣 Yikes! \n\nMy son just did a trip to a couple of big pharmaceutical companies to consider a career on STEM. One of them bragged about having a way to remove withdrawal from nicotine with a shot and also basically the cure for cancer.\n\nWhen my son pressed asking why it wasn't",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2055639418539581676"
+    },
+    {
+      "id": "2055626900366660091",
+      "created_at": "2026-05-16T12:30:19.000Z",
+      "text": "publicly available, they went back to their script and avoided questions. \n\nHe was so furious it had him reconsidering his career path, and he refused to recommend the trip to classmates.\n\nAh. Business reasons. Some people's religions are weird. 😤",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2055626390599270715"
+    },
+    {
+      "id": "2055629180511937017",
+      "created_at": "2026-05-16T12:39:23.000Z",
+      "text": "dear lord. props to your son for asking the right questions. gotta keep talking to everyone gotta keep pushing one of these days change might happen 🙏",
+      "screen_name": "gene_jelly",
+      "name": "Gene Jelly",
+      "pfp_url": "https://pbs.twimg.com/profile_images/1879504469475422208/7cnujdbS_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055639418539581676",
+      "created_at": "2026-05-16T13:20:03.000Z",
+      "text": "The dandelion field... 😩🙏🤍✨ Wow.",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 2,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2055640880841683029"
+    },
+    {
+      "id": "2055640880841683029",
+      "created_at": "2026-05-16T13:25:52.000Z",
+      "text": "So many have dreams of changing systems from within and end up corrupted too, not even just by lobbyist money. \n\nI only have one idea at solutions to such matters, and I think a lot of people here are already focusing on that. :)",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2055678698079076791"
+    },
+    {
+      "id": "2055647482038608040",
+      "created_at": "2026-05-16T13:52:06.000Z",
+      "text": "Maybe I like you so much because I remember you from before in some other time.",
+      "screen_name": "USSOL_112",
+      "name": "SOL",
+      "pfp_url": "https://pbs.twimg.com/profile_images/1680414472253370368/Es8cRfI0_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 1,
+      "retweet_count": 4,
+      "favorite_count": 7,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055676660326765005",
+      "created_at": "2026-05-16T15:48:03.000Z",
+      "text": "i’ve gathered my friends…whom are begging my attention 🪅💜.",
+      "screen_name": "lynneT816",
+      "name": "b.witching",
+      "pfp_url": "https://pbs.twimg.com/profile_images/1749302975267282944/BP99vUna_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [
+        {
+          "type": "photo",
+          "url": "https://pbs.twimg.com/media/HIc7A28W0AAjQg0?format=jpg&name=small"
+        }
+      ],
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 6,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055678698079076791",
+      "created_at": "2026-05-16T15:56:08.000Z",
+      "text": "How sweet of you to honor them all in the same place. ☺️💗",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 0,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2055689225857609882"
+    },
+    {
+      "id": "2055681859879588133",
+      "created_at": "2026-05-16T16:08:42.000Z",
+      "text": "So basically, the exact opposite of how an LLM is advising you to edit your draft!",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [
+        {
+          "type": "photo",
+          "url": "https://pbs.twimg.com/media/HIc_wdWWEAEgrA1?format=jpg&name=small"
+        }
+      ],
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 4,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2055682344003002714"
+    },
+    {
+      "id": "2055682344003002714",
+      "created_at": "2026-05-16T16:10:38.000Z",
+      "text": "Why do I feel sunshine-y and tearful today? \n\n✨ That new moon energy. 💛\n\n                          😌",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 2,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2047785449834291407"
+    },
+    {
+      "id": "2055687985404969116",
+      "created_at": "2026-05-16T16:33:03.000Z",
+      "text": "should i wear my new pretty white dress today",
+      "screen_name": "appleMechanic",
+      "name": "teeming-toting (8/42 spaces 2026)",
+      "pfp_url": "https://pbs.twimg.com/profile_images/1550924218207850496/e6eDD7VU_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 7,
+      "retweet_count": 0,
+      "favorite_count": 20,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055689225857609882",
+      "created_at": "2026-05-16T16:37:58.000Z",
+      "text": "Yes",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2055706313196261835"
+    },
+    {
+      "id": "2055705661691085083",
+      "created_at": "2026-05-16T17:43:17.000Z",
+      "text": "AI is writing for the least common denominator: the terminally online",
+      "screen_name": "workflowsauce",
+      "name": "Joshua 💫",
+      "pfp_url": "https://pbs.twimg.com/profile_images/1922682353551646720/9xwiH1Rv_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2055714485894295801"
+    },
+    {
+      "id": "2055706313196261835",
+      "created_at": "2026-05-16T17:45:52.000Z",
+      "text": "Wouldn't that be the lowest common denominator though?",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2055712627834212784"
+    },
+    {
+      "id": "2055708365788151933",
+      "created_at": "2026-05-16T17:54:02.000Z",
+      "text": "I bet this feels nice for the coral",
+      "screen_name": "taijitu_sees",
+      "name": "Taijitu Observer",
+      "pfp_url": "https://pbs.twimg.com/profile_images/1880867735539953664/BeQcQrJ0_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [
+        {
+          "type": "video",
+          "url": null,
+          "poster": "https://pbs.twimg.com/ext_tw_video_thumb/2055708345844338689/pu/img/XmPmnX_06jDpMliw.jpg"
+        }
+      ],
+      "reply_count": 2,
+      "retweet_count": 0,
+      "favorite_count": 4,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055712103831314721",
+      "created_at": "2026-05-16T18:08:53.000Z",
+      "text": "I did interpret it as rarest, which confused it a bit. But then I imagined AI catering specifically to its user and imagined that maybe rare just means personal in this moment, and so your swap, in a roundabout way still works.",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2055714965449760970"
+    },
+    {
+      "id": "2055712627834212784",
+      "created_at": "2026-05-16T18:10:58.000Z",
+      "text": "But then again. Not really. \n\nI have used it like this, and it's good in some ways, but in others, it's lacking greatly.",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2055712103831314721"
+    },
+    {
+      "id": "2055714485894295801",
+      "created_at": "2026-05-16T18:18:21.000Z",
+      "text": "Imagine social media where you only had the ability to engage with a handful of posts a day\n\nLike a library",
+      "screen_name": "workflowsauce",
+      "name": "Joshua 💫",
+      "pfp_url": "https://pbs.twimg.com/profile_images/1922682353551646720/9xwiH1Rv_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere"
+    },
+    {
+      "id": "2055714821426069701",
+      "created_at": "2026-05-16T18:19:41.000Z",
+      "text": "On some level, probably cellular, this is probably happening.",
+      "screen_name": "taijitu_sees",
+      "name": "Taijitu Observer",
+      "pfp_url": "https://pbs.twimg.com/profile_images/1880867735539953664/BeQcQrJ0_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2055708365788151933"
+    },
+    {
+      "id": "2055714965449760970",
+      "created_at": "2026-05-16T18:20:15.000Z",
+      "text": "I'm enchanted already. Also include a rating system where you could raise or lower a temperature dial of how much you're feeling the vibe of a person and would like to increase or lower the amount of interaction with them.",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 1,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2055715094856630423"
+    },
+    {
+      "id": "2055715094856630423",
+      "created_at": "2026-05-16T18:20:46.000Z",
+      "text": "My cells are sighing happily.",
+      "screen_name": "manamajere",
+      "name": "🎶 prana Mana",
+      "pfp_url": "https://pbs.twimg.com/profile_images/2010476083557122048/UlHJJjQp_400x400.jpg",
+      "in_reply_to_screen_names": [],
+      "media": [],
+      "reply_count": 0,
+      "retweet_count": 0,
+      "favorite_count": 1,
+      "_source": "dom",
+      "_scraped_on": "https://x.com/manamajere",
+      "inferred_in_reply_to_id": "2054982497285369997"
+    }
+  ]
+}

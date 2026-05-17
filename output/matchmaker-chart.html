@@ -1,0 +1,1333 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tweet Plot Visualizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
+    <!--
+      To produce a finished plot:
+        1. Duplicate this file (e.g. cp chart-template.html my-thread.html).
+        2. On the data line below, replace the placeholder string
+           __CHART_DATA_PLACEHOLDER__ — surrounding quotes included — with the
+           combined JSON object for your thread. The result should read:
+               window.__EMBEDDED_DATA__ = { "pfps": { ... }, ... };
+           The combined object carries both the scraped tweets and the
+           categorization, with these five keys:
+               { pfps, tweets, axes, categories, data }
+           (A nested form, { tweetData: {...}, categorizationData: {...} },
+           is also accepted.)
+        3. Open the file in a browser.
+
+      Without embedded data the page falls back to a paste-in form. You can
+      also append ?load=<url> to fetch a JSON file at runtime instead of
+      embedding it.
+    -->
+    <script>window.__EMBEDDED_DATA__ = {"tweetData": {"pfps": {"datingbyblaine": "https://pbs.twimg.com/profile_images/2011132635729276929/CII-JTP9_400x400.jpg", "emmysteuer": "https://pbs.twimg.com/profile_images/1867465428831965184/t-Tju1t9_400x400.jpg", "bellisaurius": "https://pbs.twimg.com/profile_images/743807505592000512/5aJJ3RAV_400x400.jpg", "carsandheels": "https://pbs.twimg.com/profile_images/2031566242402938881/j38timCt_400x400.jpg", "HunterBidensL17": "https://pbs.twimg.com/profile_images/2011284397438423041/5GD58L-0_400x400.jpg", "eericmyers": "https://pbs.twimg.com/profile_images/485586991409410048/Xa9gSnNw_400x400.jpeg", "daanielaaguilar": "https://pbs.twimg.com/profile_images/760611292826574848/NyfxYatN_400x400.jpg", "matthewswspence": "https://pbs.twimg.com/profile_images/1530207942536007680/rZWFDZwX_400x400.jpg", "wanderfall9": "https://pbs.twimg.com/profile_images/2048875872225243136/IpZttogL_400x400.jpg", "thisistechtoday": "https://pbs.twimg.com/profile_images/1089617343016124417/LZVe4amB_400x400.jpg", "Brbrophy15": "https://pbs.twimg.com/profile_images/1994230588702642176/R8KLDNOR_400x400.jpg", "mrsChoocher": "https://pbs.twimg.com/profile_images/2033377845771177984/W9mFQr-h_400x400.jpg", "sheabsullivan": "https://pbs.twimg.com/profile_images/849339457107111937/qpqqczxI_400x400.jpg", "C1evrNameHere": "https://pbs.twimg.com/profile_images/1552736294639439872/pPGWJO6T_400x400.jpg", "heroineworshipe": "https://pbs.twimg.com/profile_images/1706821492284264448/uwv6n8k0_400x400.jpg", "BagEndCapital": "https://pbs.twimg.com/profile_images/2055154855983960065/CbHv-79z_400x400.jpg", "dahliajeanx": "https://pbs.twimg.com/profile_images/1864072150514085888/C61NFtq-_400x400.jpg", "just_oliveira16": "https://pbs.twimg.com/profile_images/1870175457892544512/ieyxwhCx_400x400.jpg", "gitbooster": "https://pbs.twimg.com/profile_images/1857554927096045568/QBJ9hpU8_400x400.png", "j_subgang": "https://pbs.twimg.com/profile_images/1817500673203638273/MKuasuSw_400x400.jpg", "jasonpdaly": "https://pbs.twimg.com/profile_images/1603471129573789698/zSxwTsCf_400x400.jpg", "loobah_l": "https://pbs.twimg.com/profile_images/1789395518407180289/DL3vHa_q_400x400.jpg", "SchloegelBagel": "https://pbs.twimg.com/profile_images/1714856940130484224/vMz1fkSE_400x400.jpg", "corpsole2": "https://pbs.twimg.com/profile_images/1856024700092329986/D2CjJKtn_400x400.jpg", "mattfle58323855": "https://pbs.twimg.com/profile_images/1862608306453291008/Cj1-xyRu_400x400.jpg", "punishedpat76": "https://pbs.twimg.com/profile_images/1808258330290540545/oJ2Gx2Pb_400x400.jpg", "silentjoy47": "https://pbs.twimg.com/profile_images/2028199803222646784/F9vF5E0k_400x400.jpg", "leebrill": "https://pbs.twimg.com/profile_images/1579899717215219712/qZch3-Zm_400x400.jpg", "ErinDusty": "https://pbs.twimg.com/profile_images/1303440288086659072/zIZo6db5_400x400.jpg", "lucijapen": "https://pbs.twimg.com/profile_images/1981538821092061184/X86JQhRO_400x400.jpg", "AletaValiant": "https://pbs.twimg.com/profile_images/1956414792719015937/bYpRBr9T_400x400.jpg", "IshDtax": "https://pbs.twimg.com/profile_images/1883363681775636480/XBQX8bMX_400x400.jpg", "KnuckleSandwic8": "https://pbs.twimg.com/profile_images/1485713817552113666/sucXWhcu_400x400.jpg", "Corndogdreams": "https://pbs.twimg.com/profile_images/1980384949300588544/v_13Ec1N_400x400.jpg", "HugeHunkOfSwiss": "https://pbs.twimg.com/profile_images/456247385769775104/byqRhdPH_400x400.jpeg", "cljack": "https://pbs.twimg.com/profile_images/1610248047014838274/R2wNkzX8_400x400.jpg", "FWPlayboy": "https://pbs.twimg.com/profile_images/999510717354033152/n18k9fvm_400x400.jpg", "spiderstumbled": "https://pbs.twimg.com/profile_images/2010974609860972544/jaXNa-zU_400x400.jpg", "thecureforblur": "https://pbs.twimg.com/profile_images/2010392597261606912/TWz6Cy1A_400x400.jpg", "sevultura": "https://pbs.twimg.com/profile_images/1095718752908279809/cHgljort_400x400.png", "momoquiroz": "https://pbs.twimg.com/profile_images/468637127517802499/00935yD0_400x400.jpeg", "octal": "https://pbs.twimg.com/profile_images/1639592637140451328/k6-OHCMd_400x400.jpg", "rantanpln": "https://pbs.twimg.com/profile_images/1380434148091908099/BaKMX3fl_400x400.jpg", "NovaSmith1111": "https://pbs.twimg.com/profile_images/2037955826204528640/lbyVKjTT_400x400.jpg", "Sofi_Shvets": "https://pbs.twimg.com/profile_images/2048068222172495872/0MAnudq3_400x400.jpg", "JohnBogleyDC": "https://pbs.twimg.com/profile_images/1812152167395893248/i9Z1tHTu_400x400.jpg", "XenniallTeach": "https://pbs.twimg.com/profile_images/2034105786297720832/GPlN7Vwq_400x400.jpg", "amthoughts33": "https://pbs.twimg.com/profile_images/1606086483483533312/qKy1qaXQ_400x400.jpg", "GardenStGambler": "https://pbs.twimg.com/profile_images/1627954011188985856/-mSDNtyY_400x400.jpg", "PolishUsa": "https://pbs.twimg.com/profile_images/1534546263500283904/YRGQiNPR_400x400.jpg", "saiyar": "https://pbs.twimg.com/profile_images/1483136210587598849/5fPNZwyK_400x400.jpg", "StroutMotivateU": "https://pbs.twimg.com/profile_images/1424742204397006852/ifdwlBQl_400x400.jpg", "an1malspirits": "https://pbs.twimg.com/profile_images/1907075047438663680/ZAGApK2Q_400x400.jpg", "oskarelmgren": "https://pbs.twimg.com/profile_images/1658815446932398081/AQA91sng_400x400.jpg", "concernedowl22": "https://pbs.twimg.com/profile_images/2015114859101261825/BdsPcRP6_400x400.jpg", "hey_im_babe": "https://pbs.twimg.com/profile_images/2030060002795474945/ykPjmuTT_400x400.jpg", "KattyDiore": "https://pbs.twimg.com/profile_images/2034551820710727680/AICqyE1l_400x400.jpg", "ElizaKorhonen": "https://pbs.twimg.com/profile_images/1462009843020087299/9ljSJm-N_400x400.jpg", "SunnyvaleSBay": "https://pbs.twimg.com/profile_images/1743481544856178688/7OVnmoG-_400x400.jpg", "sweet_Lou_singr": "https://pbs.twimg.com/profile_images/2049723107724886017/9PmC30iz_400x400.jpg", "henry_lgl_long": "https://pbs.twimg.com/profile_images/2040417528145428480/KYJ0_PB3_400x400.jpg", "SalvicMuse": "https://pbs.twimg.com/profile_images/1869384243257724928/13z4lF9s_400x400.jpg", "Optimumlatte69": "https://pbs.twimg.com/profile_images/1981518913679552512/ZYgOlAJE_400x400.jpg", "Tongalagliu": "https://pbs.twimg.com/profile_images/2035218308887453698/dqUpDXhl_400x400.jpg", "LisaFenDragon": "https://pbs.twimg.com/profile_images/2022812201279721473/sJ8fQc2s_400x400.jpg", "karissapersists": "https://pbs.twimg.com/profile_images/2013641190030147584/7dZutcSt_400x400.jpg", "citizenkaneda": "https://pbs.twimg.com/profile_images/1886485284583280641/8eMKyLhQ_400x400.jpg", "medjournalist": "https://pbs.twimg.com/profile_images/918914426438262784/-QRt3m7j_400x400.jpg", "David_Waddell": "https://pbs.twimg.com/profile_images/1693636247095218176/5b083U07_400x400.jpg", "bhonda805": "https://pbs.twimg.com/profile_images/2054747379790991360/xfcH23t__400x400.jpg", "ian_90211": "https://pbs.twimg.com/profile_images/1756503425003786240/ur7h9I26_400x400.jpg", "FZaslavskiy": "https://pbs.twimg.com/profile_images/1378377541220720641/NmyDSayo_400x400.jpg", "HeSpeaksNStuff": "https://pbs.twimg.com/profile_images/1962249586786926592/KVM_XJHa_400x400.jpg", "SassySouthBlond": "https://pbs.twimg.com/profile_images/1998390369931722752/xi47l3KM_400x400.jpg", "sarah_cone": "https://pbs.twimg.com/profile_images/2052142323241287681/Gx65XdQL_400x400.jpg", "TheTruth14982": "https://pbs.twimg.com/profile_images/2002370646337077248/0p1DwJ6a_400x400.jpg", "govoyeurangel": "https://pbs.twimg.com/profile_images/2051832101784133638/xgvwl4h0_400x400.jpg", "Industrious112": "https://pbs.twimg.com/profile_images/1519388335524909056/c2855pG2_400x400.jpg", "ContrarianSaver": "https://pbs.twimg.com/profile_images/1205595215626719238/rZkJmveU_400x400.jpg", "JohnnyBlack_HS": "https://pbs.twimg.com/profile_images/866433969226747904/KaUYUPzg_400x400.jpg", "AlmostMedia": "https://pbs.twimg.com/profile_images/1365699140240502789/ZZZWISUo_400x400.jpg", "LouisEdwar97778": "https://pbs.twimg.com/profile_images/1897915145923223552/8lN-d5pp_400x400.jpg", "pascal_patin": "https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png", "HFMajorTom": "https://pbs.twimg.com/profile_images/1366770726943002630/_TT0JocY_400x400.jpg", "TayTayTayT67373": "https://pbs.twimg.com/profile_images/2013784575789682688/qjzoIjga_400x400.png", "wadafazt": "https://pbs.twimg.com/profile_images/1194459342730231810/QkccvMUH_400x400.jpg", "jessethan3": "https://pbs.twimg.com/profile_images/2008599580053520384/Poh9DIXd_400x400.jpg", "Can2CG": "https://pbs.twimg.com/profile_images/1905014792399544320/VdCmtMrK_400x400.jpg", "EclectiCatholic": "https://pbs.twimg.com/profile_images/1939001218245832704/FuQMTk86_400x400.jpg", "pypolk": "https://pbs.twimg.com/profile_images/1717728619332571136/G-8zdhNO_400x400.jpg"}, "tweets": [{"id": "2055037080560881835", "author": "datingbyblaine", "timestamp": "2026-05-14T21:26:35.000Z", "text": "Example of a matchmaking application I'll reject. It sounds like he wants a cofounder not a wife? 🤔", "likes": 725, "reply_to": null}, {"id": "2055038235030819251", "author": "emmysteuer", "timestamp": "2026-05-14T21:31:10.000Z", "text": "He can be MY cofounder if he works on my projects 😝 but I won’t be working on his", "likes": 66, "reply_to": null}, {"id": "2055038645216637012", "author": "MarginCalled80", "timestamp": "Thu May 14 21:32:48 +0000 2026", "text": "@datingbyblaine Imagine being on a date with that guy. https://t.co/YrQnSVaQZJ", "likes": 8, "reply_to": "2055037080560881835"}, {"id": "2055038696500457866", "author": "bellisaurius", "timestamp": "2026-05-14T21:33:00.000Z", "text": "I was like, eh just sounds weird until I hit the discussion about his previous matchmaker interaction.\n\nSounds troublesome and hard to please", "likes": 25, "reply_to": "2055037080560881835"}, {"id": "2055038761306927484", "author": "carsandheels", "timestamp": "2026-05-14T21:33:16.000Z", "text": "I don’t think there’s anything wrong with him wanting to find someone as driven as he is. I’m sure he has no trouble dating. But the whole point of hiring a matchmaker is to find someone truly rare ; someone you wouldn’t easily meet on your own.", "likes": 13, "reply_to": null}, {"id": "2055038811084624204", "author": "HunterBidensL17", "timestamp": "2026-05-14T21:33:27.000Z", "text": "This is why I say most liberals are not actually liberal. I guaruntee you he expresses liberal views publicly. But can you imagine what he actually thinks avout other people / the world?", "likes": 7, "reply_to": "2055037080560881835"}, {"id": "2055039212085498109", "author": "eericmyers", "timestamp": "2026-05-14T21:35:03.000Z", "text": "He did say finding a true co-pilot 🤷‍♂️\n\nBut the highly ambitious, high-agency 1% woman (if there even is a relationship-single one?) is probably not looking to give up control, to say anything about his visual/intellectual standards being \"ruthlessly high\"", "likes": 71, "reply_to": null}, {"id": "2055039278506193198", "author": "daanielaaguilar", "timestamp": "2026-05-14T21:35:19.000Z", "text": "\"I'm the most insufferable person you've ever met seeking an equally insufferable woman\"", "likes": 59, "reply_to": "2055037080560881835"}, {"id": "2055039425961165048", "author": "matthewswspence", "timestamp": "2026-05-14T21:35:54.000Z", "text": "Sounds like this guy should marry his ego, it’s clearly big enough.", "likes": 13, "reply_to": "2055037080560881835"}, {"id": "2055039645084483745", "author": "wanderfall9", "timestamp": "2026-05-14T21:36:46.000Z", "text": "It sounds like he is writing a business proposal—all that business jargon and language. Is that normal for these guys…? Sounds very corporate and robotic…", "likes": 14, "reply_to": "2055037080560881835"}, {"id": "2055039679997587827", "author": "thisistechtoday", "timestamp": "2026-05-14T21:36:55.000Z", "text": "Good grief. Leave room for someone else’s head in the room.", "likes": 47, "reply_to": null}, {"id": "2055041522081358064", "author": "Brbrophy15", "timestamp": "2026-05-14T21:44:14.000Z", "text": "Would you consider him in understanding that the parts of the country that have high value social capital usually rely on wives running local political organizations and especially other sorts of non-profits? They do an excellent job in maintaining community structure", "likes": 5, "reply_to": null}, {"id": "2055041600066088968", "author": "mrsChoocher", "timestamp": "2026-05-14T21:44:32.000Z", "text": "Also sounds like he’s not really successful himself and trying to leverage the names of others…", "likes": 277, "reply_to": null}, {"id": "2055041881428423167", "author": "datingbyblaine", "timestamp": "2026-05-14T21:45:40.000Z", "text": "He’s a middle manager at a large tech company 🫠", "likes": 549, "reply_to": "2055037080560881835"}, {"id": "2055042869803532588", "author": "sheabsullivan", "timestamp": "2026-05-14T21:49:35.000Z", "text": "Was it Patrick Bateman?\n\nAlso: “if you deliver” is code for “I’ll withhold payment.”", "likes": 121, "reply_to": null}, {"id": "2055043549830238328", "author": "C1evrNameHere", "timestamp": "2026-05-14T21:52:17.000Z", "text": "I'm surprised he's single.  🤣😂🤣😂\n\nHe needs a corporate headhunter, not a romantic matchmaker.  I sense zero warmth or affection from this guy.", "likes": 8, "reply_to": "2055037080560881835"}, {"id": "2055045042465849611", "author": "heroineworshipe", "timestamp": "2026-05-14T21:58:13.000Z", "text": "Honestly, exactly the linkedin profile of what all the women picked.", "likes": 0, "reply_to": "2055037080560881835"}, {"id": "2055045827718983962", "author": "BagEndCapital", "timestamp": "2026-05-14T22:01:20.000Z", "text": "Tbh this reads like it was written with AI too", "likes": 3, "reply_to": "2055037080560881835"}, {"id": "2055046034724737135", "author": "markbower123", "timestamp": "Thu May 14 22:02:10 +0000 2026", "text": "@datingbyblaine How many buzzwords can you put on one page", "likes": 0, "reply_to": "2055037080560881835"}, {"id": "2055046208310448272", "author": "dahliajeanx", "timestamp": "2026-05-14T22:02:51.000Z", "text": "Interesting matchmaking insight. \nBut, don't you know any women who are looking for precisely this kind of relationship? I could imagine a few “boss-bitch” women I know responding to that type of “high-agency” profile on a dating app. \nLots of gals WANT to be co-founders.", "likes": 8, "reply_to": null}, {"id": "2055046376384270647", "author": "just_oliveira16", "timestamp": "2026-05-14T22:03:31.000Z", "text": "I wouldn’t even want to be this guy’s friend. I can’t imagine a woman wanting to be his partner.", "likes": 15, "reply_to": "2055037080560881835"}, {"id": "2055046422643593262", "author": "gitbooster", "timestamp": "2026-05-14T22:03:42.000Z", "text": "You are the bearer of non disclosure agree---\nments. You held options and preferred shares for me\nThanks for your pitch decks\nYou're the best keynote that I've ever met\nYou're my co-founder\nCo-founder with benefits", "likes": 1, "reply_to": "2055037080560881835"}, {"id": "2055046448878866595", "author": "j_subgang", "timestamp": "2026-05-14T22:03:48.000Z", "text": "Not the first tech bro that I see make that statement. Life is a bit like running a company, I guess", "likes": 0, "reply_to": null}, {"id": "2055046830958748122", "author": "jasonpdaly", "timestamp": "2026-05-14T22:05:20.000Z", "text": "Without knowing anything about your business apart from what you post on social media, this to me sounds like the exact type of client your business caters to… an affluent, driven man looking for a combination of arm candy and drive in a woman.", "likes": 5, "reply_to": "2055037080560881835"}, {"id": "2055046840978915347", "author": "loobah_l", "timestamp": "2026-05-14T22:05:22.000Z", "text": "@datingbyblaine https://t.co/qqjxjiVk6d", "likes": 21, "reply_to": "2055037080560881835"}, {"id": "2055048636317257891", "author": "georgequaint", "timestamp": "Thu May 14 22:12:30 +0000 2026", "text": "@datingbyblaine Men. Please don’t talk like this.\n\nYou sound like a fuckin’ idiot.", "likes": 4, "reply_to": "2055037080560881835"}, {"id": "2055048777728454777", "author": "BorisBotenov", "timestamp": "Thu May 14 22:13:04 +0000 2026", "text": "@datingbyblaine He's describing a woman who has no need to be set up with someone.", "likes": 4, "reply_to": "2055037080560881835"}, {"id": "2055049430223720448", "author": "SchloegelBagel", "timestamp": "2026-05-14T22:15:39.000Z", "text": "What a dbag. 100% insufferable. I cant imagine any woman with this guy.", "likes": 39, "reply_to": "2055037080560881835"}, {"id": "2055049574222582134", "author": "corpsole2", "timestamp": "2026-05-14T22:16:14.000Z", "text": "Heck, I’m a manager at a tech company and I’m not that boring. At least that’s what my dates tell me.", "likes": 2, "reply_to": "2055037080560881835"}, {"id": "2055049653125521551", "author": "grantgoodstein", "timestamp": "Thu May 14 22:16:32 +0000 2026", "text": "@datingbyblaine “Hunting down hidden omakase spots with my inner circle” 😂😂😂", "likes": 8, "reply_to": "2055037080560881835"}, {"id": "2055049784298176674", "author": "mattfle58323855", "timestamp": "2026-05-14T22:17:04.000Z", "text": "Sounds like your prototype power-couple dynamic.  Do you just try and find trophy wives?", "likes": 0, "reply_to": "2055037080560881835"}, {"id": "2055050317922734139", "author": "punishedpat76", "timestamp": "2026-05-14T22:19:11.000Z", "text": "A lot of people would consider that successful.", "likes": 16, "reply_to": null}, {"id": "2055050421740192222", "author": "war_alex101", "timestamp": "Thu May 14 22:19:36 +0000 2026", "text": "@datingbyblaine why are people so fucking neurotic? \nif he was like 10% less  this would parse easily as a ride or die baddie situation", "likes": 3, "reply_to": "2055037080560881835"}, {"id": "2055050620625948689", "author": "silentjoy47", "timestamp": "2026-05-14T22:20:23.000Z", "text": "Do they often share a girlfriend mood board? Thats hilarious", "likes": 2, "reply_to": "2055037080560881835"}, {"id": "2055052150246367305", "author": "mrsChoocher", "timestamp": "2026-05-14T22:26:28.000Z", "text": "The girls he’s talking about would not.", "likes": 289, "reply_to": "2055041600066088968"}, {"id": "2055052157251178860", "author": "leebrill", "timestamp": "2026-05-14T22:26:29.000Z", "text": "I can’t imagine spending 10 minutes with this guy, let alone a lifetime. What an arrogant blowhard.", "likes": 220, "reply_to": null}, {"id": "2055052261693227172", "author": "ErinDusty", "timestamp": "2026-05-14T22:26:54.000Z", "text": "I don’t think he sounds bad but he’s dry as anything and this didn’t feel romantic at all. It’s like he was preposing to an angel investor.", "likes": 7, "reply_to": "2055037080560881835"}, {"id": "2055053640113488125", "author": "lucijapen", "timestamp": "2026-05-14T22:32:23.000Z", "text": "Matchmaking - it’s like corporate recruitment but worse. 10/10 would decline this style of answers in a corporate interview.", "likes": 1, "reply_to": "2055037080560881835"}, {"id": "2055053647873262004", "author": "AletaValiant", "timestamp": "2026-05-14T22:32:25.000Z", "text": "I think all matchmaking candidates should do the big 5 personality test, attachment style test and personality disorder tests with a proper chat with a knowledgeable and licensed professional (psychoatrist) before being taken into consideration for being matched. Specially if the other people are paying 25 000 dollars to be matched with him/her.", "likes": 38, "reply_to": null}, {"id": "2055054734592246072", "author": "IshDtax", "timestamp": "2026-05-14T22:36:44.000Z", "text": "This just reads icky: \"kept sending me standard mid-level corporate girls instead of the high-agency 1% I require\"...", "likes": 69, "reply_to": "2055037080560881835"}, {"id": "2055056771073638531", "author": "KnuckleSandwic8", "timestamp": "2026-05-14T22:44:49.000Z", "text": "I jumped off a bridge 🌉 just reading that.  Good luck to anyone stuck on a date with this idiot.", "likes": 6, "reply_to": "2055037080560881835"}, {"id": "2055056899385761972", "author": "Corndogdreams", "timestamp": "2026-05-14T22:45:20.000Z", "text": "Did you add those emojis to the application?\n\nWhy would an adult hire you?", "likes": 1, "reply_to": "2055037080560881835"}, {"id": "2055057719401312445", "author": "TheCatLeap", "timestamp": "Thu May 14 22:48:36 +0000 2026", "text": "@datingbyblaine he sounds exhausting and insufferable. glad I don't meet his visual bar", "likes": 1, "reply_to": "2055037080560881835"}, {"id": "2055058977969586235", "author": "TravelFearless", "timestamp": "Thu May 14 22:53:36 +0000 2026", "text": "@datingbyblaine I think that’s just spam for his “dossier” website.", "likes": 0, "reply_to": "2055037080560881835"}, {"id": "2055060050557722745", "author": "HugeHunkOfSwiss", "timestamp": "2026-05-14T22:57:51.000Z", "text": "One thing I’ve never understood: \nwhen some guy is making a list of the things he’s looking for in a woman, that hair color is one of the early items on the list.", "likes": 2, "reply_to": "2055037080560881835"}, {"id": "2055060384457842848", "author": "cljack", "timestamp": "2026-05-14T22:59:11.000Z", "text": "these men never ask themselves why such a woman would want *them*", "likes": 230, "reply_to": null}, {"id": "2055061827399094757", "author": "GirlGurl26", "timestamp": "Thu May 14 23:04:55 +0000 2026", "text": "@datingbyblaine If he built an app to find someone why hasn’t he found her yet?? Is it broken?", "likes": 3, "reply_to": "2055037080560881835"}, {"id": "2055062084937797636", "author": "FWPlayboy", "timestamp": "2026-05-14T23:05:56.000Z", "text": "Super goofy.\nHim getting completely wiped out would be good for him. \nStart over broke, no friends,  mattress on the floor. \nHave to fix that silly caustic personality fast.", "likes": 72, "reply_to": null}, {"id": "2055063742157562346", "author": "spiderstumbled", "timestamp": "2026-05-14T23:12:32.000Z", "text": "Why should anyone trust you with an application if you're going to post it to make fun of someone? Yeah, you blurred the names but still pretty darn rude, Blaine.", "likes": 1, "reply_to": "2055037080560881835"}, {"id": "2055064216910905546", "author": "Cailin071", "timestamp": "Thu May 14 23:14:25 +0000 2026", "text": "@datingbyblaine I think we just figured out why he has to pay 25k to find a girlfriend...", "likes": 4, "reply_to": "2055037080560881835"}, {"id": "2055065334483447828", "author": "thecureforblur", "timestamp": "2026-05-14T23:18:51.000Z", "text": "why do you post all these things where you talk shit about potential clientsp", "likes": 2, "reply_to": "2055037080560881835"}, {"id": "2055065923027927493", "author": "sevultura", "timestamp": "2026-05-14T23:21:11.000Z", "text": "He sounds insufferable. I expect he is less than visually and intellectually striking himself", "likes": 9, "reply_to": "2055037080560881835"}, {"id": "2055066671732404721", "author": "momoquiroz", "timestamp": "2026-05-14T23:24:10.000Z", "text": "Tell me you used ChatGPT to create this (lazy) intake form without telling me you used ChatGPT to create this (lazy) intake form", "likes": 0, "reply_to": "2055037080560881835"}, {"id": "2055070898743357714", "author": "octal", "timestamp": "2026-05-14T23:40:58.000Z", "text": "What he's asking for doesn't sound bad, but he sounds bad.", "likes": 15, "reply_to": null}, {"id": "2055072220481740893", "author": "rantanpln", "timestamp": "2026-05-14T23:46:13.000Z", "text": "For the first time in human history, we are seeing meganerds convert their unique characters to money and power. And the results are very very disappointing.", "likes": 5, "reply_to": "2055037080560881835"}, {"id": "2055072226865713608", "author": "NovaSmith1111", "timestamp": "2026-05-14T23:46:14.000Z", "text": "There is some perfect  1 percenter woman that will own him . I don’t think he understands what is required in a relationship . A woman that has made it to that level will not allow that kind of micromanagement- especially if they have children.", "likes": 9, "reply_to": null}, {"id": "2055074388983300226", "author": "adelbucetta", "timestamp": "Thu May 14 23:54:50 +0000 2026", "text": "@datingbyblaine seems like the lines between friendship and business have gotten too blurred", "likes": 0, "reply_to": "2055037080560881835"}, {"id": "2055075519788630176", "author": "Sofi_Shvets", "timestamp": "2026-05-14T23:59:20.000Z", "text": "he seems lovely, i wonder why he is single 😂", "likes": 3, "reply_to": "2055037080560881835"}, {"id": "2055078090519253243", "author": "arriefrakes", "timestamp": "Fri May 15 00:09:32 +0000 2026", "text": "@datingbyblaine You won’t be the only woman who is rejecting him.", "likes": 1, "reply_to": "2055037080560881835"}, {"id": "2055078737536762004", "author": "JohnBogleyDC", "timestamp": "2026-05-15T00:12:07.000Z", "text": "Mine would just say \"Can you match me with PaigeUncaged?\"", "likes": 0, "reply_to": "2055037080560881835"}, {"id": "2055081145574830367", "author": "XenniallTeach", "timestamp": "2026-05-15T00:21:41.000Z", "text": "😂 Chatgpt wrote this and oh boy does this guy sound like the most boring techbro on the face of the planet. Two minutes with this guy and I would want to shoot myself", "likes": 23, "reply_to": "2055037080560881835"}, {"id": "2055084986370339010", "author": "amthoughts33", "timestamp": "2026-05-15T00:36:57.000Z", "text": "His issue is that he is imagining a super hot female version of himself which does not exist.\n\nIf she is that capable + hot, she’ll marry a rich guy and never work again, not be this dude’s copilot lol. He should just find a hot blonde woman who works in tech.", "likes": 6, "reply_to": null}, {"id": "2055086700213202989", "author": "GardenStGambler", "timestamp": "2026-05-15T00:43:45.000Z", "text": "Is he looking for next round of Funding or a girlfriend? 🤦‍♂️🤔", "likes": 1, "reply_to": "2055037080560881835"}, {"id": "2055088916617707540", "author": "Anusien", "timestamp": "Fri May 15 00:52:34 +0000 2026", "text": "@datingbyblaine Okay but what did you think of his dossier?", "likes": 0, "reply_to": "2055037080560881835"}, {"id": "2055089419925803352", "author": "PolishUsa", "timestamp": "2026-05-15T00:54:34.000Z", "text": "Blaine, I must criticize you for lack of imagination! This guy sounds PERFECT for the (thousands of) \"boss babe\" \"strong, independent women\" out there looking for someone not \"intimidated\" by her. Match them up and then put the date on OnlyFans for $20/view.", "likes": 2, "reply_to": null}, {"id": "2055090259042382053", "author": "saiyar", "timestamp": "2026-05-15T00:57:54.000Z", "text": "Jesus you deal with absolute retarded loser men. I can’t imagine the cringe you have to deal with day in, day out.", "likes": 3, "reply_to": "2055037080560881835"}, {"id": "2055093305331888334", "author": "StroutMotivateU", "timestamp": "2026-05-15T01:10:00.000Z", "text": "Did he mistake this for a job application?", "likes": 0, "reply_to": "2055037080560881835"}, {"id": "2055094092170756301", "author": "an1malspirits", "timestamp": "2026-05-15T01:13:08.000Z", "text": "This guy really drank the kool-aid", "likes": 0, "reply_to": "2055037080560881835"}, {"id": "2055095318740676943", "author": "code_mom_", "timestamp": "Fri May 15 01:18:00 +0000 2026", "text": "@datingbyblaine I am a robot and I seek a robot wife.", "likes": 0, "reply_to": "2055037080560881835"}, {"id": "2055102662085923102", "author": "oskarelmgren", "timestamp": "2026-05-15T01:47:11.000Z", "text": "What's wrong with a co-founder that's your wife?", "likes": 2, "reply_to": "2055037080560881835"}, {"id": "2055106466487443548", "author": "concernedowl22", "timestamp": "2026-05-15T02:02:18.000Z", "text": "You should look up Jennie Young and her \"Burned Haystack\" method of online dating, focusing on identifying and weeding out the toxic shitty rhetorical patterns in a lot of men's dating profiles. \n\nThis guy's is called \"Build-a-girlfriend\" and \"I'm the prize\" BTW.", "likes": 9, "reply_to": null}, {"id": "2055112011172692019", "author": "hey_im_babe", "timestamp": "2026-05-15T02:24:20.000Z", "text": "I dated a guy last summer who works for Google & does very well $800K+ & I can tell you firsthand most of these guys are insufferable & already married to work/money. They don’t want to be a husband/father. They want a trophy who checks off the boxes on the list they made at MIT.", "likes": 9, "reply_to": "2055037080560881835"}, {"id": "2055122276647936296", "author": "KattyDiore", "timestamp": "2026-05-15T03:05:07.000Z", "text": "He sounds like he's looking for a man. I can bake cakes, pleat flowers, and set dinner tables. There's 80 other things I can do, but running tech is not it.", "likes": 6, "reply_to": "2055037080560881835"}, {"id": "2055126302756134953", "author": "ElizaKorhonen", "timestamp": "2026-05-15T03:21:07.000Z", "text": "He’s looking for a submissive woman who will surrender to his control. But how do you find a top 1% career woman who fits that mold? A very beautiful blonde like that he might find, but a high performer? No wonder he can’t find a matchmaker, let alone a wife.", "likes": 0, "reply_to": "2055037080560881835"}, {"id": "2055127073946308637", "author": "SunnyvaleSBay", "timestamp": "2026-05-15T03:24:11.000Z", "text": "I smell the app written by AI. It has that scent to it.", "likes": 0, "reply_to": null}, {"id": "2055127867613478934", "author": "sweet_Lou_singr", "timestamp": "2026-05-15T03:27:20.000Z", "text": "I feel like Ms. Anderson would find more success if instead of farming engagement she operated more like the Bene Gesserit, slowly developing a network of fertile, elite-minded women with the goal of producing a messiah who can be the Omnichad, consolidating a global harem", "likes": 1, "reply_to": null}, {"id": "2055129566344089894", "author": "henry_lgl_long", "timestamp": "2026-05-15T03:34:05.000Z", "text": "TDLR I’m full of 💩 and I’m blatantly materialistic.", "likes": 0, "reply_to": "2055037080560881835"}, {"id": "2055137308882485269", "author": "SalvicMuse", "timestamp": "2026-05-15T04:04:51.000Z", "text": "High agency 1% but also visually striking blonde, good luck sir 🫡", "likes": 3, "reply_to": "2055037080560881835"}, {"id": "2055143920653279668", "author": "Optimumlatte69", "timestamp": "2026-05-15T04:31:08.000Z", "text": "This person is not suitable to own a pet never mind be in any kind of romantic relationship with a human. They are already married to themselves cowabunga 🤙🏻", "likes": 11, "reply_to": null}, {"id": "2055149016917422439", "author": "Tongalagliu", "timestamp": "2026-05-15T04:51:23.000Z", "text": "Your job is to (1) do a call to re-examine (2) coach him to a right frame of mindset and expectations when necessary.  Not acting like a spoiled girl just do whatever becoz of whatever, if u do, don’t post up so the whole world sees how unprofessional you are.", "likes": 8, "reply_to": null}, {"id": "2055162070904246641", "author": "LisaFenDragon", "timestamp": "2026-05-15T05:43:15.000Z", "text": "He's looking for his Starter Wife, Barbara the Builder\n\nBut also wants her to be super hot. Lulz. He should know that the super hot chick is the second wife", "likes": 12, "reply_to": "2055037080560881835"}, {"id": "2055174166790197614", "author": "karissapersists", "timestamp": "2026-05-15T06:31:19.000Z", "text": "Did the original prompt include those emojis or did this tool just use ChatGPT to come up with his answers?", "likes": 0, "reply_to": "2055037080560881835"}, {"id": "2055176851237064847", "author": "citizenkaneda", "timestamp": "2026-05-15T06:41:59.000Z", "text": "Let's be honest here. If this were a female applicant you'd be singing her praises.", "likes": 2, "reply_to": "2055037080560881835"}, {"id": "2055181176713929189", "author": "medjournalist", "timestamp": "2026-05-15T06:59:10.000Z", "text": "Can relate to wanting a co-founder type! Carrying the load for introverts is tough", "likes": 1, "reply_to": "2055037080560881835"}, {"id": "2055198229847802282", "author": "David_Waddell", "timestamp": "2026-05-15T08:06:56.000Z", "text": "The type of woman he's after is not going to hang on his tail at his networking events. She'll be busy at her own events or working until 10pm. Also \"fired\" a matchmaker, like they're on staff? 🤣", "likes": 0, "reply_to": "2055037080560881835"}, {"id": "2055208451920564575", "author": "bhonda805", "timestamp": "2026-05-15T08:47:33.000Z", "text": "I’m calling BS Blaine. People this insufferable may exist but it’s way more likely you just made this up for clicks", "likes": 0, "reply_to": "2055037080560881835"}, {"id": "2055208923192569888", "author": "ian_90211", "timestamp": "2026-05-15T08:49:25.000Z", "text": "Everyone is piling on but there's nothing really wrong with this guy wanting what he wants and also nothing wrong with Blaine saying that doesn't sound like something I can help with.", "likes": 3, "reply_to": null}, {"id": "2055251441032335672", "author": "FZaslavskiy", "timestamp": "2026-05-15T11:38:22.000Z", "text": "I think i just doxed your client:", "likes": 16, "reply_to": null}, {"id": "2055251477120073893", "author": "SirCumcized48", "timestamp": "Fri May 15 11:38:31 +0000 2026", "text": "@datingbyblaine “Curated lifestyle”? “Alongside” the C suite? Lol fuck you, nigger.\n\nIt’s a symptom of civilizational entropy that people like this are able to exist.", "likes": 1, "reply_to": "2055037080560881835"}, {"id": "2055253597412102519", "author": "HeSpeaksNStuff", "timestamp": "2026-05-15T11:46:57.000Z", "text": "Not disagreeing with your criticism, but I question the ethics of you publishing what was presumably sent to you in confidence. Were I considering the same, this would give me pause.", "likes": 0, "reply_to": "2055037080560881835"}, {"id": "2055261387463512306", "author": "SassySouthBlond", "timestamp": "2026-05-15T12:17:54.000Z", "text": "Bro wants a 10 that is a CEO of a tech company. Like those exist bro. He wants a mythical unicorn.", "likes": 1, "reply_to": null}, {"id": "2055273142952538202", "author": "sarah_cone", "timestamp": "2026-05-15T13:04:37.000Z", "text": "I think he sounds great. See, there's someone for everyone.", "likes": 2, "reply_to": null}, {"id": "2055276155050000827", "author": "TheTruth14982", "timestamp": "2026-05-15T13:16:35.000Z", "text": "Isn’t this your job?  You must suck at it. How’s this guy different from any of the women you try to fix up. He knows what he wants (no vapid idiots) and is setting his expectations before handing you a significant sum of money. \n\nSounds like you just aren’t up for the challenge", "likes": 1, "reply_to": "2055037080560881835"}, {"id": "2055277398581543379", "author": "govoyeurangel", "timestamp": "2026-05-15T13:21:31.000Z", "text": "This guy actually sounds like no fun, rich or not, swap the careers randomly for literally anything else and he still sound really boring", "likes": 0, "reply_to": null}, {"id": "2055281127351599529", "author": "Industrious112", "timestamp": "2026-05-15T13:36:20.000Z", "text": "Anyone using the word 'founder' immediately goes in the bin as an unserious person.\n\nDime a dozen in my office.", "likes": 0, "reply_to": "2055037080560881835"}, {"id": "2055285227338235978", "author": "ContrarianSaver", "timestamp": "2026-05-15T13:52:38.000Z", "text": "Wow there are some professional 🚩🚩 in there ($25m fund? I didn’t realize they had funds that small) that tell me he’s a loser that never got any professional traction so he’s now looking to marry into it. Serious tech bro cosplaying. \nPossibly some family money funding this", "likes": 5, "reply_to": null}, {"id": "2055289458409210327", "author": "JohnnyBlack_HS", "timestamp": "2026-05-15T14:09:26.000Z", "text": "I thought the point of $25k+ fees was to be able to deliver on hard requests like co-founder+wife?\n\nIs it that, or that the guy seems pretty awful?", "likes": 0, "reply_to": null}, {"id": "2055294872320622875", "author": "AlmostMedia", "timestamp": "2026-05-15T14:30:57.000Z", "text": "Funny he sounds like a mid level corporate girlie", "likes": 5, "reply_to": null}, {"id": "2055297598290796753", "author": "LouisEdwar97778", "timestamp": "2026-05-15T14:41:47.000Z", "text": "critical part is the grammar in the work sentence - is he himself a VC and angel investor, or is he just working alongside them, along with the c-suite?", "likes": 1, "reply_to": "2055037080560881835"}, {"id": "2055305261217157205", "author": "pascal_patin", "timestamp": "2026-05-15T15:12:14.000Z", "text": "This looks like a LinkedInLunatics post.", "likes": 0, "reply_to": "2055037080560881835"}, {"id": "2055309214323773597", "author": "akhljndl", "timestamp": "Fri May 15 15:27:57 +0000 2026", "text": "@datingbyblaine no notes", "likes": 0, "reply_to": "2055037080560881835"}, {"id": "2055311953988342030", "author": "HFMajorTom", "timestamp": "2026-05-15T15:38:50.000Z", "text": "Is that a LinkedIn post?… 😁💀", "likes": 2, "reply_to": "2055037080560881835"}, {"id": "2055321890068340766", "author": "TayTayTayT67373", "timestamp": "2026-05-15T16:18:19.000Z", "text": "What a narcissist lol. He's begging for a cosmic reality check unfortunately", "likes": 0, "reply_to": "2055037080560881835"}, {"id": "2055323068353134851", "author": "wadafazt", "timestamp": "2026-05-15T16:23:00.000Z", "text": "It's crazy that you would share this, unless he permitted you to. This individual could absolutely be identified with this. Wild.", "likes": 1, "reply_to": "2055037080560881835"}, {"id": "2055323153564385415", "author": "robbhurstCPA", "timestamp": "Fri May 15 16:23:20 +0000 2026", "text": "@datingbyblaine Sounds fun", "likes": 0, "reply_to": "2055037080560881835"}, {"id": "2055338007755206802", "author": "jessethan3", "timestamp": "2026-05-15T17:22:22.000Z", "text": "Curious, how many intros come with the starting VIP service?", "likes": 0, "reply_to": "2055037080560881835"}, {"id": "2055343050755305638", "author": "Can2CG", "timestamp": "2026-05-15T17:42:24.000Z", "text": "\"I didn't want to fumble so bad that some woman I approached posted me on her socials, so I tried to hire a matchmaker, but my application was so bad that she posted it on her socials.\"", "likes": 0, "reply_to": null}, {"id": "2055373210841956677", "author": "EclectiCatholic", "timestamp": "2026-05-15T19:42:15.000Z", "text": "Acts like he primarily wants a woman who is brilliant, fit and high-agency but then strongly prefers a hair color that maybe 5% of adult women have? Tell me without telling me that you can't prioritize.", "likes": 0, "reply_to": null}, {"id": "2055379478667297077", "author": "pypolk", "timestamp": "2026-05-15T20:07:09.000Z", "text": "If I came face-to-face, with this guy, I would give him a wedgie.", "likes": 0, "reply_to": null}]}, "categorizationData": {"axes": [{"label": "Verdict on the Applicant", "positive": "Defends or endorses the man and what he's asking for", "negative": "Condemns him as insufferable / unmatchable"}, {"label": "Target of Critique", "positive": "Turns the criticism onto Blaine the matchmaker", "negative": "Aims squarely at the male applicant"}, {"label": "Diagnostic Frame", "positive": "Treats it as a cultural type (tech-bro, corporate, AI-era)", "negative": "Treats it as one man's individual personality flaw"}, {"label": "Rhetorical Register", "positive": "Earnest, analytical close reading", "negative": "Pure dunk, joke, or meme"}, {"label": "Gendered Lens", "positive": "Frames it through gender dynamics (what men/women do)", "negative": "Frames it in gender-neutral terms (ego, corporate, AI)"}, {"label": "Feasibility vs. Character", "positive": "Critiques the ask as unrealistic / unmatchable", "negative": "Critiques who he is as a person"}], "categories": [{"id": "pile_on", "label": "The Pile-On", "coords": [-74, -26, 1, -54, 6, -17]}, {"id": "systemic", "label": "It's a Tech-Bro Type", "coords": [-47, -13, 61, 32, 17, 5]}, {"id": "psych_read", "label": "Diagnosing the Man", "coords": [-42, -24, -1, 62, 28, 36]}, {"id": "defenders", "label": "In His Defense", "coords": [54, 11, 13, 51, 26, 34]}, {"id": "critics_blaine", "label": "Turning On the Matchmaker", "coords": [3, 70, 18, 43, 15, 7]}, {"id": "skeptics", "label": "Is This Even Real?", "coords": [-31, 21, 20, -9, -20, -3]}, {"id": "memes", "label": "Memes & Social Noise", "coords": [-37, -2, 6, -64, 5, -9]}], "data": {"2055037080560881835": {"coords": [-55, -40, -25, -5, 20, 15], "categories": ["systemic"], "explanation": "Blaine's framing tweet — coins the 'cofounder not a wife' read that the whole thread runs with."}, "2055038235030819251": {"coords": [-30, -20, -10, -55, 70, 0], "categories": ["memes"], "explanation": "Playful one-liner flipping the cofounder ask back onto herself."}, "2055038645216637012": {"coords": [-75, -30, -10, -85, -10, -55], "categories": ["memes"], "explanation": "Reaction GIF dunk with no real argument — 'imagine being on a date with that guy.'"}, "2055038696500457866": {"coords": [-55, -40, -45, 40, -10, -35], "categories": ["psych_read"], "explanation": "Measured read that lands on 'hard to please' once his past matchmaker conflict is factored in."}, "2055038761306927484": {"coords": [65, 15, -15, 55, 15, 60], "categories": ["defenders"], "explanation": "Defends the ask: wanting someone driven is fine, and rarity is the whole point of a matchmaker."}, "2055038811084624204": {"coords": [-60, 5, 55, 20, -40, -25], "categories": ["systemic"], "explanation": "Pivots to a political-tribe frame — 'this is why liberals aren't actually liberal.'"}, "2055039212085498109": {"coords": [-45, -35, -10, 75, 55, 70], "categories": ["psych_read"], "explanation": "Analytical: the high-agency woman he wants won't cede control to his 'ruthlessly high' standards."}, "2055039278506193198": {"coords": [-85, -40, -15, -70, -5, -60], "categories": ["pile_on"], "explanation": "Mocking paraphrase — 'most insufferable person seeking an equally insufferable woman.'"}, "2055039425961165048": {"coords": [-80, -30, -25, -75, -20, -55], "categories": ["pile_on"], "explanation": "One-line dunk: he should just marry his ego."}, "2055039645084483745": {"coords": [-55, -25, 65, 35, 15, -10], "categories": ["systemic"], "explanation": "Reads the application as corporate/robotic business jargon typical of 'these guys.'"}, "2055039679997587827": {"coords": [-80, -35, -20, -65, -25, -50], "categories": ["pile_on"], "explanation": "Dunk on his egotism — 'leave room for someone else's head in the room.'"}, "2055041522081358064": {"coords": [15, 25, 30, 75, 75, 35], "categories": ["defenders"], "explanation": "Earnest aside urging Blaine to reconsider him, citing wives who sustain community institutions."}, "2055041600066088968": {"coords": [-65, -25, -30, 55, -25, -20], "categories": ["psych_read"], "explanation": "Diagnoses him as not actually successful, name-dropping others to borrow status."}, "2055041881428423167": {"coords": [-70, -40, -15, -55, -20, -25], "categories": ["pile_on"], "explanation": "Blaine's punchline reveal — 'he's a middle manager at a large tech company.'"}, "2055042869803532588": {"coords": [-75, -30, -15, -30, -15, -40], "categories": ["pile_on"], "explanation": "Patrick Bateman comparison plus a sharp read that 'if you deliver' signals withheld payment."}, "2055043549830238328": {"coords": [-75, -30, 25, -45, -10, -25], "categories": ["pile_on"], "explanation": "Mocks him as needing a corporate headhunter, not a matchmaker — 'zero warmth.'"}, "2055045042465849611": {"coords": [-25, 0, 70, 20, 55, 25], "categories": ["systemic"], "explanation": "Ironic observation that this is exactly the LinkedIn profile women select for."}, "2055045827718983962": {"coords": [-40, -10, 30, 5, -45, 0], "categories": ["skeptics"], "explanation": "Suspects the application itself was AI-written."}, "2055046034724737135": {"coords": [-70, -35, 35, -55, -35, -30], "categories": ["pile_on"], "explanation": "Dunk on the corporate-speak density — 'how many buzzwords on one page.'"}, "2055046208310448272": {"coords": [55, 25, 10, 55, 80, 75], "categories": ["defenders"], "explanation": "Defends him: plenty of 'boss-bitch' women would actively want a high-agency match like this."}, "2055046376384270647": {"coords": [-85, -35, -20, -55, 25, -30], "categories": ["pile_on"], "explanation": "Wouldn't want him as a friend, let alone imagine a woman as his partner."}, "2055046422643593262": {"coords": [-40, -10, 0, -90, -10, 0], "categories": ["memes"], "explanation": "Song-parody riff turning the application into 'co-founder with benefits' lyrics."}, "2055046448878866595": {"coords": [-10, 0, 75, 35, 10, -10], "categories": ["systemic"], "explanation": "Shrugs it off as just another tech bro treating life like running a company."}, "2055046830958748122": {"coords": [-30, 60, 45, 60, 50, 15], "categories": ["critics_blaine"], "explanation": "Argues this is exactly the affluent arm-candy-seeking client Blaine's business is built for."}, "2055046840978915347": {"coords": [-30, 0, 0, -80, 0, 0], "categories": ["memes"], "explanation": "Bare image reply with no text content."}, "2055048636317257891": {"coords": [-80, -35, 35, -55, 75, -35], "categories": ["pile_on"], "explanation": "Blunt plea — 'men, please don't talk like this, you sound like an idiot.'"}, "2055048777728454777": {"coords": [-40, -30, -5, 75, 55, 80], "categories": ["psych_read"], "explanation": "Analytical: he's describing a woman who would have no need for matchmaking at all."}, "2055049430223720448": {"coords": [-90, -35, -20, -60, 30, -40], "categories": ["pile_on"], "explanation": "Maximum-condemnation dunk — '100% insufferable, what a dbag.'"}, "2055049574222582134": {"coords": [-40, -10, 15, -40, -15, -30], "categories": ["memes"], "explanation": "Personal-anecdote joke — 'I'm a tech manager and my dates say I'm not that boring.'"}, "2055049653125521551": {"coords": [-65, -25, 10, -80, -15, -20], "categories": ["pile_on"], "explanation": "Quote-and-laugh at the 'hidden omakase spots with my inner circle' line."}, "2055049784298176674": {"coords": [-25, 55, 35, 35, 55, 0], "categories": ["critics_blaine"], "explanation": "Asks Blaine pointedly whether her business is just sourcing trophy wives."}, "2055050317922734139": {"coords": [55, -10, 15, 50, -25, -10], "categories": ["defenders"], "explanation": "Pushes back on the 'middle manager' dunk — plenty of people would call that successful."}, "2055050421740192222": {"coords": [40, 15, 35, 25, 35, 15], "categories": ["defenders"], "explanation": "Meta-defense: the pile-on is neurotic; trimmed 10% he'd read as a 'ride or die' match."}, "2055050620625948689": {"coords": [-45, -10, 10, -75, 30, 0], "categories": ["memes"], "explanation": "Joke about couples sharing a 'girlfriend mood board.'"}, "2055052150246367305": {"coords": [-55, -30, -5, 15, 60, 75], "categories": ["psych_read"], "explanation": "Terse verdict — the elite women he describes would not want him."}, "2055052157251178860": {"coords": [-90, -35, -25, -60, -20, -50], "categories": ["pile_on"], "explanation": "'Can't imagine 10 minutes with this guy' — archetypal arrogant-blowhard dunk."}, "2055052261693227172": {"coords": [10, -15, 30, 60, -25, -25], "categories": ["psych_read"], "explanation": "Measured: not bad, but bone-dry — like proposing to an angel investor."}, "2055053640113488125": {"coords": [-50, -15, 70, 30, -25, -20], "categories": ["systemic"], "explanation": "Frames matchmaking as corporate recruitment, and this as a failing interview."}, "2055053647873262004": {"coords": [-35, 45, 20, 85, -10, 0], "categories": ["critics_blaine"], "explanation": "Earnest process critique — candidates should be psych-screened before anyone pays $25k."}, "2055054734592246072": {"coords": [-80, -35, -10, -40, 35, -15], "categories": ["pile_on"], "explanation": "Quotes the 'high-agency 1% I require' line as self-evidently icky."}, "2055056771073638531": {"coords": [-85, -35, -15, -80, -15, -55], "categories": ["pile_on"], "explanation": "Hyperbolic dunk — 'I jumped off a bridge just reading that.'"}, "2055056899385761972": {"coords": [-30, 60, 5, 20, -10, 0], "categories": ["critics_blaine"], "explanation": "Turns on Blaine — the emojis and the public mockery make her look unhireable."}, "2055057719401312445": {"coords": [-80, -30, -15, -50, 15, -35], "categories": ["pile_on"], "explanation": "Calls him exhausting and insufferable, glad to fall below his 'visual bar.'"}, "2055058977969586235": {"coords": [-30, 5, 20, -10, -10, 0], "categories": ["skeptics"], "explanation": "Suspects the whole thing is spam promoting his 'dossier' website."}, "2055060050557722745": {"coords": [-45, -20, 60, 40, 75, 30], "categories": ["systemic"], "explanation": "Observes the broader pattern of men ranking hair color high on their requirement lists."}, "2055060384457842848": {"coords": [-55, -25, 55, 55, 80, 80], "categories": ["systemic"], "explanation": "The thread's signature line — 'these men never ask why such a woman would want them.'"}, "2055061827399094757": {"coords": [-55, -15, 10, -65, 20, 55], "categories": ["pile_on"], "explanation": "Joke — if he built an app to find her, why hasn't it worked, is it broken?"}, "2055062084937797636": {"coords": [-80, -30, -30, -40, -15, -40], "categories": ["pile_on"], "explanation": "Wishes financial ruin on him as character-correcting punishment."}, "2055063742157562346": {"coords": [5, 80, 5, 45, -10, 0], "categories": ["critics_blaine"], "explanation": "Ethics critique — posting a client's application to mock it is rude even with names blurred."}, "2055064216910905546": {"coords": [-75, -25, 5, -60, 30, 35], "categories": ["pile_on"], "explanation": "Joke — 'now we know why he has to pay 25k to find a girlfriend.'"}, "2055065334483447828": {"coords": [0, 80, 10, 20, -5, 0], "categories": ["critics_blaine"], "explanation": "Challenges Blaine's habit of publicly trashing prospective clients."}, "2055065923027927493": {"coords": [-80, -30, -15, -25, 5, -10], "categories": ["pile_on"], "explanation": "Dunk plus a guess that he's nowhere near as striking as he demands a partner be."}, "2055066671732404721": {"coords": [-25, 50, 20, -10, -15, 0], "categories": ["skeptics"], "explanation": "Accuses Blaine's intake tool itself of being a lazy ChatGPT-generated form."}, "2055070898743357714": {"coords": [-10, -20, -5, 60, -15, -25], "categories": ["psych_read"], "explanation": "The thread's cleanest summary — 'what he's asking for isn't bad, but he sounds bad.'"}, "2055072220481740893": {"coords": [-50, 5, 90, 60, -20, -15], "categories": ["systemic"], "explanation": "Broad cultural diagnosis — 'meganerds' converting their character into money, to disappointing effect."}, "2055072226865713608": {"coords": [-45, -25, -5, 80, 65, 80], "categories": ["psych_read"], "explanation": "A true 1% woman would 'own' him and never tolerate the micromanagement, especially with kids."}, "2055074388983300226": {"coords": [-35, -10, 80, 45, -30, -10], "categories": ["systemic"], "explanation": "Names the underlying shift — the line between friendship and business has blurred."}, "2055075519788630176": {"coords": [-70, -25, -10, -70, -5, -20], "categories": ["pile_on"], "explanation": "Sarcastic dunk — 'he seems lovely, I wonder why he's single.'"}, "2055078090519253243": {"coords": [-75, -25, -10, -55, 45, 30], "categories": ["pile_on"], "explanation": "Dunk — Blaine won't be the only woman rejecting him."}, "2055078737536762004": {"coords": [-20, -5, 0, -90, 0, 0], "categories": ["memes"], "explanation": "Inside-joke tangent name-dropping another account."}, "2055081145574830367": {"coords": [-80, -15, 25, -50, -10, -20], "categories": ["skeptics", "pile_on"], "explanation": "Claims ChatGPT wrote it and piles on that he's the most boring tech bro alive."}, "2055084986370339010": {"coords": [-45, -25, -5, 80, 60, 85], "categories": ["psych_read"], "explanation": "Analytical — he wants an impossible hot, capable copilot; such a woman would marry rich and quit."}, "2055086700213202989": {"coords": [-50, -10, 45, -55, 30, 0], "categories": ["pile_on"], "explanation": "Joke — is he seeking funding or a girlfriend?"}, "2055088916617707540": {"coords": [-10, 20, 5, -35, -5, 0], "categories": ["memes"], "explanation": "Low-content filler — 'what did you think of his dossier?'"}, "2055089419925803352": {"coords": [35, 65, 25, -30, 55, 20], "categories": ["critics_blaine"], "explanation": "Scolds Blaine for lack of imagination, then jokes about putting the date on OnlyFans."}, "2055090259042382053": {"coords": [-75, 20, 30, -45, 40, -25], "categories": ["pile_on"], "explanation": "Dunks on 'loser men' generally while sympathizing with Blaine's workload."}, "2055093305331888334": {"coords": [-55, -15, 50, -55, -20, -10], "categories": ["pile_on"], "explanation": "Joke — did he mistake this for a job application?"}, "2055094092170756301": {"coords": [-65, -20, 35, -45, -20, -30], "categories": ["pile_on"], "explanation": "Dunk — 'this guy really drank the kool-aid.'"}, "2055095318740676943": {"coords": [-55, -10, 15, -85, 25, -20], "categories": ["memes"], "explanation": "Robot-parody one-liner — 'I am a robot and I seek a robot wife.'"}, "2055102662085923102": {"coords": [55, 15, 20, 50, 50, 35], "categories": ["defenders"], "explanation": "Genuine question in his defense — what's actually wrong with a cofounder who's your wife?"}, "2055106466487443548": {"coords": [-55, -10, 55, 85, 60, -5], "categories": ["systemic"], "explanation": "Earnest resource drop — flags his profile as a textbook 'Build-a-girlfriend / I'm the prize' pattern."}, "2055112011172692019": {"coords": [-55, -25, 75, 70, 75, 45], "categories": ["systemic"], "explanation": "Firsthand systemic testimony — high-earning tech men want a box-checking trophy, not a husband role."}, "2055122276647936296": {"coords": [-40, -20, 20, 20, 70, 55], "categories": ["psych_read"], "explanation": "A woman's response — he's describing a man's skill set; that's not what she'd bring."}, "2055126302756134953": {"coords": [-55, -25, -5, 85, 65, 85], "categories": ["psych_read"], "explanation": "Detailed read — he wants a submissive woman who is also a top-1% performer, a near-impossible mold."}, "2055127073946308637": {"coords": [-35, -5, 25, -15, -40, 0], "categories": ["skeptics"], "explanation": "Smells AI authorship in the application's prose."}, "2055127867613478934": {"coords": [-20, 30, 20, -85, 40, 0], "categories": ["memes"], "explanation": "Absurdist Dune tangent imagining Blaine breeding an 'Omnichad' Bene Gesserit-style."}, "2055129566344089894": {"coords": [-85, -30, -20, -65, -15, -45], "categories": ["pile_on"], "explanation": "Mocking 'TLDR' paraphrase — 'I'm full of it and blatantly materialistic.'"}, "2055137308882485269": {"coords": [-65, -25, 10, -50, 40, 75], "categories": ["pile_on"], "explanation": "Dunk spotlighting the contradiction of demanding a 1% woman who is also a striking blonde."}, "2055143920653279668": {"coords": [-85, -30, -25, -65, -15, -45], "categories": ["pile_on"], "explanation": "Extreme dunk — 'not suitable to own a pet,' already married to himself."}, "2055149016917422439": {"coords": [10, 85, 15, 60, -5, 0], "categories": ["critics_blaine"], "explanation": "Lectures Blaine that her job is to coach the client, not act 'unprofessional' and post him."}, "2055162070904246641": {"coords": [-60, -20, 20, -50, 55, 30], "categories": ["pile_on"], "explanation": "Joke — he wants a hot 'starter wife, Barbara the Builder.'"}, "2055174166790197614": {"coords": [-20, 45, 15, -5, -15, 0], "categories": ["skeptics"], "explanation": "Questions whether Blaine's tool ChatGPT'd the answers and the emojis."}, "2055176851237064847": {"coords": [30, 70, 40, 35, 75, 0], "categories": ["critics_blaine"], "explanation": "Accuses Blaine of a gender double standard — a female applicant would get praised."}, "2055181176713929189": {"coords": [65, 0, 0, 50, -10, 20], "categories": ["defenders"], "explanation": "Relates to wanting a cofounder-type partner; carrying the load alone is hard for introverts."}, "2055198229847802282": {"coords": [-45, -20, 10, 45, 60, 70], "categories": ["psych_read"], "explanation": "Reads the mismatch — his ideal woman would be at her own events, plus mocks 'fired a matchmaker.'"}, "2055208451920564575": {"coords": [15, 75, 5, 20, -5, 0], "categories": ["skeptics"], "explanation": "Calls BS — likelier Blaine fabricated the application for engagement."}, "2055208923192569888": {"coords": [60, 5, 15, 70, 0, 30], "categories": ["defenders"], "explanation": "Balanced — nothing wrong with him wanting this, nor with Blaine declining the job."}, "2055251441032335672": {"coords": [-15, 25, 5, -55, -5, 0], "categories": ["memes"], "explanation": "Tangent claiming to have 'doxed' the client."}, "2055251477120073893": {"coords": [-50, 15, 15, -70, 0, -10], "categories": ["memes"], "explanation": "Slur-laden noise reply with no substance."}, "2055253597412102519": {"coords": [5, 80, 10, 75, -5, 0], "categories": ["critics_blaine"], "explanation": "Earnest ethics objection — publishing something sent in confidence should give pause."}, "2055261387463512306": {"coords": [-55, -20, 5, -35, 50, 85], "categories": ["pile_on"], "explanation": "Dunk on the impossibility — he wants a 'mythical unicorn' 10 who's also a tech CEO."}, "2055273142952538202": {"coords": [75, 10, 5, 30, 10, 50], "categories": ["defenders"], "explanation": "Sincere defense — 'he sounds great, there's someone for everyone.'"}, "2055276155050000827": {"coords": [40, 85, 10, 35, 5, 25], "categories": ["critics_blaine"], "explanation": "Sharp — this is literally Blaine's job; the client knows what he wants and she's just not up to it."}, "2055277398581543379": {"coords": [-70, -25, 10, -30, -15, -35], "categories": ["pile_on"], "explanation": "Dunk — swap his career for anything and he'd still sound boring."}, "2055281127351599529": {"coords": [-55, -15, 60, -10, -20, -15], "categories": ["systemic"], "explanation": "Systemic dismissal — anyone using 'founder' is an unserious type, a dime a dozen."}, "2055285227338235978": {"coords": [-65, -20, 25, 70, -20, -15], "categories": ["psych_read"], "explanation": "Detailed takedown — the small fund and red flags read as a man cosplaying tech success."}, "2055289458409210327": {"coords": [25, 60, 10, 65, 0, 35], "categories": ["critics_blaine"], "explanation": "Genuine question — isn't delivering hard requests the point of the $25k fee?"}, "2055294872320622875": {"coords": [-65, -20, 25, -55, 30, -25], "categories": ["pile_on"], "explanation": "Dunk — he ironically sounds like the 'mid-level corporate girlie' he disdains."}, "2055297598290796753": {"coords": [-25, -15, 10, 90, -15, -15], "categories": ["psych_read"], "explanation": "Close grammatical reading — is he actually a VC, or just inflating proximity to one?"}, "2055305261217157205": {"coords": [-50, -10, 65, -25, -20, -10], "categories": ["systemic"], "explanation": "Files it under the 'LinkedInLunatics' cultural genre."}, "2055309214323773597": {"coords": [-45, -15, 0, -60, 0, 0], "categories": ["memes"], "explanation": "Filler agreement — 'no notes.'"}, "2055311953988342030": {"coords": [-50, -10, 55, -60, -20, -10], "categories": ["memes"], "explanation": "Throwaway 'is that a LinkedIn post?' emoji joke."}, "2055321890068340766": {"coords": [-75, -25, -20, -50, -15, -30], "categories": ["pile_on"], "explanation": "Dunk plus a label — 'what a narcissist, he's begging for a reality check.'"}, "2055323068353134851": {"coords": [5, 80, 10, 55, -5, 0], "categories": ["critics_blaine"], "explanation": "Ethics objection — sharing this is wild, the individual could be identified."}, "2055323153564385415": {"coords": [-30, -10, 0, -55, 0, -10], "categories": ["memes"], "explanation": "Sarcastic two-word filler — 'sounds fun.'"}, "2055338007755206802": {"coords": [0, 30, 5, 5, -5, 0], "categories": ["memes"], "explanation": "Off-topic question about Blaine's VIP service tiers."}, "2055343050755305638": {"coords": [-75, -25, -5, -55, -10, -15], "categories": ["pile_on"], "explanation": "Mocking narrated paraphrase of how his application ended up posted."}, "2055373210841956677": {"coords": [-55, -20, 10, 75, 35, 70], "categories": ["psych_read"], "explanation": "Spots the priorities contradiction — high-agency brilliance versus a rare hair color."}, "2055379478667297077": {"coords": [-75, -25, -15, -75, -10, -25], "categories": ["memes"], "explanation": "Low-content threat-joke — 'I would give him a wedgie.'"}}}};</script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel" data-presets="react,typescript">
+const { useState, useRef, useEffect } = React;
+
+const TweetPlotVisualizer = () => {
+  const [tweetInput, setTweetInput] = useState('');
+  const [categorizationInput, setCategorizationInput] = useState('');
+  const [tweetData, setTweetData] = useState(null);
+  const [categorizationData, setCategorizationData] = useState(null);
+  const [hoveredTweet, setHoveredTweet] = useState(null);
+  const [hoveredCategory, setHoveredCategory] = useState(null);
+  const [categoryTooltipPos, setCategoryTooltipPos] = useState(null);
+  const [selectedTweets, setSelectedTweets] = useState(new Set());
+  const [error, setError] = useState('');
+  const [timelineTime, setTimelineTime] = useState(0);
+  const [minTime, setMinTime] = useState(0);
+  const [maxTime, setMaxTime] = useState(0);
+  const [selectedAxes, setSelectedAxes] = useState({ x: 0, y: 1 });
+  const [axisDirections, setAxisDirections] = useState({ x: 1, y: 1 });
+  const [showAxisPicker, setShowAxisPicker] = useState(null);
+  const [isSelecting, setIsSelecting] = useState(false);
+  const [selectionStart, setSelectionStart] = useState(null);
+  const [selectionEnd, setSelectionEnd] = useState(null);
+  const [detailsWidth, setDetailsWidth] = useState(384);
+  const [isResizing, setIsResizing] = useState(false);
+  const [zoom, setZoom] = useState(1);
+  const [panOffset, setPanOffset] = useState({ x: 0, y: 0 });
+  const [isPanning, setIsPanning] = useState(false);
+  const [panStart, setPanStart] = useState(null);
+  const [spacePressed, setSpacePressed] = useState(false);
+  const [showReplyEdges, setShowReplyEdges] = useState(false);
+  const svgRef = useRef(null);
+
+  const CATEGORY_COLORS = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E2', '#F8B739', '#52B788'];
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.code === 'Space' && !spacePressed) {
+        e.preventDefault();
+        setSpacePressed(true);
+      } else if (e.code === 'ArrowLeft') {
+        e.preventDefault();
+        setTimelineTime(Math.max(minTime, timelineTime - (maxTime - minTime) / 100));
+      } else if (e.code === 'ArrowRight') {
+        e.preventDefault();
+        setTimelineTime(Math.min(maxTime, timelineTime + (maxTime - minTime) / 100));
+      }
+    };
+
+    const handleKeyUp = (e) => {
+      if (e.code === 'Space') {
+        e.preventDefault();
+        setSpacePressed(false);
+        setIsPanning(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+    };
+  }, [spacePressed, minTime, maxTime, timelineTime]);
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (isResizing) {
+        const newWidth = window.innerWidth - e.clientX;
+        setDetailsWidth(Math.max(300, Math.min(800, newWidth)));
+      }
+    };
+
+    const handleMouseUp = () => {
+      if (isResizing) {
+        setIsResizing(false);
+      }
+    };
+
+    if (isResizing) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+      return () => {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+      };
+    }
+  }, [isResizing]);
+
+  // Validate a parsed tweet + categorization pair and, if it checks out,
+  // push it into state. Returns true on success.
+  const applyData = (tweets, categorization) => {
+    setError('');
+
+    // Validate tweet data structure
+    if (!tweets || !tweets.tweets) {
+      setError('Tweet data missing "tweets" array');
+      return false;
+    }
+    if (!Array.isArray(tweets.tweets)) {
+      setError('Tweet data "tweets" must be an array');
+      return false;
+    }
+    if (tweets.tweets.length === 0) {
+      setError('Tweet data "tweets" array is empty');
+      return false;
+    }
+    if (!tweets.pfps) {
+      setError('Tweet data missing "pfps" object');
+      return false;
+    }
+
+    // Validate first tweet has required fields
+    const firstTweet = tweets.tweets[0];
+    if (!firstTweet.id) {
+      setError('Tweets missing "id" field');
+      return false;
+    }
+    if (!firstTweet.timestamp) {
+      setError('Tweets missing "timestamp" field');
+      return false;
+    }
+    if (!firstTweet.author) {
+      setError('Tweets missing "author" field');
+      return false;
+    }
+
+    // Validate categorization data structure
+    if (!categorization || !categorization.axes) {
+      setError('Categorization data missing "axes" array');
+      return false;
+    }
+    if (!Array.isArray(categorization.axes)) {
+      setError('Categorization data "axes" must be an array');
+      return false;
+    }
+    if (categorization.axes.length === 0) {
+      setError('Categorization data "axes" array is empty');
+      return false;
+    }
+    if (!categorization.categories) {
+      setError('Categorization data missing "categories" array');
+      return false;
+    }
+    if (!Array.isArray(categorization.categories)) {
+      setError('Categorization data "categories" must be an array');
+      return false;
+    }
+    if (!categorization.data) {
+      setError('Categorization data missing "data" object');
+      return false;
+    }
+
+    // Validate axes structure
+    const firstAxis = categorization.axes[0];
+    if (!firstAxis.positive || !firstAxis.negative) {
+      setError('Axes missing "positive" or "negative" labels');
+      return false;
+    }
+
+    // Validate categories structure
+    if (categorization.categories.length > 0) {
+      const firstCat = categorization.categories[0];
+      if (!firstCat.id) {
+        setError('Categories missing "id" field');
+        return false;
+      }
+      if (!firstCat.coords || !Array.isArray(firstCat.coords)) {
+        setError('Categories missing "coords" array');
+        return false;
+      }
+    }
+
+    // Validate that tweet data has coordinates
+    let coordCount = 0;
+    for (const tweet of tweets.tweets) {
+      if (categorization.data[tweet.id]?.coords) {
+        coordCount++;
+      }
+    }
+
+    if (coordCount === 0) {
+      setError('No tweets have coordinate data in categorization.data');
+      return false;
+    }
+
+    // Validate coordinate dimensions match axes
+    const firstTweetWithCoords = tweets.tweets.find(t => categorization.data[t.id]?.coords);
+    if (firstTweetWithCoords) {
+      const coords = categorization.data[firstTweetWithCoords.id].coords;
+      if (coords.length < categorization.axes.length) {
+        setError(`Coordinate dimensions (${coords.length}) less than number of axes (${categorization.axes.length})`);
+        return false;
+      }
+    }
+
+    setTweetData(tweets);
+    setCategorizationData(categorization);
+
+    const timestamps = tweets.tweets.map(t => new Date(t.timestamp).getTime());
+    const min = Math.min(...timestamps);
+    const max = Math.max(...timestamps);
+    setMinTime(min);
+    setMaxTime(max);
+    setTimelineTime(max);
+    setSelectedAxes({ x: 0, y: Math.min(1, categorization.axes.length - 1) });
+    setAxisDirections({ x: 1, y: 1 });
+    setSelectedTweets(new Set());
+    setZoom(1);
+    setPanOffset({ x: 0, y: 0 });
+    setShowReplyEdges(false);
+    setError('');
+    return true;
+  };
+
+  const parseJSON = () => {
+    try {
+      setError('');
+      const tweets = JSON.parse(tweetInput);
+      const categorization = JSON.parse(categorizationInput);
+      applyData(tweets, categorization);
+    } catch (e) {
+      setError('Error parsing JSON: ' + e.message + '\n\nStack: ' + e.stack);
+    }
+  };
+
+  // Split a single combined object into the tweet + categorization pair the
+  // visualizer expects. Accepts either a flat object with all five keys
+  // ({ pfps, tweets, axes, categories, data }) or a nested object
+  // ({ tweetData, categorizationData }).
+  const splitCombined = (obj) => {
+    if (obj && obj.tweetData && obj.categorizationData) {
+      return [obj.tweetData, obj.categorizationData];
+    }
+    return [
+      { pfps: obj.pfps || {}, tweets: obj.tweets || [] },
+      {
+        axes: obj.axes || [],
+        categories: obj.categories || [],
+        data: obj.data || {},
+      },
+    ];
+  };
+
+  // On mount, pick up data embedded in the page or fetched via ?load=<url>.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const loadUrl = params.get('load');
+
+    if (loadUrl) {
+      fetch(loadUrl)
+        .then(r => r.json())
+        .then(obj => {
+          const [t, c] = splitCombined(obj);
+          applyData(t, c);
+        })
+        .catch(e => setError('Failed to load ' + loadUrl + ': ' + e.message));
+      return;
+    }
+
+    const embedded = window.__EMBEDDED_DATA__;
+    if (embedded && typeof embedded === 'object') {
+      const [t, c] = splitCombined(embedded);
+      applyData(t, c);
+    }
+  }, []);
+
+  const handleAxisClick = (side) => {
+    setShowAxisPicker(side);
+  };
+
+  const selectAxis = (side, axisIndex) => {
+    if (side === 'left' || side === 'right') {
+      setSelectedAxes(prev => ({ ...prev, x: axisIndex }));
+      setAxisDirections(prev => ({ ...prev, x: side === 'left' ? -1 : 1 }));
+    } else {
+      setSelectedAxes(prev => ({ ...prev, y: axisIndex }));
+      setAxisDirections(prev => ({ ...prev, y: side === 'top' ? 1 : -1 }));
+    }
+    setShowAxisPicker(null);
+  };
+
+  const getCategoryColor = (categoryId) => {
+    const index = categorizationData.categories.findIndex(c => c.id === categoryId);
+    return CATEGORY_COLORS[index % CATEGORY_COLORS.length];
+  };
+
+  const getTweetColors = (tweetId) => {
+    if (!categorizationData.data[tweetId]) return ['#999999'];
+    const categories = categorizationData.data[tweetId].categories || [];
+    if (categories.length === 0) return ['#999999'];
+    return categories.map(catId => getCategoryColor(catId));
+  };
+
+  // Deterministic jitter based on tweet ID
+  const getJitter = (tweetId, coordKey) => {
+    // Use tweet ID to generate consistent random offset
+    let hash = 0;
+    const str = tweetId + coordKey;
+    for (let i = 0; i < str.length; i++) {
+      hash = ((hash << 5) - hash) + str.charCodeAt(i);
+      hash = hash & hash;
+    }
+    // Convert to a value between -1 and 1
+    return (Math.abs(hash) % 1000) / 500 - 1;
+  };
+
+  const [jitterAmount, setJitterAmount] = useState(40);
+
+  const coordsToPixels = (coords, width, height, tweetId = null) => {
+    const xValue = coords[selectedAxes.x] * axisDirections.x;
+    const yValue = coords[selectedAxes.y] * axisDirections.y;
+
+    const padding = 80;
+    const plotWidth = width - 2 * padding;
+    const plotHeight = height - 2 * padding;
+
+    const allCoords = [];
+    tweetData.tweets.forEach(tweet => {
+      if (categorizationData.data[tweet.id]?.coords) {
+        allCoords.push(categorizationData.data[tweet.id].coords);
+      }
+    });
+    categorizationData.categories.forEach(cat => {
+      allCoords.push(cat.coords);
+    });
+
+    if (allCoords.length === 0) return [0, 0];
+
+    const allX = allCoords.map(c => c[selectedAxes.x] * axisDirections.x);
+    const allY = allCoords.map(c => c[selectedAxes.y] * axisDirections.y);
+    const minX = Math.min(...allX);
+    const maxX = Math.max(...allX);
+    const minY = Math.min(...allY);
+    const maxY = Math.max(...allY);
+
+    const rangeX = maxX - minX || 1;
+    const rangeY = maxY - minY || 1;
+
+    const margin = 0.1;
+    const expandedRangeX = rangeX * (1 + 2 * margin);
+    const expandedRangeY = rangeY * (1 + 2 * margin);
+
+    const normalizedX = (xValue - minX + rangeX * margin) / expandedRangeX;
+    const normalizedY = (yValue - minY + rangeY * margin) / expandedRangeY;
+
+    let pixelX = (normalizedX - 0.5) * plotWidth;
+    let pixelY = (0.5 - normalizedY) * plotHeight;
+
+    // Always apply jitter to tweets
+    if (tweetId) {
+      const jitterX = getJitter(tweetId, 'x') * jitterAmount;
+      const jitterY = getJitter(tweetId, 'y') * jitterAmount;
+      pixelX += jitterX;
+      pixelY += jitterY;
+    }
+
+    return [pixelX, pixelY];
+  };
+
+  const isTweetVisible = (tweet) => {
+    return new Date(tweet.timestamp).getTime() <= timelineTime;
+  };
+
+  const convexHull = (points) => {
+    if (points.length < 3) return points;
+
+    // Safety check: limit number of points to prevent crashes
+    if (points.length > 10000) {
+      console.warn('Too many points for convex hull, sampling...');
+      const step = Math.ceil(points.length / 1000);
+      points = points.filter((_, i) => i % step === 0);
+    }
+
+    const hull = [];
+    let leftmost = 0;
+    for (let i = 1; i < points.length; i++) {
+      if (points[i][0] < points[leftmost][0]) leftmost = i;
+    }
+
+    let current = leftmost;
+    let iterations = 0;
+    const maxIterations = points.length * 2; // Safety limit
+
+    do {
+      hull.push(points[current]);
+      let next = (current + 1) % points.length;
+
+      for (let i = 0; i < points.length; i++) {
+        const cross = (points[next][0] - points[current][0]) * (points[i][1] - points[current][1]) -
+                     (points[next][1] - points[current][1]) * (points[i][0] - points[current][0]);
+        if (cross < 0) next = i;
+      }
+
+      current = next;
+      iterations++;
+
+      // Safety check to prevent infinite loops
+      if (iterations > maxIterations) {
+        console.error('Convex hull exceeded max iterations');
+        break;
+      }
+    } while (current !== leftmost && iterations < maxIterations);
+
+    return hull;
+  };
+
+  const getCategoryBlob = (categoryId, width, height) => {
+    try {
+      const tweetsInCategory = tweetData.tweets.filter(tweet => {
+        if (!isTweetVisible(tweet)) return false;
+        const data = categorizationData.data[tweet.id];
+        return data?.categories?.includes(categoryId);
+      });
+
+      if (tweetsInCategory.length === 0) return null;
+
+      let points = tweetsInCategory.map(tweet => {
+        const coords = categorizationData.data[tweet.id].coords;
+        return coordsToPixels(coords, width, height, tweet.id);
+      });
+
+      console.log(`Category ${categoryId}: ${points.length} points`, points);
+
+      if (points.length === 1) {
+        const x = points[0][0];
+        const y = points[0][1];
+        const numSegments = 32;
+        const radius = 40;
+        let path = `M ${x + radius} ${y}`;
+        for (let i = 1; i <= numSegments; i++) {
+          const angle = (i / numSegments) * 2 * Math.PI;
+          const px = x + radius * Math.cos(angle);
+          const py = y + radius * Math.sin(angle);
+          path += ` L ${px} ${py}`;
+        }
+        return path + ' Z';
+      }
+
+      // Add padding points around each original point to ensure minimum size
+      const paddedPoints = [];
+      const minPadding = 30; // Minimum padding around each point
+
+      points.forEach(point => {
+        // Add the original point
+        paddedPoints.push(point);
+
+        // Add 8 surrounding points for minimum area
+        const angles = [0, Math.PI/4, Math.PI/2, 3*Math.PI/4, Math.PI, 5*Math.PI/4, 3*Math.PI/2, 7*Math.PI/4];
+        angles.forEach(angle => {
+          paddedPoints.push([
+            point[0] + minPadding * Math.cos(angle),
+            point[1] + minPadding * Math.sin(angle)
+          ]);
+        });
+      });
+
+      const hull = convexHull(paddedPoints);
+
+      if (!hull || hull.length < 3) return null;
+
+      const centroid = hull.reduce((acc, p) => [acc[0] + p[0], acc[1] + p[1]], [0, 0]);
+      centroid[0] /= hull.length;
+      centroid[1] /= hull.length;
+
+      const expandedHull = hull.map((point) => {
+        const x = point[0];
+        const y = point[1];
+        const dx = x - centroid[0];
+        const dy = y - centroid[1];
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const expandDist = 30; // Reduced from 60
+        return [x + (dx / dist) * expandDist, y + (dy / dist) * expandDist];
+      });
+
+      if (expandedHull.length < 3) return null;
+
+      // Limit smoothing points for performance
+      const pointsPerSegment = Math.min(32, Math.floor(500 / expandedHull.length));
+
+      // First, add interpolated points between hull vertices
+      const smoothedPoints = [];
+
+      for (let i = 0; i < expandedHull.length; i++) {
+        const curr = expandedHull[i];
+        const next = expandedHull[(i + 1) % expandedHull.length];
+
+        for (let j = 0; j < pointsPerSegment; j++) {
+          const t = j / pointsPerSegment;
+          const smoothT = t * t * t * (t * (t * 6 - 15) + 10);
+          const px = curr[0] + (next[0] - curr[0]) * smoothT;
+          const py = curr[1] + (next[1] - curr[1]) * smoothT;
+          smoothedPoints.push([px, py]);
+        }
+      }
+
+      // Safety check
+      if (smoothedPoints.length > 5000) {
+        console.warn('Too many smoothed points, reducing...');
+        const step = Math.ceil(smoothedPoints.length / 1000);
+        const reduced = [];
+        for (let i = 0; i < smoothedPoints.length; i += step) {
+          reduced.push(smoothedPoints[i]);
+        }
+        return `M ${reduced[0][0]} ${reduced[0][1]} ` +
+               reduced.slice(1).map(p => `L ${p[0]} ${p[1]}`).join(' ') + ' Z';
+      }
+
+      // Second pass: subdivide vertices to further smooth corners
+      const subdividedPoints = [];
+      for (let i = 0; i < smoothedPoints.length; i++) {
+        const prev = smoothedPoints[(i - 1 + smoothedPoints.length) % smoothedPoints.length];
+        const curr = smoothedPoints[i];
+        const next = smoothedPoints[(i + 1) % smoothedPoints.length];
+
+        const t1 = 0.15;
+
+        const p1x = curr[0] + (prev[0] - curr[0]) * t1;
+        const p1y = curr[1] + (prev[1] - curr[1]) * t1;
+
+        const p2x = curr[0] + (next[0] - curr[0]) * t1;
+        const p2y = curr[1] + (next[1] - curr[1]) * t1;
+
+        subdividedPoints.push([p1x, p1y]);
+        subdividedPoints.push([p2x, p2y]);
+      }
+
+      let path = `M ${subdividedPoints[0][0]} ${subdividedPoints[0][1]}`;
+      for (let i = 1; i < subdividedPoints.length; i++) {
+        path += ` L ${subdividedPoints[i][0]} ${subdividedPoints[i][1]}`;
+      }
+
+      return path + ' Z';
+    } catch (e) {
+      console.error('Error generating category blob:', e);
+      return null;
+    }
+  };
+
+  const handleTweetClick = (e, tweetId) => {
+    if (spacePressed || isPanning) {
+      e.stopPropagation();
+      return;
+    }
+
+    e.stopPropagation();
+    const newSelection = new Set(selectedTweets);
+
+    if (e.metaKey || e.ctrlKey) {
+      if (newSelection.has(tweetId)) {
+        newSelection.delete(tweetId);
+      } else {
+        newSelection.add(tweetId);
+      }
+    } else if (e.shiftKey) {
+      newSelection.delete(tweetId);
+    } else {
+      if (newSelection.has(tweetId) && newSelection.size === 1) {
+        newSelection.clear();
+      } else {
+        newSelection.clear();
+        newSelection.add(tweetId);
+      }
+    }
+
+    setSelectedTweets(newSelection);
+  };
+
+  const handleCategoryClick = (e, categoryId) => {
+    if (spacePressed || isPanning) {
+      e.stopPropagation();
+      return;
+    }
+
+    e.stopPropagation();
+    const tweetsInCategory = tweetData.tweets
+      .filter(tweet => categorizationData.data[tweet.id]?.categories?.includes(categoryId))
+      .map(t => t.id);
+
+    const newSelection = new Set(selectedTweets);
+
+    // Check if all tweets in category are already selected
+    const allSelected = tweetsInCategory.every(id => newSelection.has(id));
+
+    if (e.metaKey || e.ctrlKey) {
+      if (allSelected) {
+        // All are selected, so toggle them off
+        tweetsInCategory.forEach(id => newSelection.delete(id));
+      } else {
+        // Not all selected, so select all
+        tweetsInCategory.forEach(id => newSelection.add(id));
+      }
+    } else if (e.shiftKey) {
+      tweetsInCategory.forEach(id => newSelection.delete(id));
+    } else {
+      newSelection.clear();
+      tweetsInCategory.forEach(id => newSelection.add(id));
+    }
+
+    setSelectedTweets(newSelection);
+  };
+
+  const handleSvgMouseDown = (e) => {
+    if (spacePressed) {
+      e.preventDefault();
+      setIsPanning(true);
+      setPanStart({ x: e.clientX - panOffset.x, y: e.clientY - panOffset.y });
+      return;
+    }
+
+    if (!svgRef.current) return;
+    const rect = svgRef.current.getBoundingClientRect();
+    const svgX = (e.clientX - rect.left - width/2 - panOffset.x) / zoom;
+    const svgY = (e.clientY - rect.top - height/2 - panOffset.y) / zoom;
+    setIsSelecting(true);
+    setSelectionStart({ x: svgX, y: svgY });
+    setSelectionEnd({ x: svgX, y: svgY });
+    if (!e.metaKey && !e.ctrlKey) {
+      setSelectedTweets(new Set());
+    }
+  };
+
+  const handleSvgMouseMove = (e) => {
+    if (isPanning) {
+      e.preventDefault();
+      setPanOffset({
+        x: e.clientX - panStart.x,
+        y: e.clientY - panStart.y
+      });
+      return;
+    }
+
+    if (!isSelecting || !svgRef.current) return;
+    const rect = svgRef.current.getBoundingClientRect();
+    const svgX = (e.clientX - rect.left - width/2 - panOffset.x) / zoom;
+    const svgY = (e.clientY - rect.top - height/2 - panOffset.y) / zoom;
+    setSelectionEnd({ x: svgX, y: svgY });
+  };
+
+  const handleSvgMouseUp = (e) => {
+    if (isPanning) {
+      setIsPanning(false);
+      return;
+    }
+
+    if (!isSelecting) return;
+
+    const minX = Math.min(selectionStart.x, selectionEnd.x);
+    const maxX = Math.max(selectionStart.x, selectionEnd.x);
+    const minY = Math.min(selectionStart.y, selectionEnd.y);
+    const maxY = Math.max(selectionStart.y, selectionEnd.y);
+
+    const newSelection = new Set(selectedTweets);
+
+    tweetData.tweets.forEach(tweet => {
+      if (!categorizationData.data[tweet.id]) return;
+      const coordPair = coordsToPixels(categorizationData.data[tweet.id].coords, 1200, 900);
+      const x = coordPair[0];
+      const y = coordPair[1];
+      if (x >= minX && x <= maxX && y >= minY && y <= maxY) {
+        if (e.shiftKey) newSelection.delete(tweet.id);
+        else newSelection.add(tweet.id);
+      }
+    });
+
+    setSelectedTweets(newSelection);
+    setIsSelecting(false);
+    setSelectionStart(null);
+    setSelectionEnd(null);
+  };
+
+  const handleWheel = (e) => {
+    e.preventDefault();
+    const delta = e.deltaY * -0.01;
+    const newZoom = Math.min(Math.max(0.5, zoom + delta * zoom * 0.5), 5);
+
+    if (svgRef.current) {
+      const rect = svgRef.current.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+
+      const zoomRatio = newZoom / zoom;
+
+      setPanOffset({
+        x: mouseX - (mouseX - panOffset.x) * zoomRatio,
+        y: mouseY - (mouseY - panOffset.y) * zoomRatio
+      });
+    }
+
+    setZoom(newZoom);
+  };
+
+  const isCategorySelected = (categoryId) => {
+    const tweetsInCategory = tweetData.tweets
+      .filter(tweet => categorizationData.data[tweet.id]?.categories?.includes(categoryId))
+      .map(t => t.id);
+
+    if (tweetsInCategory.length === 0) return false;
+    return tweetsInCategory.every(id => selectedTweets.has(id));
+  };
+
+  const getSelectedCategories = () => {
+    return categories.filter(cat => isCategorySelected(cat.id)).map(cat => cat.id);
+  };
+
+  const getTweetOpacity = (tweetId) => {
+    if (hoveredTweet) {
+      return tweetId === hoveredTweet ? 1 : 0.1;
+    }
+    if (selectedTweets.size > 0) {
+      return selectedTweets.has(tweetId) ? 1 : 0.1;
+    }
+    if (hoveredCategory) {
+      const data = categorizationData.data[tweetId];
+      return data?.categories?.includes(hoveredCategory) ? 1 : 0.1;
+    }
+    return 1;
+  };
+
+  const handleResizeMouseDown = (e) => {
+    e.preventDefault();
+    setIsResizing(true);
+  };
+
+  if (!tweetData || !categorizationData) {
+    return (
+      <div className="w-full h-screen flex items-center justify-center bg-gray-50 p-8">
+        <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg p-6">
+          <h1 className="text-2xl font-bold mb-4">Tweet Plot Visualizer</h1>
+
+          <div className="mb-4">
+            <label className="block text-sm font-semibold mb-2">Tweet Data JSON:</label>
+            <textarea
+              className="w-full h-48 p-4 border border-gray-300 rounded font-mono text-sm"
+              placeholder='{"pfps": {...}, "tweets": [...]}'
+              value={tweetInput}
+              onChange={(e) => setTweetInput(e.target.value)}
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-sm font-semibold mb-2">Categorization Data JSON:</label>
+            <textarea
+              className="w-full h-48 p-4 border border-gray-300 rounded font-mono text-sm"
+              placeholder='{"axes": [...], "categories": [...], "data": {...}}'
+              value={categorizationInput}
+              onChange={(e) => setCategorizationInput(e.target.value)}
+            />
+          </div>
+
+          {error && <div className="mt-2 text-red-600 text-sm whitespace-pre-wrap font-mono max-h-48 overflow-y-auto bg-red-50 p-3 rounded">{error}</div>}
+
+          <button
+            className="mt-4 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            onClick={parseJSON}
+          >
+            Generate Plot
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const width = 1200;
+  const height = 900;
+  const axes = categorizationData.axes;
+  const categories = categorizationData.categories;
+  const tweets = tweetData.tweets;
+  const pfps = tweetData.pfps;
+
+  const xAxis = axes[selectedAxes.x];
+  const yAxis = axes[selectedAxes.y];
+  const xLabel = axisDirections.x === 1 ? xAxis.positive : xAxis.negative;
+  const xLabelNeg = axisDirections.x === 1 ? xAxis.negative : xAxis.positive;
+  const yLabel = axisDirections.y === 1 ? yAxis.positive : yAxis.negative;
+  const yLabelNeg = axisDirections.y === 1 ? yAxis.negative : yAxis.positive;
+
+  const visibleTweets = tweets.filter(isTweetVisible);
+
+  const displayTweets = hoveredTweet
+    ? [tweets.find(t => t.id === hoveredTweet)]
+    : hoveredCategory
+    ? visibleTweets.filter(t => categorizationData.data[t.id]?.categories?.includes(hoveredCategory))
+    : selectedTweets.size > 0
+    ? visibleTweets.filter(t => selectedTweets.has(t.id))
+    : visibleTweets;
+
+  const selectedCategories = getSelectedCategories();
+
+  return (
+    <div className="w-full h-screen flex flex-col bg-gray-50">
+      <div className="p-4 bg-white border-b flex-shrink-0">
+        <div className="flex items-center gap-4 max-w-6xl mx-auto">
+          <button
+            className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+            onClick={() => setTimelineTime(Math.max(minTime, timelineTime - (maxTime - minTime) / 100))}
+          >
+            ←
+          </button>
+          <div className="flex-1">
+            <div className="text-sm mb-1">{new Date(timelineTime).toLocaleString()}</div>
+            <input
+              type="range"
+              min={minTime}
+              max={maxTime}
+              value={timelineTime}
+              onChange={(e) => setTimelineTime(parseInt(e.target.value))}
+              className="w-full"
+            />
+          </div>
+          <button
+            className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+            onClick={() => setTimelineTime(Math.min(maxTime, timelineTime + (maxTime - minTime) / 100))}
+          >
+            →
+          </button>
+          <div className="flex items-center gap-2">
+            <button
+              className="px-3 py-1 bg-gray-600 text-white rounded hover:bg-gray-700"
+              onClick={() => setZoom(Math.max(0.5, zoom - 0.2))}
+            >
+              −
+            </button>
+            <span className="text-sm w-16 text-center">{Math.round(zoom * 100)}%</span>
+            <button
+              className="px-3 py-1 bg-gray-600 text-white rounded hover:bg-gray-700"
+              onClick={() => setZoom(Math.min(5, zoom + 0.2))}
+            >
+              +
+            </button>
+            <button
+              className="px-3 py-1 bg-gray-600 text-white rounded hover:bg-gray-700"
+              onClick={() => { setZoom(1); setPanOffset({ x: 0, y: 0 }); }}
+            >
+              Reset
+            </button>
+          </div>
+          <div className="flex items-center gap-2">
+            <label className="text-sm">Jitter:</label>
+            <button
+              className="px-2 py-1 bg-gray-600 text-white rounded hover:bg-gray-700"
+              onClick={() => setJitterAmount(Math.max(0, jitterAmount - 10))}
+            >
+              −
+            </button>
+            <span className="text-sm w-12 text-center">{jitterAmount}</span>
+            <button
+              className="px-2 py-1 bg-gray-600 text-white rounded hover:bg-gray-700"
+              onClick={() => setJitterAmount(Math.min(100, jitterAmount + 10))}
+            >
+              +
+            </button>
+          </div>
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={showReplyEdges}
+              onChange={(e) => setShowReplyEdges(e.target.checked)}
+              className="w-4 h-4"
+            />
+            <span className="text-sm">Show Reply Edges</span>
+          </label>
+          <button
+            className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
+            onClick={() => {
+              setTweetData(null);
+              setCategorizationData(null);
+            }}
+          >
+            Load New Data
+          </button>
+        </div>
+      </div>
+
+      <div className="flex-1 flex overflow-hidden">
+        <div
+          className="flex-1 flex items-center justify-center relative overflow-hidden"
+          style={{ cursor: spacePressed ? (isPanning ? 'grabbing' : 'grab') : 'default' }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+              overflow: 'hidden',
+              background: 'white'
+            }}
+          >
+          <svg
+            ref={svgRef}
+            width="100%"
+            height="100%"
+            className="bg-white"
+            onMouseDown={handleSvgMouseDown}
+            onMouseMove={handleSvgMouseMove}
+            onMouseUp={handleSvgMouseUp}
+            onWheel={handleWheel}
+            style={{
+              position: 'absolute',
+              left: 0,
+              top: 0
+            }}
+          >
+            <g transform={`translate(${width/2 + panOffset.x}, ${height/2 + panOffset.y}) scale(${zoom})`}>
+              <line x1={-width/2 + 80} y1="0" x2={width/2 - 80} y2="0" stroke="#666" strokeWidth={2/zoom} />
+              <line x1="0" y1={-height/2 + 80} x2="0" y2={height/2 - 80} stroke="#666" strokeWidth={2/zoom} />
+
+              <text
+                x="0"
+                y={-height/2 + 30}
+                textAnchor="middle"
+                className="text-sm font-semibold cursor-pointer hover:text-blue-600"
+                fontSize={14/zoom}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleAxisClick('top');
+                }}
+              >
+                {yLabel}
+              </text>
+              <text
+                x="0"
+                y={height/2 - 20}
+                textAnchor="middle"
+                className="text-sm font-semibold cursor-pointer hover:text-blue-600"
+                fontSize={14/zoom}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleAxisClick('bottom');
+                }}
+              >
+                {yLabelNeg}
+              </text>
+              <text
+                x={-width/2 + 20}
+                y="-10"
+                textAnchor="start"
+                className="text-sm font-semibold cursor-pointer hover:text-blue-600"
+                fontSize={14/zoom}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleAxisClick('left');
+                }}
+              >
+                {xLabelNeg}
+              </text>
+              <text
+                x={width/2 - 20}
+                y="-10"
+                textAnchor="end"
+                className="text-sm font-semibold cursor-pointer hover:text-blue-600"
+                fontSize={14/zoom}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleAxisClick('right');
+                }}
+              >
+                {xLabel}
+              </text>
+
+              <g id="category-blobs">
+                {categories.map(category => {
+                  const blobPath = getCategoryBlob(category.id, width, height);
+                  if (!blobPath) return null;
+                  const isHovered = hoveredCategory === category.id;
+                  const isSelected = selectedCategories.includes(category.id);
+                  const shouldFill = isHovered || isSelected;
+
+                  let strokeOpacity = 0.7;
+                  if (hoveredCategory && hoveredCategory !== category.id) {
+                    strokeOpacity = 0.2;
+                  }
+
+                  return (
+                    <path
+                      key={category.id}
+                      d={blobPath}
+                      fill={shouldFill ? getCategoryColor(category.id) : 'none'}
+                      fillOpacity={shouldFill ? 0.25 : 0}
+                      stroke={getCategoryColor(category.id)}
+                      strokeWidth={3/zoom}
+                      strokeOpacity={strokeOpacity}
+                      style={{
+                        cursor: 'pointer',
+                        pointerEvents: 'all'
+                      }}
+                      onMouseEnter={(e) => {
+                        setHoveredCategory(category.id);
+                        const rect = svgRef.current.getBoundingClientRect();
+                        setCategoryTooltipPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+                      }}
+                      onMouseMove={(e) => {
+                        const rect = svgRef.current.getBoundingClientRect();
+                        setCategoryTooltipPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+                      }}
+                      onMouseLeave={() => {
+                        setHoveredCategory(null);
+                        setCategoryTooltipPos(null);
+                      }}
+                      onClick={(e) => handleCategoryClick(e, category.id)}
+                    />
+                  );
+                })}
+              </g>
+
+              {showReplyEdges && (
+                <g id="reply-edges">
+                  {tweets.map(tweet => {
+                    if (!isTweetVisible(tweet) || !categorizationData.data[tweet.id]) return null;
+                    if (!tweet.reply_to) return null;
+
+                    const replyToTweet = tweets.find(t => t.id === tweet.reply_to);
+                    if (!replyToTweet || !isTweetVisible(replyToTweet) || !categorizationData.data[replyToTweet.id]) return null;
+
+                    const fromCoords = coordsToPixels(categorizationData.data[tweet.id].coords, width, height);
+                    const toCoords = coordsToPixels(categorizationData.data[replyToTweet.id].coords, width, height);
+
+                    return (
+                      <line
+                        key={`edge-${tweet.id}`}
+                        x1={fromCoords[0]}
+                        y1={fromCoords[1]}
+                        x2={toCoords[0]}
+                        y2={toCoords[1]}
+                        stroke="#999"
+                        strokeWidth={1/zoom}
+                        strokeOpacity={0.3}
+                        pointerEvents="none"
+                      />
+                    );
+                  })}
+                </g>
+              )}
+
+              <g id="tweets">
+                {tweets
+                  .map((tweet, origIndex) => ({ tweet, origIndex }))
+                  .sort((a, b) => {
+                    const aSelected = selectedTweets.has(a.tweet.id);
+                    const bSelected = selectedTweets.has(b.tweet.id);
+                    const aHovered = hoveredTweet === a.tweet.id;
+                    const bHovered = hoveredTweet === b.tweet.id;
+
+                    if (aHovered && !bHovered) return 1;
+                    if (bHovered && !aHovered) return -1;
+
+                    if (aSelected && !bSelected) return 1;
+                    if (bSelected && !aSelected) return -1;
+
+                    return a.origIndex - b.origIndex;
+                  })
+                  .map(({ tweet }) => {
+                  if (!isTweetVisible(tweet) || !categorizationData.data[tweet.id]) return null;
+
+                  const coords = categorizationData.data[tweet.id].coords;
+                  const baseCoords = coordsToPixels(coords, width, height, tweet.id);
+                  const x = baseCoords[0];
+                  const y = baseCoords[1];
+                  const colors = getTweetColors(tweet.id);
+                  const isSelected = selectedTweets.has(tweet.id);
+
+                  const baseRadius = 20;
+                  const minRadius = 4;
+                  const maxRadius = 32;
+                  const radius = Math.max(minRadius, Math.min(maxRadius, baseRadius * Math.pow(zoom, 0.5))) / zoom;
+                  const ringWidth = 3 / zoom;
+
+                  return (
+                    <g
+                      key={tweet.id}
+                      onMouseEnter={() => setHoveredTweet(tweet.id)}
+                      onMouseLeave={() => setHoveredTweet(null)}
+                      onClick={(e) => handleTweetClick(e, tweet.id)}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      {colors.length === 1 ? (
+                        <circle
+                          cx={x}
+                          cy={y}
+                          r={radius + ringWidth / 2}
+                          fill="none"
+                          stroke={colors[0]}
+                          strokeWidth={ringWidth}
+                          opacity={getTweetOpacity(tweet.id)}
+                        />
+                      ) : (
+                        colors.map((color, idx) => {
+                          const numColors = colors.length;
+                          const segmentAngle = (2 * Math.PI) / numColors;
+                          const startAngle = idx * segmentAngle - Math.PI / 2;
+                          const endAngle = (idx + 1) * segmentAngle - Math.PI / 2;
+
+                          const innerRadius = radius;
+                          const outerRadius = radius + ringWidth;
+
+                          const x1Inner = x + innerRadius * Math.cos(startAngle);
+                          const y1Inner = y + innerRadius * Math.sin(startAngle);
+                          const x1Outer = x + outerRadius * Math.cos(startAngle);
+                          const y1Outer = y + outerRadius * Math.sin(startAngle);
+
+                          const x2Inner = x + innerRadius * Math.cos(endAngle);
+                          const y2Inner = y + innerRadius * Math.sin(endAngle);
+                          const x2Outer = x + outerRadius * Math.cos(endAngle);
+                          const y2Outer = y + outerRadius * Math.sin(endAngle);
+
+                          const largeArc = segmentAngle > Math.PI ? 1 : 0;
+
+                          const pathData = [
+                            `M ${x1Inner} ${y1Inner}`,
+                            `L ${x1Outer} ${y1Outer}`,
+                            `A ${outerRadius} ${outerRadius} 0 ${largeArc} 1 ${x2Outer} ${y2Outer}`,
+                            `L ${x2Inner} ${y2Inner}`,
+                            `A ${innerRadius} ${innerRadius} 0 ${largeArc} 0 ${x1Inner} ${y1Inner}`,
+                            `Z`
+                          ].join(' ');
+
+                          return (
+                            <path
+                              key={idx}
+                              d={pathData}
+                              fill={color}
+                              opacity={getTweetOpacity(tweet.id)}
+                            />
+                          );
+                        })
+                      )}
+
+                      <g opacity={getTweetOpacity(tweet.id)}>
+                        {pfps[tweet.author] && (
+                          <image
+                            href={pfps[tweet.author]}
+                            x={x - radius}
+                            y={y - radius}
+                            width={radius * 2}
+                            height={radius * 2}
+                            clipPath={`circle(${radius}px at ${radius}px ${radius}px)`}
+                          />
+                        )}
+                      </g>
+                    </g>
+                  );
+                })}
+              </g>
+
+              {isSelecting && selectionStart && selectionEnd && (
+                <rect
+                  x={Math.min(selectionStart.x, selectionEnd.x)}
+                  y={Math.min(selectionStart.y, selectionEnd.y)}
+                  width={Math.abs(selectionEnd.x - selectionStart.x)}
+                  height={Math.abs(selectionEnd.y - selectionStart.y)}
+                  fill="rgba(59, 130, 246, 0.2)"
+                  stroke="#3B82F6"
+                  strokeWidth={2 / zoom}
+                  strokeDasharray="5,5"
+                />
+              )}
+            </g>
+          </svg>
+
+          {hoveredCategory && categoryTooltipPos && (
+            <div
+              className="absolute bg-gray-900 text-white px-3 py-1 rounded text-sm pointer-events-none shadow-lg"
+              style={{
+                left: categoryTooltipPos.x + 15,
+                top: categoryTooltipPos.y - 10,
+                zIndex: 1000
+              }}
+            >
+              {categories.find(c => c.id === hoveredCategory)?.label}
+            </div>
+          )}
+          </div>
+
+          {showAxisPicker && (
+            <div
+              className="absolute bg-white border-2 border-blue-600 rounded-lg shadow-xl p-3 z-50"
+              style={{
+                left: showAxisPicker === 'left' ? '100px' : showAxisPicker === 'right' ? 'auto' : '50%',
+                right: showAxisPicker === 'right' ? '100px' : 'auto',
+                top: showAxisPicker === 'top' ? '120px' : showAxisPicker === 'bottom' ? 'auto' : '50%',
+                bottom: showAxisPicker === 'bottom' ? '120px' : 'auto',
+                transform: (showAxisPicker === 'top' || showAxisPicker === 'bottom') ? 'translateX(-50%)' : 'translateY(-50%)'
+              }}
+            >
+              <div className="text-xs font-semibold text-gray-700 mb-2">Select Axis:</div>
+              <div className="space-y-1">
+                {axes.map((axis, idx) => (
+                  <button
+                    key={idx}
+                    className="block w-full text-left px-3 py-2 text-sm hover:bg-blue-50 rounded"
+                    onClick={() => selectAxis(showAxisPicker, idx)}
+                  >
+                    <div className="font-semibold">{axis.label}</div>
+                    <div className="text-xs text-gray-600">
+                      {showAxisPicker === 'left' || showAxisPicker === 'bottom' ? axis.negative : axis.positive}
+                    </div>
+                  </button>
+                ))}
+              </div>
+              <button
+                className="mt-2 w-full text-xs text-gray-500 hover:text-gray-700"
+                onClick={() => setShowAxisPicker(null)}
+              >
+                Cancel
+              </button>
+            </div>
+          )}
+
+          <div className="absolute bottom-4 left-4 bg-white/90 rounded px-3 py-2 text-xs text-gray-600">
+            Hold SPACE and drag to pan • Scroll to zoom • Arrow keys for timeline • Shift to deselect
+          </div>
+        </div>
+
+        <div
+          className="bg-gray-400 hover:bg-blue-500 cursor-ew-resize flex-shrink-0"
+          style={{ width: '6px' }}
+          onMouseDown={handleResizeMouseDown}
+        />
+
+        <div className="bg-white shadow-lg flex flex-col" style={{ width: `${detailsWidth}px` }}>
+          <div className="p-4 border-b flex-shrink-0">
+            <h2 className="font-bold">Details</h2>
+          </div>
+          <div className="flex-1 overflow-y-auto p-4">
+            {displayTweets.length === 0 ? (
+              <p className="text-gray-500 italic">Hover or click tweets to view</p>
+            ) : (
+              <div className="space-y-4">
+                {displayTweets.map(tweet => {
+                  if (!tweet) return null;
+                  const tweetMeta = categorizationData.data[tweet.id];
+                  return (
+                    <div key={tweet.id} className="border-b pb-4 last:border-b-0">
+                      <div className="flex items-start gap-2 mb-2">
+                        <div className="flex items-center gap-2 flex-1">
+                          {pfps[tweet.author] && (
+                            <img src={pfps[tweet.author]} className="w-8 h-8 rounded-full flex-shrink-0" alt="" />
+                          )}
+                          <div className="flex-1 min-w-0">
+                            <div className="font-bold truncate">@{tweet.author}</div>
+                            <div className="text-xs text-gray-500">
+                              {new Date(tweet.timestamp).toLocaleString()}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2 flex-shrink-0">
+                          {tweetMeta?.categories && (
+                            <div className="flex gap-1">
+                              {tweetMeta.categories.map(catId => (
+                                <div
+                                  key={catId}
+                                  className="w-3 h-3 rounded-full"
+                                  style={{ backgroundColor: getCategoryColor(catId) }}
+                                  title={categories.find(c => c.id === catId)?.label}
+                                />
+                              ))}
+                            </div>
+                          )}
+                          <div className="text-xs text-gray-600">❤️ {tweet.likes}</div>
+                        </div>
+                      </div>
+                      <p className="text-sm mb-2">{tweet.text}</p>
+                      {tweetMeta?.explanation && (
+                        <p className="text-xs italic text-gray-600 bg-gray-50 p-2 rounded">
+                          {tweetMeta.explanation}
+                        </p>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div className="p-4 bg-white border-t flex-shrink-0">
+        <div className="flex flex-wrap gap-4 justify-center">
+          {categories.map(cat => (
+            <div
+              key={cat.id}
+              className="flex items-center gap-2 cursor-pointer hover:opacity-70"
+              onClick={(e) => handleCategoryClick(e, cat.id)}
+              onMouseEnter={() => setHoveredCategory(cat.id)}
+              onMouseLeave={() => setHoveredCategory(null)}
+            >
+              <div className="w-4 h-4 rounded" style={{ backgroundColor: getCategoryColor(cat.id) }} />
+              <span className="text-sm">{cat.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<TweetPlotVisualizer />);
+    </script>
+  </body>
+</html>
